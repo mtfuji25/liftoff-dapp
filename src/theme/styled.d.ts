@@ -1,3 +1,8 @@
+import {
+  FlattenSimpleInterpolation,
+  ThemedCssFunction
+} from 'styled-components';
+
 export type Color = string;
 export interface Colors {
   // base
@@ -47,6 +52,14 @@ declare module 'styled-components' {
 
     // shadows
     shadow1: string;
+
+    // media queries
+    mediaWidth: {
+      upToExtraSmall: ThemedCssFunction<DefaultTheme>;
+      upToSmall: ThemedCssFunction<DefaultTheme>;
+      upToMedium: ThemedCssFunction<DefaultTheme>;
+      upToLarge: ThemedCssFunction<DefaultTheme>;
+    };
 
     // css snippets
     flexColumnNoWrap: FlattenSimpleInterpolation;

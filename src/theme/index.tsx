@@ -1,11 +1,30 @@
 import React from 'react';
-import {
+import styled, {
   createGlobalStyle,
   DefaultTheme,
   css,
   ThemeProvider as StyledComponentsThemeProvider
 } from 'styled-components';
+import { Text, TextProps } from 'rebass';
 import { Colors } from './styled';
+
+const MEDIA_WIDTHS = {
+  upToExtraSmall: 500,
+  upToSmall: 720,
+  upToMedium: 960,
+  upToLarge: 1280
+};
+
+const mediaWidthTemplates: {
+  [width in keyof typeof MEDIA_WIDTHS]: typeof css;
+} = Object.keys(MEDIA_WIDTHS).reduce((accumulator, size) => {
+  (accumulator as any)[size] = (a: any, b: any, c: any) => css`
+    @media (max-width: ${(MEDIA_WIDTHS as any)[size]}px) {
+      ${css(a, b, c)}
+    }
+  `;
+  return accumulator;
+}, {}) as any;
 
 const white = '#FFFFFF';
 const black = '#000000';
@@ -58,6 +77,9 @@ export const theme: DefaultTheme = {
   //shadows
   shadow1: '#2F80ED',
 
+  // media queries
+  mediaWidth: mediaWidthTemplates,
+
   // css snippets
   flexColumnNoWrap: css`
     display: flex;
@@ -80,6 +102,25 @@ export default function ThemeProvider({
     </StyledComponentsThemeProvider>
   );
 }
+
+const TextWrapper = styled(Text)<{ color: keyof Colors }>`
+  color: ${({ color, theme }) => (theme as any)[color]};
+`;
+
+export const TYPE = {
+  largeHeader(props: TextProps) {
+    return <TextWrapper fontWeight={700} fontSize="24px" {...props} />;
+  },
+  header(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize="16px" {...props} />;
+  },
+  body(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize="14px" {...props} />;
+  },
+  small(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize="12px" {...props} />;
+  }
+};
 
 export const ThemedGlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap');
