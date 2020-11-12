@@ -1,9 +1,9 @@
 import React from 'react';
-import {BrowserRouter} from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import App from './pages/App';
 import reportWebVitals from './reportWebVitals';
-import ThemeProvider,{ ThemedGlobalStyle } from './theme';
+import ThemeProvider, { ThemedGlobalStyle } from './theme';
 
 ReactDOM.render(
   <React.StrictMode>
