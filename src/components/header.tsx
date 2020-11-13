@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { TYPE } from '../theme';
 import { Button } from './button';
 import Logo from '../assets/logo.png';
 
@@ -28,6 +29,11 @@ const StyledNav = styled.div`
   }
 `;
 
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const StyledLogo = styled.img`
   width: 2rem;
 `;
@@ -38,7 +44,12 @@ const StyledButton = styled(Button)``;
 export const Header = (props: Props) => {
   return (
     <StyledNavContainer>
-      <StyledLogo src={Logo} alt="LID protocol logo" />
+      <LogoContainer>
+        <StyledLogo src={Logo} alt="LID protocol logo" />
+        <TYPE.LargeHeader color="white" marginLeft="1rem">
+          LIFTOFF
+        </TYPE.LargeHeader>
+      </LogoContainer>
       <StyledNav>
         <StyledLink to="/">Launchpad</StyledLink>
         <StyledLink to="/rockets">Rockets</StyledLink>

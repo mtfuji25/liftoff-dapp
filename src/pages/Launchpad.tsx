@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TYPE } from '../theme';
 
 interface Props {}
 
@@ -7,35 +8,29 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 800px;
+  margin: auto;
 `;
-const StyledText = styled.span``;
-const StyledList = styled.ol``;
-const StyledListItem = styled.li``;
 
 export const Launchpad = (props: Props) => {
   return (
     <StyledContainer>
-      <StyledText>🕹Luanchpad for Developers</StyledText>
-      <StyledText>How it works</StyledText>
-      <StyledList>
-        <StyledListItem>
-          <StyledText>Register your project with this form</StyledText>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledText>
-            Include a link to your working dapp that will use the created token.
-          </StyledText>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledText>Submit and pay the gas fee.</StyledText>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledText>
-            Liftoff will create your ERC20 token and your project's liftoff
-            page.
-          </StyledText>
-        </StyledListItem>
-      </StyledList>
+      <TYPE.LargeHeader color="white">
+        🕹Luanchpad for Developers
+      </TYPE.LargeHeader>
+      <TYPE.Header marginY="1.875rem" color="white">
+        How it works
+      </TYPE.Header>
+      <TYPE.Body color="white" textAlign="center" lineHeight="1.5rem">
+        1. Register your project with this form.
+        <br />
+        2. Include a link to your working dapp that will use the created token.
+        <br />
+        3. Submit and pay the gas fee.
+        <br />
+        4. Liftoff will create your ERC20 token and your project's liftoff page.
+      </TYPE.Body>
+      <TYPE.Body color="white" textAlign="center"></TYPE.Body>
     </StyledContainer>
   );
 };

@@ -108,16 +108,16 @@ const TextWrapper = styled(Text)<{ color: keyof Colors }>`
 `;
 
 export const TYPE = {
-  largeHeader(props: TextProps) {
+  LargeHeader(props: TextProps) {
     return <TextWrapper fontWeight={700} fontSize="24px" {...props} />;
   },
-  header(props: TextProps) {
-    return <TextWrapper fontWeight={600} fontSize="16px" {...props} />;
+  Header(props: TextProps) {
+    return <TextWrapper fontWeight={500} fontSize="16px" {...props} />;
   },
-  body(props: TextProps) {
+  Body(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize="14px" {...props} />;
   },
-  small(props: TextProps) {
+  Small(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize="12px" {...props} />;
   }
 };
