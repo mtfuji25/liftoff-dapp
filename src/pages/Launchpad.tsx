@@ -16,17 +16,10 @@ export const StyledContainer = styled.div`
   max-width: 800px;
   margin: auto;
 `;
-const StyledTitle = styled.span`
-  font-weight: 400;
-`;
-const StyledText = styled.span`
-  font-size: 0.8rem;
-`;
-const StyledList = styled.ol``;
-const StyledListItem = styled.li``;
 
 const StyledForm = styled.div`
   width: 40rem;
+  margin-top: 3.5rem;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     width: 100%;
   `}
@@ -43,27 +36,22 @@ const StyledButton = styled(Button)``;
 export const Launchpad = (props: Props) => {
   return (
     <StyledContainer>
-      <StyledTitle>🕹Luanchpad for Developers</StyledTitle>
-      <StyledTitle>How it works</StyledTitle>
-      <StyledList>
-        <StyledListItem>
-          <StyledText>Register your project with this form</StyledText>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledText>
-            Include a link to your working dapp that will use the created token.
-          </StyledText>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledText>Submit and pay the gas fee.</StyledText>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledText>
-            Liftoff will create your ERC20 token and your project's liftoff
-            page.
-          </StyledText>
-        </StyledListItem>
-      </StyledList>
+      <TYPE.LargeHeader color="white">
+        🕹Luanchpad for Developers
+      </TYPE.LargeHeader>
+      <TYPE.Header marginY="1.875rem" color="white">
+        How it works
+      </TYPE.Header>
+      <TYPE.Body color="white" textAlign="center" lineHeight="1.5rem">
+        1. Register your project with this form.
+        <br />
+        2. Include a link to your working dapp that will use the created token.
+        <br />
+        3. Submit and pay the gas fee.
+        <br />
+        4. Liftoff will create your ERC20 token and your project's liftoff page.
+      </TYPE.Body>
+      <TYPE.Body color="white" textAlign="center"></TYPE.Body>
 
       <StyledForm>
         <Card marginBottom="1rem">
