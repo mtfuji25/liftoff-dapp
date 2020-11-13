@@ -20,7 +20,9 @@ const StyledFooter = styled.footer`
   color: ${({ theme }) => theme.bg5};
 `;
 
-const StyledCopyrightText = styled.div``;
+const StyledCopyrightText = styled.div`
+  text-align: center;
+`;
 
 export const Footer = (props: Props) => {
   return (

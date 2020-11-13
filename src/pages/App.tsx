@@ -10,6 +10,8 @@ import { Rockets } from './Rockets';
 
 const StyledMain = styled.main`
   padding: 2rem;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  padding: 1rem 0.5rem;`}
 `;
 
 function App() {
