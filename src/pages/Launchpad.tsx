@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from '../components/button';
-import { Card, StyledCardLabel } from '../components/card';
+import { Card } from '../components/card';
 import { Disclaimer } from '../components/disclaimer';
 import { Input } from '../components/input';
 import { Textarea } from '../components/textarea';
+import { TYPE } from '../theme';
 
 interface Props {}
 
@@ -12,6 +13,8 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 800px;
+  margin: auto;
 `;
 const StyledTitle = styled.span`
   font-weight: 400;
@@ -63,9 +66,9 @@ export const Launchpad = (props: Props) => {
       </StyledList>
 
       <StyledForm>
-        <Card>
+        <Card marginBottom="1rem">
           <StyledFormItem>
-            <StyledCardLabel>Project Name</StyledCardLabel>
+            <TYPE.Header color="black">Project Name</TYPE.Header>
             <Input
               placeholder="Liquidity Dividends Protocol"
               type="text"
@@ -76,9 +79,9 @@ export const Launchpad = (props: Props) => {
             />
           </StyledFormItem>
         </Card>
-        <Card>
+        <Card marginBottom="1rem">
           <StyledFormItem>
-            <StyledCardLabel>Token ticker</StyledCardLabel>
+            <TYPE.Header color="black">Token ticker</TYPE.Header>
             <Input
               placeholder="XYZ"
               type="text"
@@ -89,15 +92,15 @@ export const Launchpad = (props: Props) => {
             />
           </StyledFormItem>
         </Card>
-        <Card>
+        <Card marginBottom="1rem">
           <StyledFormItem>
-            <StyledCardLabel>Project Description</StyledCardLabel>
+            <TYPE.Header color="black">Project Description</TYPE.Header>
             <Textarea />
           </StyledFormItem>
         </Card>
-        <Card>
+        <Card marginBottom="1rem">
           <StyledFormItem>
-            <StyledCardLabel>Website Link</StyledCardLabel>
+            <TYPE.Header color="black">Website Link</TYPE.Header>
             <Input
               placeholder="XYZ"
               type="text"
@@ -108,9 +111,9 @@ export const Launchpad = (props: Props) => {
             />
           </StyledFormItem>
         </Card>
-        <Card>
+        <Card marginBottom="1rem">
           <StyledFormItem>
-            <StyledCardLabel>dApp Link</StyledCardLabel>
+            <TYPE.Header color="black">dApp Link</TYPE.Header>
             <Input
               placeholder="XYZ"
               type="text"
@@ -121,9 +124,9 @@ export const Launchpad = (props: Props) => {
             />
           </StyledFormItem>
         </Card>
-        <Card>
+        <Card marginBottom="1rem">
           <StyledFormItem>
-            <StyledCardLabel>Whitepaper Link</StyledCardLabel>
+            <TYPE.Header color="black">Whitepaper Link</TYPE.Header>
             <Input
               placeholder="XYZ"
               type="text"
@@ -134,9 +137,9 @@ export const Launchpad = (props: Props) => {
             />
           </StyledFormItem>
         </Card>
-        <Card>
+        <Card marginBottom="1rem">
           <StyledFormItem>
-            <StyledCardLabel>Social Media Links</StyledCardLabel>
+            <TYPE.Header color="black">Social Media Links</TYPE.Header>
             <Input
               placeholder="XYZ"
               type="text"
@@ -147,9 +150,9 @@ export const Launchpad = (props: Props) => {
             />
           </StyledFormItem>
         </Card>
-        <Card>
+        <Card marginBottom="1rem">
           <StyledFormItem>
-            <StyledCardLabel>LIFTOFF Launch Date & Time</StyledCardLabel>
+            <TYPE.Header color="black">LIFTOFF Launch Date & Time</TYPE.Header>
             <Input
               placeholder="XYZ"
               type="text"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -80,7 +80,6 @@ const StyledMenu = styled.img`
 export const Header = (_props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {});
   return (
     <StyledNavContainer>
       <StyledLink to="/">
