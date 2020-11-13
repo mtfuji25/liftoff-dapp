@@ -8,18 +8,17 @@ interface Props {
 }
 
 const StyledFooter = styled.footer`
-  background-image: url(${FooterImage});
-  background-repeat: no-repeat;
-  background-size: cover;
   height: 60vh;
   display: flex;
+  background: url(${FooterImage}) center center fixed no-repeat;
+  background-repeat: no-repeat;
+  background-size: cover;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   padding-bottom: 2rem;
   color: ${({ theme }) => theme.bg5};
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    height: 30vh;
   `}
 `;
 

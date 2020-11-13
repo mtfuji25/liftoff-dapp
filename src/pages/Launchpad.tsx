@@ -9,7 +9,7 @@ import { TYPE } from '../theme';
 
 interface Props {}
 
-const StyledContainer = styled.div`
+export const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -165,8 +165,8 @@ export const Launchpad = (props: Props) => {
         </Card>
 
         <StyledButton>Launch</StyledButton>
-        <Disclaimer color="#ffffff" />
       </StyledForm>
+      <Disclaimer color="#ffffff" />
     </StyledContainer>
   );
 };
