@@ -11,13 +11,16 @@ const StyledFooter = styled.footer`
   background-image: url(${FooterImage});
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
+  height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   padding-bottom: 2rem;
   color: ${({ theme }) => theme.bg5};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    height: 30vh;
+  `}
 `;
 
 const StyledCopyrightText = styled.div`
