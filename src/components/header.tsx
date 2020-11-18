@@ -92,7 +92,7 @@ export const Header = (_props: Props) => {
     <StyledNavContainer>
       <StyledLink to="/">
         <StyledLogo src={Logo} alt="LID protocol logo" />
-        <TYPE.Header>LIFTOFF</TYPE.Header>
+        <TYPE.LargeHeader fontWeight={400}>LIFTOFF</TYPE.LargeHeader>
       </StyledLink>
       {!isOpen ? (
         <StyledMenu src={Menu} onClick={() => setIsOpen(true)} />
