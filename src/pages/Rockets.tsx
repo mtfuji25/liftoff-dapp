@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Card } from '../components/card';
+import { Countdown } from '../components/countdown';
 import { Disclaimer } from '../components/disclaimer';
 import { Footer } from '../components/footer';
 import { Rocket, RocketData, rockets } from '../data';
@@ -16,10 +17,11 @@ export const StyledRocketCard = styled(Card)`
   color: ${({ theme }) => theme.black};
   padding: 2rem;
   margin: 0.5rem 0 !important;
+  align-items: center;
   justify-content: space-between;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     flex-direction: column;
-    padding: 0.2rem;
+    padding: 1rem;
   `}
 `;
 
@@ -63,13 +65,17 @@ export const Rockets = (props: Props) => {
                         </Link>
                       </StyledRocketItem>
                       <StyledRocketItem>
-                        <TYPE.Body>{rocketData.ticker}</TYPE.Body>
+                        <TYPE.Body color="text3" fontWeight="400">
+                          {rocketData.ticker}
+                        </TYPE.Body>
                       </StyledRocketItem>
                       <StyledRocketItem>
-                        <TYPE.Body>{rocketData.website}</TYPE.Body>
+                        <TYPE.Body color="text3" fontWeight="400">
+                          {rocketData.website}
+                        </TYPE.Body>
                       </StyledRocketItem>
                       <StyledRocketItem>
-                        <TYPE.Body>{rocketData.date}</TYPE.Body>
+                        <Countdown date={rocketData.date} />
                       </StyledRocketItem>
                     </StyledRocketCard>
                   </Fragment>

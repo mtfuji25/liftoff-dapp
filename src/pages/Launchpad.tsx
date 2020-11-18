@@ -29,7 +29,7 @@ const StyledForm = styled.div`
 const StyledFormItem = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 `;
 
 export const StyledButton = styled(Button)``;
@@ -40,7 +40,7 @@ export const Launchpad = (props: Props) => {
       <StyledBody color="bg2">
         <StyledContainer sWidth={800}>
           <TYPE.LargeHeader color="white">
-            🕹Luanchpad for Developers
+            🕹Lunchpad for Developers
           </TYPE.LargeHeader>
           <TYPE.Header marginY="1.875rem" color="white">
             How it works
@@ -88,14 +88,14 @@ export const Launchpad = (props: Props) => {
             <Card marginBottom="1rem">
               <StyledFormItem>
                 <TYPE.Header color="black">Project Description</TYPE.Header>
-                <Textarea />
+                <Textarea placeholder="Text" />
               </StyledFormItem>
             </Card>
             <Card marginBottom="1rem">
               <StyledFormItem>
                 <TYPE.Header color="black">Website Link</TYPE.Header>
                 <Input
-                  placeholder="XYZ"
+                  placeholder="https://website.com"
                   type="text"
                   hasError=""
                   isTouched=""
@@ -108,7 +108,7 @@ export const Launchpad = (props: Props) => {
               <StyledFormItem>
                 <TYPE.Header color="black">dApp Link</TYPE.Header>
                 <Input
-                  placeholder="XYZ"
+                  placeholder="https://website.com/dapp"
                   type="text"
                   hasError=""
                   isTouched=""
@@ -121,7 +121,7 @@ export const Launchpad = (props: Props) => {
               <StyledFormItem>
                 <TYPE.Header color="black">Whitepaper Link</TYPE.Header>
                 <Input
-                  placeholder="XYZ"
+                  placeholder="https://website.com/whitepaper.pdf"
                   type="text"
                   hasError=""
                   isTouched=""
@@ -131,10 +131,44 @@ export const Launchpad = (props: Props) => {
               </StyledFormItem>
             </Card>
             <Card marginBottom="1rem">
+              <TYPE.Header color="black">Social Media Links</TYPE.Header>
               <StyledFormItem>
-                <TYPE.Header color="black">Social Media Links</TYPE.Header>
+                <TYPE.Body color="black">Discord</TYPE.Body>
                 <Input
-                  placeholder="XYZ"
+                  placeholder="https://discord.gg/"
+                  type="text"
+                  hasError=""
+                  isTouched=""
+                  disabled={false}
+                  onChange={(e: any) => {}}
+                />
+              </StyledFormItem>
+              <StyledFormItem>
+                <TYPE.Body color="black">Telegram</TYPE.Body>
+                <Input
+                  placeholder="https://t.me/"
+                  type="text"
+                  hasError=""
+                  isTouched=""
+                  disabled={false}
+                  onChange={(e: any) => {}}
+                />
+              </StyledFormItem>
+              <StyledFormItem>
+                <TYPE.Body color="black">Twitter</TYPE.Body>
+                <Input
+                  placeholder="https://twitter.com/"
+                  type="text"
+                  hasError=""
+                  isTouched=""
+                  disabled={false}
+                  onChange={(e: any) => {}}
+                />
+              </StyledFormItem>
+              <StyledFormItem>
+                <TYPE.Body color="black">Facebook</TYPE.Body>
+                <Input
+                  placeholder="https://facebook.com/"
                   type="text"
                   hasError=""
                   isTouched=""

@@ -6,6 +6,7 @@ import { Button } from './button';
 import Logo from '../assets/logo.png';
 import Menu from '../assets/menu.svg';
 import Close from '../assets/close.svg';
+import { TYPE } from '../theme';
 
 interface Props {}
 
@@ -63,7 +64,15 @@ const StyledLogo = styled.img`
   width: 2rem;
 `;
 
-const StyledLink = styled(Link)``;
+const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: ${({ theme }) => theme.white};
+  div {
+    margin-left: 1rem;
+  }
+`;
 const StyledButton = styled(Button)``;
 
 const StyledMenu = styled.img`
@@ -83,6 +92,7 @@ export const Header = (_props: Props) => {
     <StyledNavContainer>
       <StyledLink to="/">
         <StyledLogo src={Logo} alt="LID protocol logo" />
+        <TYPE.Header>LIFTOFF</TYPE.Header>
       </StyledLink>
       {!isOpen ? (
         <StyledMenu src={Menu} onClick={() => setIsOpen(true)} />

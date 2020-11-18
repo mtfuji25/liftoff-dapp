@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Card } from '../components/card';
+import { Countdown } from '../components/countdown';
 import { Footer } from '../components/footer';
 import { Ignite } from '../components/ignite';
 import { TokenStats } from '../components/token_stats';
@@ -41,7 +42,18 @@ const AvatarWithTitle = styled.div`
     margin-left: 2rem;
   }
 `;
-const StyledCountdown = styled.div``;
+const StyledCountdown = styled.div`
+  display: flex;
+  align-items: center;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-top: 1rem;
+    flex-direction: column;
+    justify-content: center;
+  `}
+  span {
+    margin-right: 1rem;
+  }
+`;
 
 const StyledRocketDetailBody = styled.div``;
 
@@ -67,14 +79,21 @@ export const RocketDetail = (props: Props) => {
                 <TYPE.Header>[Project Name]</TYPE.Header>{' '}
                 <StyledButton>Spark</StyledButton>
               </AvatarWithTitle>
-              <StyledCountdown>Launch in:</StyledCountdown>
+              <StyledCountdown>
+                <span>Launch in:</span>
+                <Countdown date="01/01/2021" />
+              </StyledCountdown>
             </StyledRocketDetailHead>
             <StyledRocketDetailBody>
               <StyledTable cellSpacing={0} cellPadding={0}>
                 <tbody>
                   <tr>
-                    <td>Ticker</td>
-                    <td>XYZ</td>
+                    <td width="40%">
+                      <TYPE.Body>Ticker</TYPE.Body>
+                    </td>
+                    <td width="60%">
+                      <TYPE.Body>XYZ</TYPE.Body>
+                    </td>
                   </tr>
                 </tbody>
               </StyledTable>

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { StyledButton } from '../pages/Launchpad';
 import { StyledTable } from '../pages/RocketDetail';
 import { TYPE } from '../theme';
-import { Input } from './input';
 
 const FORM = styled.form`
   display: flex;
@@ -20,22 +19,18 @@ export const Ignite = () => {
       <StyledTable cellSpacing={0} cellPadding={0}>
         <tbody>
           <tr>
-            <td>Total ETH Ignited</td>
-            <td>135 ETH</td>
+            <td width="40%">
+              <TYPE.Body>Total ETH Ignited</TYPE.Body>
+            </td>
+            <td width="60%">
+              <TYPE.Body>135 ETH</TYPE.Body>
+            </td>
           </tr>
         </tbody>
       </StyledTable>
 
       <TYPE.Header>Amount of ETH to ignite</TYPE.Header>
       <FORM>
-        <Input
-          placeholder="XYZ"
-          type="text"
-          hasError=""
-          isTouched=""
-          disabled={false}
-          onChange={(e: any) => {}}
-        />
         <StyledButton>Claim</StyledButton>
         <TYPE.Small color="primary1">Your ETH ignited: 1.26 ETH</TYPE.Small>
       </FORM>

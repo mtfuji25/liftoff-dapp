@@ -23,20 +23,12 @@ export const TokenStats = () => {
       <StyledTable cellSpacing={0} cellPadding={0}>
         <tbody>
           <tr>
-            <td>Ticker</td>
-            <td>XYZ</td>
-          </tr>
-          <tr>
-            <td>Website</td>
-            <td>www.website.com</td>
-          </tr>
-          <tr>
-            <td>dApp</td>
-            <td>www.website.com/dapp</td>
-          </tr>
-          <tr>
-            <td>Ticker</td>
-            <td>XYZ</td>
+            <td width="40%">
+              <TYPE.Body>Ticker</TYPE.Body>
+            </td>
+            <td width="60%">
+              <TYPE.Body>XYZ</TYPE.Body>
+            </td>
           </tr>
         </tbody>
       </StyledTable>

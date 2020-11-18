@@ -4,7 +4,7 @@ export interface RocketData {
   totalEth?: string;
   uniswapPrice?: string;
   website: string;
-  date: number;
+  date: string;
 }
 
 export interface Rocket {
@@ -22,13 +22,13 @@ export const rockets: Rocket[] = [
         title: 'Project Name',
         ticker: 'Ticker',
         website: 'https://googl.co',
-        date: new Date().getTime()
+        date: '01/02/2021'
       },
       {
         title: 'Project Name',
         ticker: 'Ticker',
         website: 'https://googl.co',
-        date: new Date().getTime()
+        date: '01/03/2021'
       }
     ]
   },
@@ -42,14 +42,14 @@ export const rockets: Rocket[] = [
         ticker: 'Ticker',
         website: 'https://googl.co',
         totalEth: '135 ETH Deposited',
-        date: new Date().getTime()
+        date: '01/04/2021'
       },
       {
         title: 'Project Name',
         ticker: 'Ticker',
         website: 'https://googl.co',
         totalEth: '135 ETH Deposited',
-        date: new Date().getTime()
+        date: '01/05/2021'
       }
     ]
   },
@@ -62,14 +62,14 @@ export const rockets: Rocket[] = [
         ticker: 'Ticker',
         website: 'https://googl.co',
         uniswapPrice: 'Uniswap Price: XXX',
-        date: new Date().getTime()
+        date: '01/06/2021'
       },
       {
         title: 'Project Name',
         ticker: 'Ticker',
         website: 'https://googl.co',
         uniswapPrice: 'Uniswap Price: XXX',
-        date: new Date().getTime()
+        date: '01/07/2021'
       }
     ]
   }
