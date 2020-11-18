@@ -67,29 +67,20 @@ export const Countdown = ({ date }: Props) => {
         <TYPE.Small>DAYS</TYPE.Small>
       </TimeSection>
       <TimeSection>
-        <Time>:</Time>
-      </TimeSection>
-      <TimeSection>
         <Time>
-          <TYPE.Body>{state.hours || '00'}</TYPE.Body>
+          <TYPE.Header>{state.hours || '00'}</TYPE.Header>
         </Time>
         <TYPE.Small>HRS</TYPE.Small>
       </TimeSection>
       <TimeSection>
-        <Time>:</Time>
-      </TimeSection>
-      <TimeSection>
         <Time>
-          <TYPE.Body>{state.mins || '00'}</TYPE.Body>
+          <TYPE.Header>{state.mins || '00'}</TYPE.Header>
         </Time>
         <TYPE.Small>MINS</TYPE.Small>
       </TimeSection>
       <TimeSection>
-        <Time>:</Time>
-      </TimeSection>
-      <TimeSection>
         <Time>
-          <TYPE.Body>{state.secs || '00'}</TYPE.Body>
+          <TYPE.Header>{state.secs || '00'}</TYPE.Header>
         </Time>
         <TYPE.Small>SECS</TYPE.Small>
       </TimeSection>
