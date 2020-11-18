@@ -11,7 +11,6 @@ interface Props {}
 
 const StyledNavContainer = styled.nav`
   background-color: ${({ theme }) => theme.bg1};
-  margin-bottom: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

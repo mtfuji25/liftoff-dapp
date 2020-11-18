@@ -40,9 +40,9 @@ export const colors: Colors = {
   text5: '#2C2F36',
 
   bg1: '#232628',
-  bg2: '#2C2F36',
-  bg3: '#40444F',
-  bg4: '#565A69',
+  bg2: '#484E5A',
+  bg3: '#CFD6E2',
+  bg4: '#F9FAFB',
   bg5: '#B4B4B4',
 
   primary1: '#2A7CEA',
@@ -107,6 +107,13 @@ const TextWrapper = styled(Text)<{ color: keyof Colors }>`
   color: ${({ color, theme }) => (theme as any)[color]};
 `;
 
+export const StyledBody = styled.div<{ color: keyof Colors }>`
+  padding: 2rem;
+  background-color: ${({ color, theme }) => (theme as any)[color]};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  padding: 1rem 0.5rem;`};
+`;
+
 export const TYPE = {
   LargeHeader(props: TextProps) {
     return <TextWrapper fontWeight={700} fontSize="24px" {...props} />;
@@ -126,11 +133,20 @@ export const ThemedGlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap');
 html {
   color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.bg2};
 }
 body {
   margin: 0;
   padding: 0;
   font-family: 'Open Sans', sans-serif;
 }
+table {
+  width: 100%;
+  td, th {
+    text-align: left;
+    padding: 1rem;
+  }
+  }
+  tr:nth-child(odd) {
+    background-color: ${({ theme }) => theme.bg4}
+  }
 `;

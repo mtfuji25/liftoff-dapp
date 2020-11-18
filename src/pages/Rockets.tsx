@@ -1,14 +1,16 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Card } from '../components/card';
 import { Disclaimer } from '../components/disclaimer';
+import { Footer } from '../components/footer';
 import { Rocket, RocketData, rockets } from '../data';
-import { TYPE } from '../theme';
+import { StyledBody, TYPE } from '../theme';
 import { StyledContainer } from './Launchpad';
 
 interface Props {}
 
-const StyledRocketCard = styled(Card)`
+export const StyledRocketCard = styled(Card)`
   display: flex;
   flex-direction: row;
   color: ${({ theme }) => theme.black};
@@ -19,6 +21,10 @@ const StyledRocketCard = styled(Card)`
     flex-direction: column;
     padding: 0.2rem;
   `}
+`;
+
+const Header = styled.div`
+  padding: 1rem 0;
 `;
 
 const StyledRocket = styled.div`
@@ -38,34 +44,49 @@ const StyledRocketItem = styled.div`
 
 export const Rockets = (props: Props) => {
   return (
-    <StyledContainer>
-      {rockets.map((rocket: Rocket, index: number) => (
-        <StyledRocket key={index}>
-          <TYPE.Header>{rocket.title}</TYPE.Header>
-          <TYPE.Body>{rocket.subtitle}</TYPE.Body>
-
-          {rocket.data.map((rocketData: RocketData, index: number) => (
-            <Fragment key={index}>
-              <StyledRocketCard>
-                <StyledRocketItem>
-                  <TYPE.Body>{rocketData.title}</TYPE.Body>
-                </StyledRocketItem>
-                <StyledRocketItem>
-                  <TYPE.Body>{rocketData.ticker}</TYPE.Body>
-                </StyledRocketItem>
-                <StyledRocketItem>
-                  <TYPE.Body>{rocketData.website}</TYPE.Body>
-                </StyledRocketItem>
-                <StyledRocketItem>
-                  <TYPE.Body>{rocketData.date}</TYPE.Body>
-                </StyledRocketItem>
-              </StyledRocketCard>
-            </Fragment>
+    <>
+      <StyledBody color="bg3">
+        <StyledContainer sWidth={800}>
+          {rockets.map((rocket: Rocket, index: number) => (
+            <StyledRocket key={index}>
+              <Header>
+                <TYPE.Header color="bg1">{rocket.title}</TYPE.Header>
+                <TYPE.Body color="bg1">{rocket.subtitle}</TYPE.Body>
+              </Header>
+              {rocket.data.map(
+                (rocketData: RocketData, rocketDataIndex: number) => (
+                  <Fragment key={rocketDataIndex}>
+                    <StyledRocketCard>
+                      <StyledRocketItem>
+                        <Link to={`rockets/${index}`}>
+                          <TYPE.Body>{rocketData.title}</TYPE.Body>
+                        </Link>
+                      </StyledRocketItem>
+                      <StyledRocketItem>
+                        <TYPE.Body>{rocketData.ticker}</TYPE.Body>
+                      </StyledRocketItem>
+                      <StyledRocketItem>
+                        <TYPE.Body>{rocketData.website}</TYPE.Body>
+                      </StyledRocketItem>
+                      <StyledRocketItem>
+                        <TYPE.Body>{rocketData.date}</TYPE.Body>
+                      </StyledRocketItem>
+                    </StyledRocketCard>
+                  </Fragment>
+                )
+              )}
+            </StyledRocket>
           ))}
-        </StyledRocket>
-      ))}
 
-      <Disclaimer color="black" />
-    </StyledContainer>
+          <Disclaimer color="black" />
+        </StyledContainer>
+      </StyledBody>
+
+      <Footer
+        color="bg3"
+        noBackground={false}
+        text={'© 2020 Liquidity Dividends Protocol. All rights reserved.'}
+      />
+    </>
   );
 };

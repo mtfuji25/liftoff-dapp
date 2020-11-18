@@ -9,7 +9,7 @@ interface Props {
 const StyledDisclaimer = styled.div<{ color: string }>`
   color: ${({ color }) => color};
   text-align: center;
-  margin-top: 3rem;
+  margin-top: 1rem;
   width: 30rem;
   ${({ theme }) => theme.mediaWidth.upToSmall`
   width: 20rem;`}
