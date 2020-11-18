@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import CopyRight from '../components/copyright';
 import { Button } from '../components/button';
 import { Card } from '../components/card';
 import { Disclaimer } from '../components/disclaimer';
@@ -43,7 +44,7 @@ export const Launchpad = (props: Props) => {
             🕹Lunchpad for Developers
           </TYPE.LargeHeader>
           <TYPE.Header marginY="1.875rem" color="white">
-            How it works
+            How it works?
           </TYPE.Header>
           <TYPE.Body color="white" textAlign="center" lineHeight="1.5rem">
             1. Register your project with this form.
@@ -195,7 +196,9 @@ export const Launchpad = (props: Props) => {
 
             <StyledButton>Launch</StyledButton>
           </StyledForm>
-          <Disclaimer color="#ffffff" />
+          <Disclaimer color="#b4b4b4" />
+
+          <CopyRight mt="1.375rem" />
         </StyledContainer>
       </StyledBody>
       <Footer

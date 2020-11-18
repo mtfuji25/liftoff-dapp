@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import CopyRight from '../components/copyright';
 import { Card } from '../components/card';
 import { Countdown } from '../components/countdown';
 import { Disclaimer } from '../components/disclaimer';
@@ -85,6 +86,8 @@ export const Rockets = (props: Props) => {
           ))}
 
           <Disclaimer color="black" />
+
+          <CopyRight mt="1.375rem" />
         </StyledContainer>
       </StyledBody>
 

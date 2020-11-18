@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import CopyRight from '../components/copyright';
 import { Card } from '../components/card';
 import { Countdown } from '../components/countdown';
 import { Footer } from '../components/footer';
@@ -118,6 +118,7 @@ export const RocketDetail = (props: Props) => {
             <TokenStats />
           </StyledRocketCard>
         </StyledContainer>
+        <CopyRight mt="1.375rem" />
       </StyledBody>
       <Footer
         noBackground={true}
