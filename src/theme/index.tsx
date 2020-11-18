@@ -119,7 +119,7 @@ export const TYPE = {
     return <TextWrapper fontWeight={700} fontSize="24px" {...props} />;
   },
   Header(props: TextProps) {
-    return <TextWrapper fontWeight={500} fontSize="16px" {...props} />;
+    return <TextWrapper fontWeight={600} fontSize="16px" {...props} />;
   },
   Body(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize="14px" {...props} />;
@@ -130,7 +130,6 @@ export const TYPE = {
 };
 
 export const ThemedGlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap');
 html {
   color: ${({ theme }) => theme.text1};
 }
