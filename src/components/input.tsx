@@ -15,11 +15,12 @@ interface Props {
 
 const InputContainer = styled.input<{ error: any }>`
   border: 1px solid #dadada;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   height: 2rem;
   outline: none;
   padding: 0 1rem;
   margin: 0.5rem 0;
+  font-family: 'Open Sans', sans-serif;
 `;
 
 const Input = ({
