@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+
 import CopyRight from '../components/Copyright';
 import Card from '../components/Card';
 import Countdown from '../components/Countdown';
@@ -7,6 +8,7 @@ import Footer from '../components/Footer';
 import Ignite from '../components/Ignite';
 import Button from '../components/Button';
 import TokenStats from '../components/TokenStats';
+import Avatar from '../components/Avatar';
 
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 
@@ -77,7 +79,8 @@ const RocketDetail: FC = () => {
           <StyledRocketCard>
             <StyledRocketDetailHead>
               <AvatarWithTitle>
-                <TYPE.Header>[Project Name]</TYPE.Header>{' '}
+                <Avatar size="4.375rem" />
+                <TYPE.Header ml="2.25rem">[Project Name]</TYPE.Header>
                 <StyledButton>Spark</StyledButton>
               </AvatarWithTitle>
               <StyledCountdown>

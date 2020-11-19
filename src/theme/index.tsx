@@ -44,6 +44,7 @@ export const colors: Colors = {
   bg3: '#CFD6E2',
   bg4: '#F9FAFB',
   bg5: '#B4B4B4',
+  bg6: '#D8D8D8',
 
   border: '#dadada',
 

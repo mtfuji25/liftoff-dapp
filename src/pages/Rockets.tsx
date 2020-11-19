@@ -1,11 +1,14 @@
 import React, { Fragment, FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Box, Flex } from 'rebass';
+
 import CopyRight from '../components/Copyright';
 import Card from '../components/Card';
 import Countdown from '../components/Countdown';
 import Disclaimer from '../components/Disclaimer';
 import Footer from '../components/Footer';
+import Avatar from '../components/Avatar';
 import { Rocket, RocketData, rockets } from '../data';
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 
@@ -23,18 +26,6 @@ export const StyledRocketCard = styled(Card)`
   `}
 `;
 
-const Header = styled.div`
-  padding: 1rem 0;
-`;
-
-const StyledRocket = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  text-align: center;
-`;
-
 const StyledRocketItem = styled.div`
   ${({ theme }) => theme.mediaWidth.upToSmall`
   text-align: justify;
@@ -48,19 +39,32 @@ const Rockets: FC = () => {
       <StyledBody color="bg3">
         <StyledContainer sWidth={1144}>
           {rockets.map((rocket: Rocket, index: number) => (
-            <StyledRocket key={index}>
-              <Header>
-                <TYPE.LargeHeader color="bg1">{rocket.title}</TYPE.LargeHeader>
-                <TYPE.Body color="bg1">{rocket.subtitle}</TYPE.Body>
-              </Header>
+            <Box width="100%" key={index} mb="3.875rem">
+              <Box mb="1.25rem">
+                <TYPE.LargeHeader
+                  color="bg1"
+                  textAlign="center"
+                  fontWeight={600}
+                >
+                  {rocket.title}
+                </TYPE.LargeHeader>
+                <TYPE.Body color="bg1" textAlign="center">
+                  {rocket.subtitle}
+                </TYPE.Body>
+              </Box>
               {rocket.data.map(
                 (rocketData: RocketData, rocketDataIndex: number) => (
                   <Fragment key={rocketDataIndex}>
                     <StyledRocketCard>
                       <StyledRocketItem>
-                        <Link to={`rockets/${index}`}>
-                          <TYPE.Body>{rocketData.title}</TYPE.Body>
-                        </Link>
+                        <Flex alignItems="center">
+                          <Box mr="1.25rem">
+                            <Avatar size="3.25rem" />
+                          </Box>
+                          <Link to={`rockets/${index}`}>
+                            <TYPE.Body>{rocketData.title}</TYPE.Body>
+                          </Link>
+                        </Flex>
                       </StyledRocketItem>
                       <StyledRocketItem>
                         <TYPE.Body color="text3" fontWeight="400">
@@ -79,7 +83,7 @@ const Rockets: FC = () => {
                   </Fragment>
                 )
               )}
-            </StyledRocket>
+            </Box>
           ))}
 
           <Disclaimer color="black" />
