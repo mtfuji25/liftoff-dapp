@@ -23,6 +23,9 @@ export interface Colors {
   bg4: Color;
   bg5: Color;
 
+  // border
+  border: Color;
+
   //blues
   primary1: Color;
   primary2: Color;

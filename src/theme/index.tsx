@@ -45,6 +45,8 @@ export const colors: Colors = {
   bg4: '#F9FAFB',
   bg5: '#B4B4B4',
 
+  border: '#dadada',
+
   primary1: '#2A7CEA',
   primary2: '#FF8CC3',
   primary3: '#FF99C9',
@@ -111,7 +113,7 @@ export const StyledBody = styled.div<{ color: keyof Colors }>`
   padding: 2rem;
   background-color: ${({ color, theme }) => (theme as any)[color]};
   ${({ theme }) => theme.mediaWidth.upToSmall`
-  padding: 1rem 0.5rem;`};
+  padding: 1rem 1.25rem;`};
 `;
 
 export const TYPE = {
@@ -138,6 +140,11 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
 }
+
+* {
+  box-sizing: border-box;
+}
+ 
 table {
   width: 100%;
   td, th {

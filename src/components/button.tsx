@@ -6,8 +6,9 @@ export const Button = styled.button.attrs<
 >(({ warning, theme }) => ({
   backgroundColor: warning ? theme.blue1 : theme.primary1
 }))`
+  font-family: 'Open Sans', sans-serif;
   padding: 0.7rem 2rem 0.7rem 2rem;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   cursor: pointer;
   user-select: none;
   font-size: 1rem;

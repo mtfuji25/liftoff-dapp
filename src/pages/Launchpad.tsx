@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Box, Flex, Image } from 'rebass';
 import CopyRight from '../components/copyright';
 import { Button } from '../components/button';
 import { Card } from '../components/card';
@@ -8,8 +9,7 @@ import { Footer } from '../components/footer';
 import { Input } from '../components/input';
 import { Textarea } from '../components/textarea';
 import { StyledBody, TYPE } from '../theme';
-
-interface Props {}
+import IMG_UPLOAD from '../assets/upload.png';
 
 export const StyledContainer = styled.div<{ sWidth: keyof string }>`
   display: flex;
@@ -19,29 +19,25 @@ export const StyledContainer = styled.div<{ sWidth: keyof string }>`
   margin: auto;
 `;
 
-const StyledForm = styled.div`
-  width: 40rem;
-  margin-top: 3.5rem;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    width: 100%;
-  `}
-`;
-
-const StyledFormItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0.5rem 0;
-`;
-
 export const StyledButton = styled(Button)``;
 
-export const Launchpad = (props: Props) => {
+const AddFileButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.primary1};
+  border: ${({ theme }) => `1px solid ${theme.border}`};
+  background: none;
+  padding: 0.5rem 1rem;
+  margin: 0;
+`;
+
+export const Launchpad = () => {
   return (
     <>
       <StyledBody color="bg2">
         <StyledContainer sWidth={800}>
           <TYPE.LargeHeader color="white">
-            🕹Lunchpad for Developers
+            🕹Launchpad for Developers
           </TYPE.LargeHeader>
           <TYPE.Header marginY="1.875rem" color="white">
             How it works?
@@ -57,148 +53,184 @@ export const Launchpad = (props: Props) => {
             4. Liftoff will create your ERC20 token and your project's liftoff
             page.
           </TYPE.Body>
-          <TYPE.Body color="white" textAlign="center"></TYPE.Body>
+          <Box width="100%" mt="2.5rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+              <TYPE.Header color="black" mb="1.25rem">
+                Project Name
+              </TYPE.Header>
+              <Input
+                placeholder="Liquidity Dividends Protocol"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
+            </Card>
 
-          <StyledForm>
-            <Card marginBottom="1rem">
-              <StyledFormItem>
-                <TYPE.Header color="black">Project Name</TYPE.Header>
-                <Input
-                  placeholder="Liquidity Dividends Protocol"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
+            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+              <TYPE.Header color="black" mb="1.25rem">
+                Token ticker
+              </TYPE.Header>
+              <Input
+                placeholder="XYZ"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
             </Card>
-            <Card marginBottom="1rem">
-              <StyledFormItem>
-                <TYPE.Header color="black">Token ticker</TYPE.Header>
-                <Input
-                  placeholder="XYZ"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
+
+            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+              <TYPE.Header color="black" mb="1.25rem">
+                Project Description
+              </TYPE.Header>
+              <Textarea placeholder="Text" />
             </Card>
-            <Card marginBottom="1rem">
-              <StyledFormItem>
-                <TYPE.Header color="black">Project Description</TYPE.Header>
-                <Textarea placeholder="Text" />
-              </StyledFormItem>
-            </Card>
-            <Card marginBottom="1rem">
-              <StyledFormItem>
-                <TYPE.Header color="black">Website Link</TYPE.Header>
-                <Input
-                  placeholder="https://website.com"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
-            </Card>
-            <Card marginBottom="1rem">
-              <StyledFormItem>
-                <TYPE.Header color="black">dApp Link</TYPE.Header>
-                <Input
-                  placeholder="https://website.com/dapp"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
-            </Card>
-            <Card marginBottom="1rem">
-              <StyledFormItem>
-                <TYPE.Header color="black">Whitepaper Link</TYPE.Header>
-                <Input
-                  placeholder="https://website.com/whitepaper.pdf"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
-            </Card>
-            <Card marginBottom="1rem">
-              <TYPE.Header color="black">Social Media Links</TYPE.Header>
-              <StyledFormItem>
-                <TYPE.Body color="black">Discord</TYPE.Body>
-                <Input
-                  placeholder="https://discord.gg/"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
-              <StyledFormItem>
-                <TYPE.Body color="black">Telegram</TYPE.Body>
-                <Input
-                  placeholder="https://t.me/"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
-              <StyledFormItem>
-                <TYPE.Body color="black">Twitter</TYPE.Body>
-                <Input
-                  placeholder="https://twitter.com/"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
-              <StyledFormItem>
-                <TYPE.Body color="black">Facebook</TYPE.Body>
-                <Input
-                  placeholder="https://facebook.com/"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
-            </Card>
-            <Card marginBottom="1rem">
-              <StyledFormItem>
-                <TYPE.Header color="black">
-                  LIFTOFF Launch Date & Time
+
+            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+              <Flex alignItems="center" mb="1.25rem">
+                <TYPE.Header color="black" mr=".875rem">
+                  Logo
                 </TYPE.Header>
-                <Input
-                  placeholder="XYZ"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
-              </StyledFormItem>
+                <TYPE.Body color="black">
+                  (Image format: png, jpg, svg)
+                </TYPE.Body>
+              </Flex>
+
+              <AddFileButton>
+                <Image src={IMG_UPLOAD}></Image>
+                <TYPE.Body ml="1rem">Add file</TYPE.Body>
+              </AddFileButton>
+            </Card>
+
+            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+              <Flex alignItems="center" mb="1.25rem">
+                <TYPE.Header color="black" mr=".875rem">
+                  Open Graph Image
+                </TYPE.Header>
+                <TYPE.Body color="black">
+                  (Image size: 1200 x 627 pixels)
+                </TYPE.Body>
+              </Flex>
+
+              <AddFileButton>
+                <Image src={IMG_UPLOAD}></Image>
+                <TYPE.Body ml="1rem">Add file</TYPE.Body>
+              </AddFileButton>
+            </Card>
+
+            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+              <TYPE.Header color="black" mb="1.25rem">
+                Website Link
+              </TYPE.Header>
+              <Input
+                placeholder="https://website.com"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
+            </Card>
+
+            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+              <TYPE.Header color="black" mb="1.25rem">
+                dApp Link
+              </TYPE.Header>
+              <Input
+                placeholder="https://website.com/dapp"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
+            </Card>
+
+            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+              <TYPE.Header color="black" mb="1.25rem">
+                Whitepaper Link
+              </TYPE.Header>
+              <Input
+                placeholder="https://website.com/whitepaper.pdf"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
+            </Card>
+
+            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+              <TYPE.Header color="black" mb="1.25rem">
+                Social Media Links
+              </TYPE.Header>
+              <TYPE.Body color="black" mb="0.5rem">
+                Discord
+              </TYPE.Body>
+              <Input
+                placeholder="https://discord.gg/"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
+              <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                Telegram
+              </TYPE.Body>
+              <Input
+                placeholder="https://t.me/"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
+              <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                Twitter
+              </TYPE.Body>
+              <Input
+                placeholder="https://twitter.com/"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
+              <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                Facebook
+              </TYPE.Body>
+              <Input
+                placeholder="https://facebook.com/"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
+            </Card>
+
+            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+              <TYPE.Header color="black" mb="1.25rem">
+                LIFTOFF Launch Date & Time
+              </TYPE.Header>
+              <Input
+                placeholder="XYZ"
+                type="text"
+                hasError=""
+                isTouched=""
+                disabled={false}
+                onChange={(e: any) => {}}
+              />
             </Card>
 
             <StyledButton>Launch</StyledButton>
-          </StyledForm>
-          <Disclaimer color="#b4b4b4" />
-
-          <CopyRight mt="1.375rem" />
+            <Disclaimer color="#b4b4b4" />
+            <CopyRight mt="1.375rem" />
+          </Box>
         </StyledContainer>
       </StyledBody>
       <Footer

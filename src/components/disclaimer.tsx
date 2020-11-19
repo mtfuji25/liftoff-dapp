@@ -9,10 +9,10 @@ interface Props {
 const StyledDisclaimer = styled.div<{ color: string }>`
   color: ${({ color }) => color};
   text-align: center;
+  width: 100%;
+  max-width: 644px;
+  margin: auto;
   margin-top: 4rem;
-  width: 30rem;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-  width: 20rem;`}
 `;
 
 export const Disclaimer = (props: Props) => (

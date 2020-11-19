@@ -14,13 +14,13 @@ interface Props {
 }
 
 const InputContainer = styled.input<{ error: any }>`
+  font-family: 'Open Sans', sans-serif;
   border: 1px solid #dadada;
   border-radius: 5px;
-  height: 2rem;
+  height: 2.375rem;
   outline: none;
   padding: 0 1rem;
-  margin: 0.5rem 0;
-  font-family: 'Open Sans', sans-serif;
+  width: 100%;
 `;
 
 const Input = ({
