@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StyledButton } from '../pages/Launchpad';
 import { StyledTable } from '../pages/RocketDetail';
+import Button from './Button';
 import { TYPE } from '../theme';
 
 const FORM = styled.form`
@@ -12,7 +12,9 @@ const FORM = styled.form`
   }
 `;
 
-export const Ignite = () => {
+const StyledButton = styled(Button)``;
+
+const Ignite = () => {
   return (
     <>
       <TYPE.Header>Ignite</TYPE.Header>
@@ -37,3 +39,5 @@ export const Ignite = () => {
     </>
   );
 };
+
+export default Ignite;

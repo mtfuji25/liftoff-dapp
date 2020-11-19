@@ -15,7 +15,7 @@ const StyledDisclaimer = styled.div<{ color: string }>`
   margin-top: 4rem;
 `;
 
-export const Disclaimer = (props: Props) => (
+const Disclaimer = (props: Props) => (
   <StyledDisclaimer color={props.color}>
     <TYPE.Header fontWeight={400}>
       LIFTOFF is an autonomous launchpad that anyone can use. Similar to
@@ -24,3 +24,5 @@ export const Disclaimer = (props: Props) => (
     </TYPE.Header>
   </StyledDisclaimer>
 );
+
+export default Disclaimer;

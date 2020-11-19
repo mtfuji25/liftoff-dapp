@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import { StyledButton } from '../pages/Launchpad';
+import Button from './Button';
 import { StyledTable } from '../pages/RocketDetail';
 import { TYPE } from '../theme';
 
@@ -16,7 +16,9 @@ const CTA = styled.div`
   `}
 `;
 
-export const TokenStats = () => {
+const StyledButton = styled(Button)``;
+
+const TokenStats: FC = () => {
   return (
     <>
       <TYPE.Header>Token Stats</TYPE.Header>
@@ -43,3 +45,5 @@ export const TokenStats = () => {
     </>
   );
 };
+
+export default TokenStats;

@@ -1,16 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import CopyRight from '../components/copyright';
-import { Card } from '../components/card';
-import { Countdown } from '../components/countdown';
-import { Disclaimer } from '../components/disclaimer';
-import { Footer } from '../components/footer';
+import CopyRight from '../components/Copyright';
+import Card from '../components/Card';
+import Countdown from '../components/Countdown';
+import Disclaimer from '../components/Disclaimer';
+import Footer from '../components/Footer';
 import { Rocket, RocketData, rockets } from '../data';
-import { StyledBody, TYPE } from '../theme';
-import { StyledContainer } from './Launchpad';
-
-interface Props {}
+import { StyledBody, StyledContainer, TYPE } from '../theme';
 
 export const StyledRocketCard = styled(Card)`
   display: flex;
@@ -45,15 +42,15 @@ const StyledRocketItem = styled.div`
 `}
 `;
 
-export const Rockets = (props: Props) => {
+const Rockets: FC = () => {
   return (
     <>
       <StyledBody color="bg3">
-        <StyledContainer sWidth={800}>
+        <StyledContainer sWidth={1144}>
           {rockets.map((rocket: Rocket, index: number) => (
             <StyledRocket key={index}>
               <Header>
-                <TYPE.Header color="bg1">{rocket.title}</TYPE.Header>
+                <TYPE.LargeHeader color="bg1">{rocket.title}</TYPE.LargeHeader>
                 <TYPE.Body color="bg1">{rocket.subtitle}</TYPE.Body>
               </Header>
               {rocket.data.map(
@@ -99,3 +96,5 @@ export const Rockets = (props: Props) => {
     </>
   );
 };
+
+export default Rockets;

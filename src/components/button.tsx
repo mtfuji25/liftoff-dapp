@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Button = styled.button.attrs<
+const Button = styled.button.attrs<
   { warning: boolean },
   { backgroundColor: string }
 >(({ warning, theme }) => ({
@@ -17,3 +17,5 @@ export const Button = styled.button.attrs<
   background-color: ${({ backgroundColor }) => backgroundColor};
   color: ${({ theme }) => theme.white};
 `;
+
+export default Button;

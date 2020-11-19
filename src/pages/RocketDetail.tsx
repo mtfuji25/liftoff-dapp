@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import CopyRight from '../components/copyright';
-import { Card } from '../components/card';
-import { Countdown } from '../components/countdown';
-import { Footer } from '../components/footer';
-import { Ignite } from '../components/ignite';
-import { TokenStats } from '../components/token_stats';
-import { StyledBody, TYPE } from '../theme';
-import { StyledContainer, StyledButton } from './Launchpad';
+import CopyRight from '../components/Copyright';
+import Card from '../components/Card';
+import Countdown from '../components/Countdown';
+import Footer from '../components/Footer';
+import Ignite from '../components/Ignite';
+import Button from '../components/Button';
+import TokenStats from '../components/TokenStats';
 
-interface Props {}
+import { StyledBody, StyledContainer, TYPE } from '../theme';
+
+const StyledButton = styled(Button)``;
 
 const StyledRocketCard = styled(Card)`
   display: flex;
@@ -68,7 +69,7 @@ export const StyledTable = styled.table`
   padding: 2rem 0;
 `;
 
-export const RocketDetail = (props: Props) => {
+const RocketDetail: FC = () => {
   return (
     <>
       <StyledBody color="bg3">
@@ -128,3 +129,5 @@ export const RocketDetail = (props: Props) => {
     </>
   );
 };
+
+export default RocketDetail;

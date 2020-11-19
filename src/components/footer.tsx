@@ -20,10 +20,12 @@ const StyledFooter = styled.footer<{
   color: ${({ theme }) => theme.bg5};
 `;
 
-export const Footer = (props: Props) => {
+const Footer = (props: Props) => {
   return (
     <StyledFooter {...props}>
       {!props.noBackground && <Image src={FooterImage} marginTop="-20%" />}
     </StyledFooter>
   );
 };
+
+export default Footer;

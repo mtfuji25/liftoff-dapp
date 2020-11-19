@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-
-import { Error } from './text';
+import { TYPE } from '../theme';
 
 interface Props {
   type: string;
@@ -41,17 +39,9 @@ const Input = ({
         disabled={disabled}
         onChange={onChange}
       />
-      {error && <Error>{error}</Error>}
+      {error && <TYPE.Body color="red2">{error}</TYPE.Body>}
     </>
   );
 };
 
-Input.propTypes = {
-  value: PropTypes.string,
-  placeholder: PropTypes.string,
-  type: PropTypes.string,
-  onChange: PropTypes.func,
-  disabled: PropTypes.bool
-};
-
-export { Input };
+export default Input;

@@ -116,6 +116,14 @@ export const StyledBody = styled.div<{ color: keyof Colors }>`
   padding: 1rem 1.25rem;`};
 `;
 
+export const StyledContainer = styled.div<{ sWidth: keyof string }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: ${({ sWidth }) => `${sWidth}px`};
+  margin: auto;
+`;
+
 export const TYPE = {
   LargeHeader(props: TextProps) {
     return <TextWrapper fontWeight={700} fontSize="24px" {...props} />;

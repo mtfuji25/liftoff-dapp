@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable import/no-anonymous-default-export */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TYPE } from '../theme';
@@ -28,7 +26,7 @@ const Time = styled.div`
   padding: 0 1rem;
 `;
 
-export const Countdown = ({ date }: Props) => {
+const Countdown = ({ date }: Props) => {
   const [countdownDate] = useState(new Date(date).getTime());
   const [state, setState] = useState({
     days: 0,
@@ -87,3 +85,5 @@ export const Countdown = ({ date }: Props) => {
     </CountdownWrapper>
   );
 };
+
+export default Countdown;

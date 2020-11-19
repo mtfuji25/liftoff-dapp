@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Button } from './button';
+import Button from './Button';
 import Logo from '../assets/logo.png';
 import Menu from '../assets/menu.svg';
 import Close from '../assets/close.svg';
@@ -85,7 +85,7 @@ const StyledMenu = styled.img`
 `};
 `;
 
-export const Header = (_props: Props) => {
+const Header = (_props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -113,3 +113,5 @@ export const Header = (_props: Props) => {
     </StyledNavContainer>
   );
 };
+
+export default Header;

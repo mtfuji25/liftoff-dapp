@@ -1,25 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Box, Flex, Image } from 'rebass';
-import CopyRight from '../components/copyright';
-import { Button } from '../components/button';
-import { Card } from '../components/card';
-import { Disclaimer } from '../components/disclaimer';
-import { Footer } from '../components/footer';
-import { Input } from '../components/input';
-import { Textarea } from '../components/textarea';
-import { StyledBody, TYPE } from '../theme';
+import CopyRight from '../components/Copyright';
+import Button from '../components/Button';
+import Card from '../components/Card';
+import Disclaimer from '../components/Disclaimer';
+import Footer from '../components/Footer';
+import Input from '../components/Input';
+import Textarea from '../components/Textarea';
+import { StyledBody, StyledContainer, TYPE } from '../theme';
 import IMG_UPLOAD from '../assets/upload.png';
 
-export const StyledContainer = styled.div<{ sWidth: keyof string }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: ${({ sWidth }) => `${sWidth}px`};
-  margin: auto;
-`;
-
-export const StyledButton = styled(Button)``;
+const StyledButton = styled(Button)``;
 
 const AddFileButton = styled(Button)`
   display: flex;
@@ -31,12 +23,12 @@ const AddFileButton = styled(Button)`
   margin: 0;
 `;
 
-export const Launchpad = () => {
+const Launchpad: FC = () => {
   return (
     <>
       <StyledBody color="bg2">
         <StyledContainer sWidth={800}>
-          <TYPE.LargeHeader color="white">
+          <TYPE.LargeHeader color="white" textAlign="center">
             🕹Launchpad for Developers
           </TYPE.LargeHeader>
           <TYPE.Header marginY="1.875rem" color="white">
@@ -68,7 +60,7 @@ export const Launchpad = () => {
               />
             </Card>
 
-            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 Token ticker
               </TYPE.Header>
@@ -82,14 +74,14 @@ export const Launchpad = () => {
               />
             </Card>
 
-            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 Project Description
               </TYPE.Header>
               <Textarea placeholder="Text" />
             </Card>
 
-            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <Flex alignItems="center" mb="1.25rem">
                 <TYPE.Header color="black" mr=".875rem">
                   Logo
@@ -105,7 +97,7 @@ export const Launchpad = () => {
               </AddFileButton>
             </Card>
 
-            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <Flex alignItems="center" mb="1.25rem">
                 <TYPE.Header color="black" mr=".875rem">
                   Open Graph Image
@@ -121,7 +113,7 @@ export const Launchpad = () => {
               </AddFileButton>
             </Card>
 
-            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 Website Link
               </TYPE.Header>
@@ -135,7 +127,7 @@ export const Launchpad = () => {
               />
             </Card>
 
-            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 dApp Link
               </TYPE.Header>
@@ -149,7 +141,7 @@ export const Launchpad = () => {
               />
             </Card>
 
-            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 Whitepaper Link
               </TYPE.Header>
@@ -163,7 +155,7 @@ export const Launchpad = () => {
               />
             </Card>
 
-            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 Social Media Links
               </TYPE.Header>
@@ -213,7 +205,7 @@ export const Launchpad = () => {
               />
             </Card>
 
-            <Card marginBottom="1rem" paddingX="1.875rem" paddingY="1.375rem">
+            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 LIFTOFF Launch Date & Time
               </TYPE.Header>
@@ -241,3 +233,5 @@ export const Launchpad = () => {
     </>
   );
 };
+
+export default Launchpad;
