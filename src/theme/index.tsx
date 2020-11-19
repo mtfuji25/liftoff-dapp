@@ -149,7 +149,12 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
 }
-
+input, textarea {
+  border: ${({ theme }) => `1px solid ${theme.border}`} !important;
+  color: ${({ theme }) => theme.text5} !important;
+  font-family: 'Open Sans', sans-serif;
+  border-radius: 5px;
+}
 * {
   box-sizing: border-box;
 }

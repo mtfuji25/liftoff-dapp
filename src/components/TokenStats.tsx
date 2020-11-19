@@ -35,7 +35,7 @@ const TokenStats: FC = () => {
         </tbody>
       </StyledTable>
 
-      <TYPE.Body>Claim Token Rewards</TYPE.Body>
+      <TYPE.Header>Claim Token Rewards</TYPE.Header>
       <CTA>
         <StyledButton>Claim</StyledButton>
         <TYPE.Small color="primary1">

@@ -50,28 +50,14 @@ const Launchpad: FC = () => {
               <TYPE.Header color="black" mb="1.25rem">
                 Project Name
               </TYPE.Header>
-              <Input
-                placeholder="Liquidity Dividends Protocol"
-                type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
-              />
+              <Input placeholder="Liquidity Dividends Protocol" type="text" />
             </Card>
 
             <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 Token ticker
               </TYPE.Header>
-              <Input
-                placeholder="XYZ"
-                type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
-              />
+              <Input placeholder="XYZ" type="text" />
             </Card>
 
             <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -117,28 +103,14 @@ const Launchpad: FC = () => {
               <TYPE.Header color="black" mb="1.25rem">
                 Website Link
               </TYPE.Header>
-              <Input
-                placeholder="https://website.com"
-                type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
-              />
+              <Input placeholder="https://website.com" type="text" />
             </Card>
 
             <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 dApp Link
               </TYPE.Header>
-              <Input
-                placeholder="https://website.com/dapp"
-                type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
-              />
+              <Input placeholder="https://website.com/dapp" type="text" />
             </Card>
 
             <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -148,10 +120,6 @@ const Launchpad: FC = () => {
               <Input
                 placeholder="https://website.com/whitepaper.pdf"
                 type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
               />
             </Card>
 
@@ -162,61 +130,26 @@ const Launchpad: FC = () => {
               <TYPE.Body color="black" mb="0.5rem">
                 Discord
               </TYPE.Body>
-              <Input
-                placeholder="https://discord.gg/"
-                type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
-              />
+              <Input placeholder="https://discord.gg/" type="text" />
               <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                 Telegram
               </TYPE.Body>
-              <Input
-                placeholder="https://t.me/"
-                type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
-              />
+              <Input placeholder="https://t.me/" type="text" />
               <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                 Twitter
               </TYPE.Body>
-              <Input
-                placeholder="https://twitter.com/"
-                type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
-              />
+              <Input placeholder="https://twitter.com/" type="text" />
               <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                 Facebook
               </TYPE.Body>
-              <Input
-                placeholder="https://facebook.com/"
-                type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
-              />
+              <Input placeholder="https://facebook.com/" type="text" />
             </Card>
 
             <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
               <TYPE.Header color="black" mb="1.25rem">
                 LIFTOFF Launch Date & Time
               </TYPE.Header>
-              <Input
-                placeholder="XYZ"
-                type="text"
-                hasError=""
-                isTouched=""
-                disabled={false}
-                onChange={(e: any) => {}}
-              />
+              <Input placeholder="XYZ" type="text" />
             </Card>
 
             <StyledButton>Launch</StyledButton>

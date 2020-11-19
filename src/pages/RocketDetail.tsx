@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import { Flex } from 'rebass';
 
 import CopyRight from '../components/Copyright';
 import Card from '../components/Card';
@@ -12,7 +13,9 @@ import Avatar from '../components/Avatar';
 
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 
-const StyledButton = styled(Button)``;
+const StyledButton = styled(Button)`
+  height: fit-content;
+`;
 
 const StyledRocketCard = styled(Card)`
   display: flex;
@@ -22,7 +25,7 @@ const StyledRocketCard = styled(Card)`
   margin: 0.5rem 0 !important;
   justify-content: space-between;
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 2rem;
+    padding: 2rem 1rem;
   `}
 `;
 
@@ -34,17 +37,7 @@ const StyledRocketDetailHead = styled.div`
     flex-direction: column;
   `};
 `;
-const AvatarWithTitle = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    justify-content: space-between;
-  `};
-  button {
-    margin-left: 2rem;
-  }
-`;
+
 const StyledCountdown = styled.div`
   display: flex;
   align-items: center;
@@ -78,11 +71,18 @@ const RocketDetail: FC = () => {
         <StyledContainer sWidth={1000}>
           <StyledRocketCard>
             <StyledRocketDetailHead>
-              <AvatarWithTitle>
-                <Avatar size="4.375rem" />
-                <TYPE.Header ml="2.25rem">[Project Name]</TYPE.Header>
+              <Flex
+                flexDirection={['column', 'row']}
+                alignItems={['flex-start', 'center']}
+              >
+                <Flex alignItems="center" mr={['0', '1rem']} mb={['1rem', '0']}>
+                  <Avatar size="4.375rem" />
+                  <TYPE.Header ml="2.25rem">[Project Name]</TYPE.Header>
+                </Flex>
+
                 <StyledButton>Spark</StyledButton>
-              </AvatarWithTitle>
+              </Flex>
+
               <StyledCountdown>
                 <span>Launch in:</span>
                 <Countdown date="01/01/2021" />

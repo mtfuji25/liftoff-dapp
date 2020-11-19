@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { StyledTable } from '../pages/RocketDetail';
 import Button from './Button';
+import Input from './Input';
 import { TYPE } from '../theme';
 
 const FORM = styled.form`
   display: flex;
+  padding: 1rem 0;
   align-items: center;
   button {
     margin: 0 1rem;
@@ -33,7 +36,8 @@ const Ignite = () => {
 
       <TYPE.Header>Amount of ETH to ignite</TYPE.Header>
       <FORM>
-        <StyledButton>Claim</StyledButton>
+        <Input placeholder="0" type="text" width="30%" />
+        <StyledButton>Ignite</StyledButton>
         <TYPE.Small color="primary1">Your ETH ignited: 1.26 ETH</TYPE.Small>
       </FORM>
     </>

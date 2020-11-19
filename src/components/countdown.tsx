@@ -35,6 +35,7 @@ const Countdown = ({ date }: Props) => {
     secs: 0
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setNewTime = () => {
     if (countdownDate) {
       const currentTime = new Date().getTime();
