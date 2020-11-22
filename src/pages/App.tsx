@@ -1,9 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Header from 'components/Header';
 import Launchpad from './Launchpad';
 import RocketDetail from './RocketDetail';
 import Rockets from './Rockets';
+import Header from '../components/Header';
 
 function App() {
   return (
