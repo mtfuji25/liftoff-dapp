@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { StyledTable } from '../pages/RocketDetail';
-import Button from './button';
-import Input from './input';
+import Button from './Button';
+import Input from './Input';
 import { TYPE } from '../theme';
 
 const FORM = styled.form`

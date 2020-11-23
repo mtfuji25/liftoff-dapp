@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Box, Flex } from 'rebass';
 
-import CopyRight from '../components/copyright';
-import Card from '../components/card';
-import Countdown from '../components/countdown';
-import Disclaimer from '../components/disclaimer';
-import Footer from '../components/footer';
-import Avatar from '../components/avatar';
+import CopyRight from '../components/Copyright';
+import Card from '../components/Card';
+import Countdown from '../components/Countdown';
+import Disclaimer from '../components/Disclaimer';
+import Footer from '../components/Footer';
+import Avatar from '../components/Avatar';
 import { Rocket, RocketData, rockets } from '../data';
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 
