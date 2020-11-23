@@ -1,7 +1,7 @@
-import React, { Fragment, FC } from 'react';
+import React, { Fragment, FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Box, Flex } from 'rebass';
+import { Box, Flex, Button } from 'rebass';
 
 import CopyRight from '../components/Copyright';
 import Card from '../components/Card';
@@ -33,11 +33,46 @@ const StyledRocketItem = styled.div`
 `}
 `;
 
+const TopDisClaimer = styled(Box)`
+  width: 100%;
+  border: ${({ theme }) => `1px solid ${theme.red3}`};
+  padding: 1.625rem 1.7rem;
+  border-radius: 10px;
+  margin-bottom: 4rem !important;
+`;
+
+const ConfirmBtn = styled(Button)`
+  border: none;
+  outline: none;
+  background: ${({ theme }) => theme.red3};
+  color: white;
+  cursor: pointer;
+`;
+
 const Rockets: FC = () => {
+  const [confirmed, setConfirmed] = useState(false);
+
+  const onClickConfirm = () => {
+    setConfirmed(true);
+  };
+
   return (
     <>
       <StyledBody color="bg3">
         <StyledContainer sWidth={1144}>
+          {!confirmed && (
+            <TopDisClaimer>
+              <TYPE.Body color="red3">
+                LIFTOFF is an autonomous launchpad that anyone can use. Similar
+                to Uniswap, anyone can create a token with any name, including
+                fake versions of existing tokens. Please do your own research
+                before joining a project.
+              </TYPE.Body>
+              <Flex justifyContent="flex-end" marginTop="1rem">
+                <ConfirmBtn onClick={onClickConfirm}>I understand</ConfirmBtn>
+              </Flex>
+            </TopDisClaimer>
+          )}
           {rockets.map((rocket: Rocket, index: number) => (
             <Box width="100%" key={index} mb="3.875rem">
               <Box mb="1.25rem">
