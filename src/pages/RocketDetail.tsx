@@ -2,14 +2,14 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Flex } from 'rebass';
 
-import CopyRight from '../components/Copyright';
-import Card from '../components/Card';
-import Countdown from '../components/Countdown';
-import Footer from '../components/Footer';
-import Ignite from '../components/Ignite';
-import Button from '../components/Button';
+import CopyRight from '../components/copyright';
+import Card from '../components/card';
+import Countdown from '../components/countdown';
+import Footer from '../components/footer';
+import Ignite from '../components/ignite';
+import Button from '../components/button';
 import TokenStats from '../components/TokenStats';
-import Avatar from '../components/Avatar';
+import Avatar from '../components/avatar';
 
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 

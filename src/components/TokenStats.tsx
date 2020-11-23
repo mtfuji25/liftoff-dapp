@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import Button from './Button';
+import Button from './button';
 import { StyledTable } from '../pages/RocketDetail';
 import { TYPE } from '../theme';
 

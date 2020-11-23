@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Box, Flex, Image } from 'rebass';
-import CopyRight from '../components/Copyright';
-import Button from '../components/Button';
-import Card from '../components/Card';
-import Disclaimer from '../components/Disclaimer';
-import Footer from '../components/Footer';
-import Input from '../components/Input';
-import Textarea from '../components/Textarea';
+import CopyRight from '../components/copyright';
+import Button from '../components/button';
+import Card from '../components/card';
+import Disclaimer from '../components/disclaimer';
+import Footer from '../components/footer';
+import Input from '../components/input';
+import Textarea from '../components/textarea';
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 import IMG_UPLOAD from '../assets/upload.png';
 
