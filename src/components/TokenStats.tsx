@@ -7,7 +7,6 @@ import { TYPE } from '../theme';
 const CTA = styled.div`
   display: flex;
   align-items: center;
-  padding: 1rem 0;
   button {
     margin-right: 1rem;
   }
