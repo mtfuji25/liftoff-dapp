@@ -1,6 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
 import { Box, Flex, Image } from 'rebass';
+import fleekStorage from '@fleekhq/fleek-storage-js';
+
 import CopyRight from '../components/Copyright';
 import Button from '../components/Button';
 import Card from '../components/Card';
@@ -11,19 +14,105 @@ import Textarea from '../components/Textarea';
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 import IMG_UPLOAD from '../assets/upload.png';
 
-const StyledButton = styled(Button)``;
+const StyledButton = styled(Button)`
+  cursor: pointer !important;
+`;
 
-const AddFileButton = styled(Button)`
+const AddFileButton = styled.label`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.primary1};
   border: ${({ theme }) => `1px solid ${theme.border}`};
+  border-radius: 5px;
   background: none;
   padding: 0.5rem 1rem;
-  margin: 0;
+  width: fit-content;
+
+  > input {
+    width: 0;
+    height: 0;
+    padding: 0;
+  }
 `;
 
+interface ILaunchPadInput {
+  projectName: string;
+  tokenTicker: string;
+  projectDescription: string;
+  websiteLink: string;
+  discord: string;
+  telegram: string;
+  twitter: string;
+  facebook: string;
+  logo: FileList;
+  openGraph: FileList;
+}
+
 const Launchpad: FC = () => {
+  const { register, handleSubmit, errors } = useForm();
+  const [loading, setLoading] = useState(false);
+
+  // console.log(errors);
+
+  const convertFormToConfig = (data: ILaunchPadInput) => {
+    const config: {
+      [key: string]: string;
+    } = {};
+    (Object.keys(data) as Array<keyof typeof data>).forEach((key) => {
+      if (key === 'logo' || key === 'openGraph') {
+        return;
+      }
+      config[key] = data[key];
+    });
+
+    return config;
+  };
+
+  const onSubmit = async (data: ILaunchPadInput) => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+
+    const baseKey = `liftoff-rockets/${data.tokenTicker}`;
+
+    // upload images
+    const logo = await fleekStorage.upload({
+      apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+      apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+      key: `${baseKey}/logo.png`,
+      data: data.logo[0]
+    });
+
+    console.log(logo);
+
+    const openGraph = await fleekStorage.upload({
+      apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+      apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+      key: `${baseKey}/open-graph.png`,
+      data: data.logo[0]
+    });
+
+    console.log(openGraph);
+
+    // upload json
+    const configJson = JSON.stringify(convertFormToConfig(data));
+    const configBlob = new Blob([new TextEncoder().encode(configJson)], {
+      type: 'application/json;charset=utf-8'
+    });
+
+    const config = await fleekStorage.upload({
+      apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+      apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+      key: `${baseKey}/config.json`,
+      data: configBlob
+    });
+
+    console.log(config);
+
+    setLoading(false);
+  };
+
   return (
     <>
       <StyledBody color="bg2">
@@ -46,113 +135,189 @@ const Launchpad: FC = () => {
             page.
           </TYPE.Body>
           <Box width="100%" mt="2.5rem">
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <TYPE.Header color="black" mb="1.25rem">
-                Project Name
-              </TYPE.Header>
-              <Input placeholder="Liquidity Dividends Protocol" type="text" />
-            </Card>
-
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <TYPE.Header color="black" mb="1.25rem">
-                Token ticker
-              </TYPE.Header>
-              <Input placeholder="XYZ" type="text" />
-            </Card>
-
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <TYPE.Header color="black" mb="1.25rem">
-                Project Description
-              </TYPE.Header>
-              <Textarea placeholder="Text" />
-            </Card>
-
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <Flex alignItems="center" mb="1.25rem">
-                <TYPE.Header color="black" mr=".875rem">
-                  Logo
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <TYPE.Header color="black" mb="1.25rem">
+                  Project Name
                 </TYPE.Header>
-                <TYPE.Body color="black">
-                  (Image format: png, jpg, svg)
-                </TYPE.Body>
-              </Flex>
+                <Input
+                  name="projectName"
+                  placeholder="Liquidity Dividends Protocol"
+                  type="text"
+                  required
+                  ref={register}
+                />
+              </Card>
 
-              <AddFileButton>
-                <Image src={IMG_UPLOAD}></Image>
-                <TYPE.Body ml="1rem">Add file</TYPE.Body>
-              </AddFileButton>
-            </Card>
-
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <Flex alignItems="center" mb="1.25rem">
-                <TYPE.Header color="black" mr=".875rem">
-                  Open Graph Image
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <TYPE.Header color="black" mb="1.25rem">
+                  Token ticker
                 </TYPE.Header>
-                <TYPE.Body color="black">
-                  (Image size: 1200 x 627 pixels)
+                <Input
+                  name="tokenTicker"
+                  placeholder="XYZ"
+                  type="text"
+                  ref={register}
+                  required
+                />
+              </Card>
+
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <TYPE.Header color="black" mb="1.25rem">
+                  Project Description
+                </TYPE.Header>
+                <Textarea
+                  name="projectDescription"
+                  placeholder="Text"
+                  ref={register}
+                  required
+                />
+              </Card>
+
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <Flex alignItems="center" mb="1.25rem">
+                  <TYPE.Header color="black" mr=".875rem">
+                    Logo
+                  </TYPE.Header>
+                  <TYPE.Body color="black">
+                    (Image format: png, jpg, svg)
+                  </TYPE.Body>
+                </Flex>
+
+                <AddFileButton>
+                  <Image src={IMG_UPLOAD}></Image>
+                  <TYPE.Body ml="1rem">Add file</TYPE.Body>
+                  <Input
+                    name="logo"
+                    type="file"
+                    ref={register}
+                    accept="image/x-png"
+                    required
+                  />
+                </AddFileButton>
+              </Card>
+
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <Flex alignItems="center" mb="1.25rem">
+                  <TYPE.Header color="black" mr=".875rem">
+                    Open Graph Image
+                  </TYPE.Header>
+                  <TYPE.Body color="black">
+                    (Image size: 1200 x 627 pixels)
+                  </TYPE.Body>
+                </Flex>
+
+                <AddFileButton>
+                  <Image src={IMG_UPLOAD}></Image>
+                  <TYPE.Body ml="1rem">Add file</TYPE.Body>
+                  <Input
+                    name="openGraph"
+                    type="file"
+                    ref={register}
+                    accept="image/x-png"
+                    required
+                  />
+                </AddFileButton>
+              </Card>
+
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <TYPE.Header color="black" mb="1.25rem">
+                  Website Link
+                </TYPE.Header>
+                <Input
+                  name="websiteLink"
+                  placeholder="https://website.com"
+                  type="text"
+                  ref={register}
+                  required
+                />
+              </Card>
+
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <TYPE.Header color="black" mb="1.25rem">
+                  dApp Link
+                </TYPE.Header>
+                <Input
+                  name="dappLink"
+                  placeholder="https://website.com/dapp"
+                  type="text"
+                  ref={register}
+                  required
+                />
+              </Card>
+
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <TYPE.Header color="black" mb="1.25rem">
+                  Whitepaper Link
+                </TYPE.Header>
+                <Input
+                  name="whitepaperLink"
+                  placeholder="https://website.com/whitepaper.pdf"
+                  type="text"
+                  ref={register}
+                  required
+                />
+              </Card>
+
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <TYPE.Header color="black" mb="1.25rem">
+                  Social Media Links
+                </TYPE.Header>
+                <TYPE.Body color="black" mb="0.5rem">
+                  Discord
                 </TYPE.Body>
-              </Flex>
+                <Input
+                  name="discord"
+                  placeholder="https://discord.gg/"
+                  type="text"
+                  ref={register}
+                />
 
-              <AddFileButton>
-                <Image src={IMG_UPLOAD}></Image>
-                <TYPE.Body ml="1rem">Add file</TYPE.Body>
-              </AddFileButton>
-            </Card>
+                <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                  Telegram
+                </TYPE.Body>
+                <Input
+                  name="telegram"
+                  placeholder="https://t.me/"
+                  type="text"
+                  ref={register}
+                />
 
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <TYPE.Header color="black" mb="1.25rem">
-                Website Link
-              </TYPE.Header>
-              <Input placeholder="https://website.com" type="text" />
-            </Card>
+                <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                  Twitter
+                </TYPE.Body>
+                <Input
+                  name="twitter"
+                  placeholder="https://twitter.com/"
+                  type="text"
+                  ref={register}
+                />
 
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <TYPE.Header color="black" mb="1.25rem">
-                dApp Link
-              </TYPE.Header>
-              <Input placeholder="https://website.com/dapp" type="text" />
-            </Card>
+                <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                  Facebook
+                </TYPE.Body>
+                <Input
+                  name="facebook"
+                  placeholder="https://facebook.com/"
+                  type="text"
+                  ref={register}
+                />
+              </Card>
 
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <TYPE.Header color="black" mb="1.25rem">
-                Whitepaper Link
-              </TYPE.Header>
-              <Input
-                placeholder="https://website.com/whitepaper.pdf"
-                type="text"
-              />
-            </Card>
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <TYPE.Header color="black" mb="1.25rem">
+                  LIFTOFF Launch Date & Time
+                </TYPE.Header>
+                <Input
+                  name="dateTime"
+                  placeholder="XYZ"
+                  type="text"
+                  ref={register}
+                />
+              </Card>
 
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <TYPE.Header color="black" mb="1.25rem">
-                Social Media Links
-              </TYPE.Header>
-              <TYPE.Body color="black" mb="0.5rem">
-                Discord
-              </TYPE.Body>
-              <Input placeholder="https://discord.gg/" type="text" />
-              <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                Telegram
-              </TYPE.Body>
-              <Input placeholder="https://t.me/" type="text" />
-              <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                Twitter
-              </TYPE.Body>
-              <Input placeholder="https://twitter.com/" type="text" />
-              <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                Facebook
-              </TYPE.Body>
-              <Input placeholder="https://facebook.com/" type="text" />
-            </Card>
-
-            <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
-              <TYPE.Header color="black" mb="1.25rem">
-                LIFTOFF Launch Date & Time
-              </TYPE.Header>
-              <Input placeholder="XYZ" type="text" />
-            </Card>
-
-            <StyledButton>Launch</StyledButton>
+              <StyledButton type="submit">Launch</StyledButton>
+            </form>
             <Disclaimer color="#b4b4b4" />
             <CopyRight mt="1.375rem" />
           </Box>

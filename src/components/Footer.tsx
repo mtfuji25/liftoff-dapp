@@ -15,6 +15,7 @@ const StyledFooter = styled.footer<{
   color: keyof Colors;
   noBackground: keyof boolean;
 }>`
+  z-index: -1;
   position: relative;
   background-color: ${({ color, theme }) => (theme as any)[color]};
   color: ${({ theme }) => theme.bg5};
