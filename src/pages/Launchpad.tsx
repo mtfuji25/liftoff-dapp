@@ -50,19 +50,26 @@ interface ILaunchPadInput {
 
 const Launchpad: FC = () => {
   const { register, handleSubmit, errors } = useForm();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // console.log(errors);
 
-  const convertFormToConfig = (data: ILaunchPadInput) => {
+  const convertFormToConfig = (
+    data: ILaunchPadInput,
+    logoUrl: string,
+    openGraphUrl: string
+  ) => {
     const config: {
       [key: string]: string;
     } = {};
     (Object.keys(data) as Array<keyof typeof data>).forEach((key) => {
-      if (key === 'logo' || key === 'openGraph') {
-        return;
+      if (key === 'logo') {
+        config[key] = logoUrl;
+      } else if (key === 'openGraph') {
+        config[key] = openGraphUrl;
+      } else {
+        config[key] = data[key];
       }
-      config[key] = data[key];
     });
 
     return config;
@@ -96,7 +103,9 @@ const Launchpad: FC = () => {
     console.log(openGraph);
 
     // upload json
-    const configJson = JSON.stringify(convertFormToConfig(data));
+    const configJson = JSON.stringify(
+      convertFormToConfig(data, logo.publicUrl, openGraph.publicUrl)
+    );
     const configBlob = new Blob([new TextEncoder().encode(configJson)], {
       type: 'application/json;charset=utf-8'
     });
@@ -144,8 +153,7 @@ const Launchpad: FC = () => {
                   name="projectName"
                   placeholder="Liquidity Dividends Protocol"
                   type="text"
-                  required
-                  ref={register}
+                  ref={register({ required: true })}
                 />
               </Card>
 
@@ -157,8 +165,7 @@ const Launchpad: FC = () => {
                   name="tokenTicker"
                   placeholder="XYZ"
                   type="text"
-                  ref={register}
-                  required
+                  ref={register({ required: true })}
                 />
               </Card>
 
@@ -169,8 +176,7 @@ const Launchpad: FC = () => {
                 <Textarea
                   name="projectDescription"
                   placeholder="Text"
-                  ref={register}
-                  required
+                  ref={register({ required: true })}
                 />
               </Card>
 
@@ -184,17 +190,16 @@ const Launchpad: FC = () => {
                   </TYPE.Body>
                 </Flex>
 
-                <AddFileButton>
+                {/* <AddFileButton>
                   <Image src={IMG_UPLOAD}></Image>
-                  <TYPE.Body ml="1rem">Add file</TYPE.Body>
-                  <Input
-                    name="logo"
-                    type="file"
-                    ref={register}
-                    accept="image/x-png"
-                    required
-                  />
-                </AddFileButton>
+                  <TYPE.Body ml="1rem">Add file</TYPE.Body> */}
+                <Input
+                  name="logo"
+                  type="file"
+                  accept="image/x-png"
+                  ref={register({ required: true })}
+                />
+                {/* </AddFileButton> */}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -207,17 +212,16 @@ const Launchpad: FC = () => {
                   </TYPE.Body>
                 </Flex>
 
-                <AddFileButton>
-                  <Image src={IMG_UPLOAD}></Image>
-                  <TYPE.Body ml="1rem">Add file</TYPE.Body>
-                  <Input
-                    name="openGraph"
-                    type="file"
-                    ref={register}
-                    accept="image/x-png"
-                    required
-                  />
-                </AddFileButton>
+                {/* <AddFileButton> */}
+                {/* <Image src={IMG_UPLOAD}></Image>
+                  <TYPE.Body ml="1rem">Add file</TYPE.Body> */}
+                <Input
+                  name="openGraph"
+                  type="file"
+                  accept="image/x-png"
+                  ref={register({ required: true })}
+                />
+                {/* </AddFileButton> */}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -241,8 +245,7 @@ const Launchpad: FC = () => {
                   name="dappLink"
                   placeholder="https://website.com/dapp"
                   type="text"
-                  ref={register}
-                  required
+                  ref={register({ required: true })}
                 />
               </Card>
 
@@ -254,8 +257,7 @@ const Launchpad: FC = () => {
                   name="whitepaperLink"
                   placeholder="https://website.com/whitepaper.pdf"
                   type="text"
-                  ref={register}
-                  required
+                  ref={register({ required: true })}
                 />
               </Card>
 
@@ -312,7 +314,7 @@ const Launchpad: FC = () => {
                   name="dateTime"
                   placeholder="XYZ"
                   type="text"
-                  ref={register}
+                  ref={register({ required: true })}
                 />
               </Card>
 
