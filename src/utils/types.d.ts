@@ -11,7 +11,11 @@ export type Maybe<T> = T | null;
 export interface INetwork {
   label: string;
   url: string;
-  contracts: {};
+  contracts: {
+    liftoffEngine: string;
+    liftoffInsurance: string;
+    liftoffRegistration: string;
+  };
 }
 
 export type NetworkId = 1 | 4;

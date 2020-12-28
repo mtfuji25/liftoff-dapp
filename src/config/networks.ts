@@ -12,12 +12,20 @@ const networks: { [K in NetworkId]: INetwork } = {
   [networkIds.MAINNET]: {
     label: 'Mainnet',
     url: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
-    contracts: {}
+    contracts: {
+      liftoffEngine: '',
+      liftoffInsurance: '',
+      liftoffRegistration: ''
+    }
   },
   [networkIds.RINKEBY]: {
     label: 'Rinkeby',
     url: `https://rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`,
-    contracts: {}
+    contracts: {
+      liftoffEngine: '',
+      liftoffInsurance: '',
+      liftoffRegistration: ''
+    }
   }
 };
 
@@ -35,12 +43,14 @@ export const supportedNetworkURLs = entries(networks).reduce<{
   {}
 );
 
-const validNetworkId = (networkId: number): networkId is NetworkId => {
+const validNetworkId = (
+  networkId: number | undefined
+): networkId is NetworkId => {
   return networks[networkId as NetworkId] !== undefined;
 };
 
 export const getContractAddress = (
-  networkId: number,
+  networkId: number | undefined,
   contract: KnownContracts
 ) => {
   if (!validNetworkId(networkId)) {
