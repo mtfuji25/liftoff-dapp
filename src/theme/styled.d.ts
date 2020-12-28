@@ -2,6 +2,7 @@ import {
   FlattenSimpleInterpolation,
   ThemedCssFunction
 } from 'styled-components';
+import { Styles } from 'react-modal';
 
 export type Color = string;
 export interface Colors {
@@ -69,5 +70,7 @@ declare module 'styled-components' {
     // css snippets
     flexColumnNoWrap: FlattenSimpleInterpolation;
     flexRowNoWrap: FlattenSimpleInterpolation;
+
+    modalStyle: Styles;
   }
 }

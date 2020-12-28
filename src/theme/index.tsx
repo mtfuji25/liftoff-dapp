@@ -92,7 +92,39 @@ export const theme: DefaultTheme = {
   flexRowNoWrap: css`
     display: flex;
     flex-flow: row nowrap;
-  `
+  `,
+
+  modalStyle: {
+    content: {
+      backgroundColor: '#F9FAFB',
+      borderColor: '#ECEFF1',
+      borderRadius: '6px',
+      borderStyle: 'solid',
+      borderWidth: '1px',
+      bottom: 'auto',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
+      display: 'flex',
+      flexDirection: 'column',
+      height: 'fit-content',
+      left: 'auto',
+      margin: 'auto 0',
+      overflow: 'hidden',
+      padding: '25px',
+      position: 'relative',
+      right: 'auto',
+      top: 'auto',
+      width: '355px'
+    },
+    overlay: {
+      alignItems: 'unset',
+      backgroundColor: 'rgba(0, 0, 0, 0.06)',
+      display: 'flex',
+      justifyContent: 'center',
+      overflow: 'auto',
+      padding: '10px',
+      zIndex: 12345
+    }
+  }
 };
 
 export default function ThemeProvider({
