@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useConnectedWeb3Context } from 'contexts';
 
 import Button from './Button';
 import ConnectWalletModal from './ConnectWalletModal';
+
 import Logo from '../assets/logo.png';
 import Menu from '../assets/menu.svg';
 import Close from '../assets/close.svg';
 import { TYPE } from '../theme';
+
+import { shortenAddress } from 'utils';
 
 interface Props {}
 
@@ -89,6 +93,9 @@ const StyledMenu = styled.img`
 const Header = (_props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setModalState] = useState(false);
+  const context = useConnectedWeb3Context();
+  const { account } = context;
+  const isConnected = !!account;
 
   return (
     <>
@@ -109,11 +116,17 @@ const Header = (_props: Props) => {
           <StyledNavListItem onClick={() => setIsOpen(false)}>
             <StyledLink to="/rockets">Rockets</StyledLink>
           </StyledNavListItem>
-          <StyledNavListItem onClick={() => setIsOpen(false)}>
-            <StyledButton onClick={() => setModalState(true)}>
-              Connect wallet
-            </StyledButton>
-          </StyledNavListItem>
+          {isConnected ? (
+            <StyledNavListItem>
+              {shortenAddress(account || '')}
+            </StyledNavListItem>
+          ) : (
+            <StyledNavListItem onClick={() => setIsOpen(false)}>
+              <StyledButton onClick={() => setModalState(true)}>
+                Connect wallet
+              </StyledButton>
+            </StyledNavListItem>
+          )}
         </StyledNavList>
       </StyledNavContainer>
       <ConnectWalletModal

@@ -3,7 +3,7 @@ import { INetwork, KnownContracts, NetworkId } from 'utils/types';
 
 export const networkIds = {
   MAINNET: 1,
-  RINKEBY: 4
+  ROPSTEN: 4
 } as const;
 
 const INFURA_PROJECT_ID = 'f9df69e5cfef48799e2d20eaa7d15697';
@@ -18,9 +18,9 @@ const networks: { [K in NetworkId]: INetwork } = {
       liftoffRegistration: ''
     }
   },
-  [networkIds.RINKEBY]: {
-    label: 'Rinkeby',
-    url: `https://rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`,
+  [networkIds.ROPSTEN]: {
+    label: 'Ropsten',
+    url: `https://ropsten.infura.io/v3/${INFURA_PROJECT_ID}`,
     contracts: {
       liftoffEngine: '',
       liftoffInsurance: '',
