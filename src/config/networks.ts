@@ -3,7 +3,7 @@ import { INetwork, KnownContracts, NetworkId } from 'utils/types';
 
 export const networkIds = {
   MAINNET: 1,
-  ROPSTEN: 4
+  ROPSTEN: 3
 } as const;
 
 const INFURA_PROJECT_ID = 'f9df69e5cfef48799e2d20eaa7d15697';
@@ -22,9 +22,9 @@ const networks: { [K in NetworkId]: INetwork } = {
     label: 'Ropsten',
     url: `https://ropsten.infura.io/v3/${INFURA_PROJECT_ID}`,
     contracts: {
-      liftoffEngine: '',
-      liftoffInsurance: '',
-      liftoffRegistration: ''
+      liftoffEngine: '0xEcBDC53216769bC2E854BcE9cd21183CDE28df76',
+      liftoffInsurance: '0xea723A65fB681868DaBd6456ae96A92B677a8F27',
+      liftoffRegistration: '0x1c5b37c07d2aa84579bD72e9266f218cc865c8cB'
     }
   }
 };

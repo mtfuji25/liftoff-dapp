@@ -1,7 +1,7 @@
 import { Web3Provider } from '@ethersproject/providers';
 import { useWeb3React } from '@web3-react/core';
 import { STORAGE_KEY_CONNECTOR } from 'config/constants';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import connectors from 'utils/connectors';
 import { ConnectorNames } from 'utils/enums';
 import { Maybe } from 'utils/types';
@@ -9,7 +9,7 @@ import { Maybe } from 'utils/types';
 export interface ConnectedWeb3Context {
   account: Maybe<string> | null;
   library: Web3Provider | undefined;
-  networkId: number | undefined;
+  networkId: number;
   rawWeb3Context: any;
 }
 
@@ -41,7 +41,6 @@ export const ConnectedWeb3: React.FC = (props) => {
     activate,
     active,
     chainId,
-    connector,
     deactivate,
     error,
     library
@@ -64,7 +63,7 @@ export const ConnectedWeb3: React.FC = (props) => {
   const value = {
     account: account || null,
     library,
-    networkId: chainId,
+    networkId: chainId || 3,
     rawWeb3Context: context
   };
 

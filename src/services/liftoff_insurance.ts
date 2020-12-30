@@ -15,7 +15,7 @@ const liftoffInsuranceAbi = [
   'function canCreateInsurance(uint256 tokenSaleId) public view returns (bool)',
   'function getRedeemValue(uint256 amount, uint256 tokensPerEthWad) public pure returns (uint256)',
   'function getTotalTokenClaimable(uint256 baseTokenLidPool, uint256 cycles, uint256 claimedTokenLidPool) public view returns (uint256)',
-  'function getTotalXethClaimable(uint256 totalIgnited, uint256 redeemedXEth, uint256 claimedXEth, uint256 cycles) public view (uint256)'
+  'function getTotalXethClaimable(uint256 totalIgnited, uint256 redeemedXEth, uint256 claimedXEth, uint256 cycles) public view returns (uint256)'
 ];
 
 class LiftoffInsuranceService {

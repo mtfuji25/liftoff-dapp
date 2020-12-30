@@ -12,28 +12,30 @@ import Footer from '../components/Footer';
 import Input from '../components/Input';
 import Textarea from '../components/Textarea';
 import { StyledBody, StyledContainer, TYPE } from '../theme';
-import IMG_UPLOAD from '../assets/upload.png';
+// import IMG_UPLOAD from '../assets/upload.png';
+
+import { useConnectedWeb3Context, useContracts } from '../contexts';
 
 const StyledButton = styled(Button)`
   cursor: pointer !important;
 `;
 
-const AddFileButton = styled.label`
-  display: flex;
-  align-items: center;
-  color: ${({ theme }) => theme.primary1};
-  border: ${({ theme }) => `1px solid ${theme.border}`};
-  border-radius: 5px;
-  background: none;
-  padding: 0.5rem 1rem;
-  width: fit-content;
+// const AddFileButton = styled.label`
+//   display: flex;
+//   align-items: center;
+//   color: ${({ theme }) => theme.primary1};
+//   border: ${({ theme }) => `1px solid ${theme.border}`};
+//   border-radius: 5px;
+//   background: none;
+//   padding: 0.5rem 1rem;
+//   width: fit-content;
 
-  > input {
-    width: 0;
-    height: 0;
-    padding: 0;
-  }
-`;
+//   > input {
+//     width: 0;
+//     height: 0;
+//     padding: 0;
+//   }
+// `;
 
 interface ILaunchPadInput {
   projectName: string;
@@ -44,13 +46,17 @@ interface ILaunchPadInput {
   telegram: string;
   twitter: string;
   facebook: string;
+  // dateTime: number;
   logo: FileList;
   openGraph: FileList;
 }
 
 const Launchpad: FC = () => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(true);
+  const context = useConnectedWeb3Context();
+  console.log(context);
+  const { liftoffRegistration } = useContracts(context);
 
   // console.log(errors);
 
@@ -313,7 +319,7 @@ const Launchpad: FC = () => {
                 <Input
                   name="dateTime"
                   placeholder="XYZ"
-                  type="text"
+                  type="datetime-local"
                   ref={register({ required: true })}
                 />
               </Card>

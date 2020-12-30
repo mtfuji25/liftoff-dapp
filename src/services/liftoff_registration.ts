@@ -1,4 +1,5 @@
 import { Contract, Wallet, ethers } from 'ethers';
+import { TransactionReceipt } from '@ethersproject/abstract-provider/lib/index';
 
 const liftoffRegistrationsAbi = [
   'event TokenIpfsHash(uint256 tokenId, string ipfsHash)',
@@ -35,6 +36,28 @@ class LiftoffRegistrationService {
   get address(): string {
     return this.contract.address;
   }
+
+  registerProject = async (
+    ipfsHash: string,
+    launchTime: number,
+    softCap: string,
+    hardCap: string,
+    totalSupplyWad: string,
+    name: string,
+    symbol: string
+  ): Promise<TransactionReceipt> => {
+    const txObject = await this.contract.registerProject(
+      ipfsHash,
+      launchTime,
+      softCap,
+      hardCap,
+      totalSupplyWad,
+      name,
+      symbol
+    );
+
+    return this.provider.waitForTransaction(txObject.hash);
+  };
 }
 
 export { LiftoffRegistrationService };

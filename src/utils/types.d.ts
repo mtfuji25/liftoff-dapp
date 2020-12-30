@@ -18,7 +18,7 @@ export interface INetwork {
   };
 }
 
-export type NetworkId = 1 | 4;
+export type NetworkId = 1 | 3;
 
 export type KnownContracts = keyof INetwork['contracts'];
 
