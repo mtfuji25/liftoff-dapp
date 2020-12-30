@@ -55,8 +55,6 @@ const Launchpad: FC = () => {
   const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(true);
   const context = useConnectedWeb3Context();
-  console.log(context);
-  const { liftoffRegistration } = useContracts(context);
 
   // console.log(errors);
 
