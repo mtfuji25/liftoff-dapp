@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Launchpad from './Launchpad';
-import RocketDetail from './RocketDetail';
+import ProjectDetail from './ProjectDetail';
 import Rockets from './Rockets';
 import Projects from './Projects';
 import Header from '../components/Header';
@@ -14,7 +14,7 @@ function App() {
         <Route path={'/'} component={Launchpad} exact />
         <Route path={'/rockets'} component={Rockets} exact />
         <Route path={'/projects'} component={Projects} exact />
-        <Route path={'/rockets/:id'} component={RocketDetail} />
+        <Route path={'/project/:id'} component={ProjectDetail} />
       </Switch>
     </>
   );

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
-import { StyledTable } from '../pages/RocketDetail';
+import { StyledTable } from '../pages/ProjectDetail';
 import { TYPE } from '../theme';
 
 const CTA = styled.div`

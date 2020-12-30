@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { StyledTable } from '../pages/RocketDetail';
+import { StyledTable } from '../pages/ProjectDetail';
 import Button from './Button';
 import Input from './Input';
 import { TYPE } from '../theme';

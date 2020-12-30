@@ -52,7 +52,7 @@ const CapInfo = styled.div({
 const LayoutGrid = styled.div(
   {
     display: 'grid',
-    gridGap: 10,
+    gridGap: 140,
     gridTemplateColumns: 'repeat(3, 1fr)'
   },
   ({ theme }) => ({
@@ -75,7 +75,8 @@ const CountdownContainer = styled.div({
 
 type Props = {
   title?: string;
-  color: string;
+  color?: string;
+  link?: string;
 };
 
 const Logo = () => (
@@ -94,10 +95,14 @@ const Logo = () => (
   </svg>
 );
 
-const CardState = ({ title, color }: Props) => (
+const CardState = ({ title, color, link }: Props) => (
   <StyledCard>
     <StyledLogo>
-      <Logo />
+      {link && (
+        <Link to={link}>
+          <Logo />
+        </Link>
+      )}
     </StyledLogo>
     <TYPE.Header textAlign="center">Project Name</TYPE.Header>
     <StatusBadge color={color}>{title}</StatusBadge>
@@ -149,19 +154,35 @@ const Projects = () => {
               </STabList>
               <STabPanel>
                 <LayoutGrid>
-                  <CardState title="Coming Soon" color="blue1" />
-                  <CardState title="Coming Soon" color="blue1" />
+                  <CardState
+                    link="/project/1"
+                    title="Coming Soon"
+                    color="blue1"
+                  />
+                  <CardState
+                    link="/project/2"
+                    title="Coming Soon"
+                    color="blue1"
+                  />
                 </LayoutGrid>
               </STabPanel>
               <STabPanel>
                 <LayoutGrid>
-                  <CardState title="ACTIVE NOW" color="red1" />
-                  <CardState title="ACTIVE NOW" color="red1" />
+                  <CardState
+                    link="/project/3"
+                    title="ACTIVE NOW"
+                    color="red1"
+                  />
+                  <CardState
+                    link="/project/4"
+                    title="ACTIVE NOW"
+                    color="red1"
+                  />
                 </LayoutGrid>
               </STabPanel>
               <STabPanel>
                 <LayoutGrid>
-                  <CardState title="COMPLETED" color="grey" />
+                  <CardState link="/project/5" title="COMPLETED" color="grey" />
                 </LayoutGrid>
               </STabPanel>
             </STabs>

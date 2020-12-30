@@ -79,11 +79,11 @@ export const StyledTable = styled.table`
   padding: 2rem 0;
 `;
 
-const RocketDetail: FC = () => {
+const ProjectDetail: FC = () => {
   return (
     <>
       <StyledBody color="bg3">
-        <StyledContainer sWidth={1000}>
+        <StyledContainer sWidth="85vw">
           <StyledRocketCard>
             <StyledRocketDetailHead>
               <Flex
@@ -151,4 +151,4 @@ const RocketDetail: FC = () => {
   );
 };
 
-export default RocketDetail;
+export default ProjectDetail;

@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 
-import { ConnectedWeb3 } from 'contexts';
-import App from 'pages/App';
-import ThemeProvider, { ThemedGlobalStyle } from 'theme';
+import { ConnectedWeb3 } from './contexts';
+import App from './pages/App';
+import ThemeProvider, { ThemedGlobalStyle } from './theme';
 import reportWebVitals from './reportWebVitals';
 
 function getLibrary(provider: any): Web3Provider {
