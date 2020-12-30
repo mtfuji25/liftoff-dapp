@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useConnectedWeb3Context } from '../contexts';
 
-import { Button } from './button';
+import Button from './Button';
+import ConnectWalletModal from './ConnectWalletModal';
+
 import Logo from '../assets/logo.png';
 import Menu from '../assets/menu.svg';
 import Close from '../assets/close.svg';
 import { TYPE } from '../theme';
+
+import { shortenAddress } from '../utils';
 
 interface Props {}
 
@@ -85,31 +90,51 @@ const StyledMenu = styled.img`
 `};
 `;
 
-export const Header = (_props: Props) => {
+const Header = (_props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setModalState] = useState(false);
+  const context = useConnectedWeb3Context();
+  const { account } = context;
+  const isConnected = !!account;
 
   return (
-    <StyledNavContainer>
-      <StyledLink to="/">
-        <StyledLogo src={Logo} alt="LID protocol logo" />
-        <TYPE.Header>LIFTOFF</TYPE.Header>
-      </StyledLink>
-      {!isOpen ? (
-        <StyledMenu src={Menu} onClick={() => setIsOpen(true)} />
-      ) : (
-        <StyledMenu src={Close} onClick={() => setIsOpen(false)} />
-      )}
-      <StyledNavList open={isOpen}>
-        <StyledNavListItem onClick={() => setIsOpen(false)}>
-          <StyledLink to="/">Launchpad</StyledLink>
-        </StyledNavListItem>
-        <StyledNavListItem onClick={() => setIsOpen(false)}>
-          <StyledLink to="/projects">Projects</StyledLink>
-        </StyledNavListItem>
-        <StyledNavListItem onClick={() => setIsOpen(false)}>
-          <StyledButton>Connect wallet</StyledButton>
-        </StyledNavListItem>
-      </StyledNavList>
-    </StyledNavContainer>
+    <>
+      <StyledNavContainer>
+        <StyledLink to="/">
+          <StyledLogo src={Logo} alt="LID protocol logo" />
+          <TYPE.LargeHeader fontWeight={400}>LIFTOFF</TYPE.LargeHeader>
+        </StyledLink>
+        {!isOpen ? (
+          <StyledMenu src={Menu} onClick={() => setIsOpen(true)} />
+        ) : (
+          <StyledMenu src={Close} onClick={() => setIsOpen(false)} />
+        )}
+        <StyledNavList open={isOpen}>
+          <StyledNavListItem onClick={() => setIsOpen(false)}>
+            <StyledLink to="/">Launchpad</StyledLink>
+          </StyledNavListItem>
+          <StyledNavListItem onClick={() => setIsOpen(false)}>
+            <StyledLink to="/rockets">Rockets</StyledLink>
+          </StyledNavListItem>
+          {isConnected ? (
+            <StyledNavListItem>
+              {shortenAddress(account || '')}
+            </StyledNavListItem>
+          ) : (
+            <StyledNavListItem onClick={() => setIsOpen(false)}>
+              <StyledButton onClick={() => setModalState(true)}>
+                Connect wallet
+              </StyledButton>
+            </StyledNavListItem>
+          )}
+        </StyledNavList>
+      </StyledNavContainer>
+      <ConnectWalletModal
+        onClose={() => setModalState(false)}
+        visible={isModalOpen}
+      />
+    </>
   );
 };
+
+export default Header;

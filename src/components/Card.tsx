@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Box } from 'rebass';
 
-export const Card = styled(Box)<{
+const Card = styled(Box)<{
   padding?: string;
   border?: string;
   borderRadius?: string;
@@ -14,3 +14,5 @@ export const Card = styled(Box)<{
   border-radius: ${({ borderRadius }) => borderRadius ?? '8px'};
   margin-bottom: ${({ marginBottom }) => marginBottom};
 `;
+
+export default Card;

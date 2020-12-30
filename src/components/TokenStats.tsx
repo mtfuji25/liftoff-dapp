@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import { StyledButton } from '../pages/Launchpad';
+import Button from './Button';
 import { StyledTable } from '../pages/RocketDetail';
 import { TYPE } from '../theme';
 
 const CTA = styled.div`
   display: flex;
   align-items: center;
-  padding: 1rem 0;
   button {
     margin-right: 1rem;
   }
@@ -16,7 +15,9 @@ const CTA = styled.div`
   `}
 `;
 
-export const TokenStats = () => {
+const StyledButton = styled(Button)``;
+
+const TokenStats: FC = () => {
   return (
     <>
       <TYPE.Header>Token Stats</TYPE.Header>
@@ -33,7 +34,7 @@ export const TokenStats = () => {
         </tbody>
       </StyledTable>
 
-      <TYPE.Body>Claim Token Rewards</TYPE.Body>
+      <TYPE.Header>Claim Token Rewards</TYPE.Header>
       <CTA>
         <StyledButton>Claim</StyledButton>
         <TYPE.Small color="primary1">
@@ -43,3 +44,5 @@ export const TokenStats = () => {
     </>
   );
 };
+
+export default TokenStats;

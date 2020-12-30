@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { StyledBody, TYPE } from '../theme';
 import { STab, STabList, STabPanel, STabs } from '../components/Tab';
 import { Warning } from '../components/Warning';
-import { StyledContainer } from './Launchpad';
-import { Card } from '../components/card';
-import { Footer } from '../components/footer';
-import { Disclaimer } from '../components/disclaimer';
-import { Countdown } from '../components/countdown';
+import { StyledContainer } from '../theme';
+import Card from '../components/Card';
+import Footer from '../components/Footer';
+import Disclaimer from '../components/Disclaimer';
+import Countdown from '../components/Countdown';
 
 const Container = styled.div(
   {
@@ -116,7 +116,7 @@ const CardState = ({ title, color }: Props) => (
   </StyledCard>
 );
 
-export const Projects = () => {
+const Projects = () => {
   return (
     <>
       <StyledBody color="bg3">
@@ -177,3 +177,5 @@ export const Projects = () => {
     </>
   );
 };
+
+export default Projects;

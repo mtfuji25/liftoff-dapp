@@ -9,18 +9,20 @@ interface Props {
 const StyledDisclaimer = styled.div<{ color: string }>`
   color: ${({ color }) => color};
   text-align: center;
-  margin-top: 1rem;
-  width: 30rem;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-  width: 20rem;`}
+  width: 100%;
+  max-width: 644px;
+  margin: auto;
+  margin-top: 4rem;
 `;
 
-export const Disclaimer = (props: Props) => (
+const Disclaimer = (props: Props) => (
   <StyledDisclaimer color={props.color}>
-    <TYPE.Small>
+    <TYPE.Header fontWeight={400}>
       LIFTOFF is an autonomous launchpad that anyone can use. Similar to
       Uniswap, anyone can create a token with any name, including fake versions
       of existing tokens. Please do your own research before joining a project.
-    </TYPE.Small>
+    </TYPE.Header>
   </StyledDisclaimer>
 );
+
+export default Disclaimer;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { TYPE } from '../theme';
-import { Button } from './button';
+import Button from './Button';
 
 const WarningBox = styled.div(
   {

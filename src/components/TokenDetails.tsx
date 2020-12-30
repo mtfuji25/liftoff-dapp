@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TYPE } from '../theme';
-import { Card } from './card';
+import Card from './Card';
 import { ProgressBar } from './ProgressBar';
 
 const CardGrid = styled.div({
@@ -16,7 +16,7 @@ const StyledCard = styled(Card)({
   marginTop: 10
 });
 
-export const TokenDetails = () => {
+const TokenDetails = () => {
   return (
     <>
       <TYPE.Header>Token Details</TYPE.Header>
@@ -39,3 +39,5 @@ export const TokenDetails = () => {
     </>
   );
 };
+
+export default TokenDetails;

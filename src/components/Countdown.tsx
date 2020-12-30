@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable import/no-anonymous-default-export */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TYPE } from '../theme';
@@ -47,7 +45,7 @@ const Time = styled.div`
     })};
 `;
 
-export const Countdown = ({ date }: Props) => {
+const Countdown = ({ date }: Props) => {
   const [countdownDate] = useState(new Date(date).getTime());
   const [state, setState] = useState({
     days: 0,
@@ -56,6 +54,7 @@ export const Countdown = ({ date }: Props) => {
     secs: 0
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setNewTime = () => {
     if (countdownDate) {
       const currentTime = new Date().getTime();
@@ -115,3 +114,5 @@ export const Countdown = ({ date }: Props) => {
     </CountdownWrapper>
   );
 };
+
+export default Countdown;

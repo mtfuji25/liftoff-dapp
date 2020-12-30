@@ -44,6 +44,7 @@ export const colors: Colors = {
   bg3: '#CFD6E2',
   bg4: '#F9FAFB',
   bg5: '#B4B4B4',
+  bg6: '#D8D8D8',
 
   primary1: '#2A7CEA',
   primary2: '#FF8CC3',
@@ -59,6 +60,7 @@ export const colors: Colors = {
 
   red1: '#FF6871',
   red2: '#F82D3A',
+  red3: '#DE3636',
   green1: '#27AE60',
   yellow1: '#FFE270',
   yellow2: '#F3841E',
@@ -91,7 +93,39 @@ export const theme: DefaultTheme = {
   flexRowNoWrap: css`
     display: flex;
     flex-flow: row nowrap;
-  `
+  `,
+
+  modalStyle: {
+    content: {
+      backgroundColor: '#F9FAFB',
+      borderColor: '#ECEFF1',
+      borderRadius: '6px',
+      borderStyle: 'solid',
+      borderWidth: '1px',
+      bottom: 'auto',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
+      display: 'flex',
+      flexDirection: 'column',
+      height: 'fit-content',
+      left: 'auto',
+      margin: 'auto 0',
+      overflow: 'hidden',
+      padding: '25px',
+      position: 'relative',
+      right: 'auto',
+      top: 'auto',
+      width: '355px'
+    },
+    overlay: {
+      alignItems: 'unset',
+      backgroundColor: 'rgba(0, 0, 0, 0.06)',
+      display: 'flex',
+      justifyContent: 'center',
+      overflow: 'auto',
+      padding: '10px',
+      zIndex: 12345
+    }
+  }
 };
 
 export default function ThemeProvider({
@@ -114,7 +148,15 @@ export const StyledBody = styled.div<{ color: keyof Colors }>`
   padding: 2rem;
   background-color: ${({ color, theme }) => (theme as any)[color]};
   ${({ theme }) => theme.mediaWidth.upToSmall`
-  padding: 1rem 0.5rem;`};
+  padding: 1rem 1.25rem;`};
+`;
+
+export const StyledContainer = styled.div<{ sWidth: any }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: ${({ sWidth }) => `${sWidth}`};
+  margin: auto;
 `;
 
 export const TYPE = {
@@ -153,9 +195,16 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
 }
-a {
-  text-decoration: none;
+input, textarea {
+  border: ${({ theme }) => `1px solid ${theme.border}`} !important;
+  color: ${({ theme }) => theme.text5} !important;
+  font-family: 'Open Sans', sans-serif;
+  border-radius: 5px;
 }
+* {
+  box-sizing: border-box;
+}
+ 
 table {
   width: 100%;
   td, th {

@@ -2,6 +2,7 @@ import {
   FlattenSimpleInterpolation,
   ThemedCssFunction
 } from 'styled-components';
+import { Styles } from 'react-modal';
 
 export type Color = string;
 export interface Colors {
@@ -22,6 +23,10 @@ export interface Colors {
   bg3: Color;
   bg4: Color;
   bg5: Color;
+  bg6: Color;
+
+  // border
+  border: Color;
 
   //blues
   primary1: Color;
@@ -40,6 +45,7 @@ export interface Colors {
   // other
   red1: Color;
   red2: Color;
+  red3: Color;
   green1: Color;
   yellow1: Color;
   yellow2: Color;
@@ -67,5 +73,7 @@ declare module 'styled-components' {
     // css snippets
     flexColumnNoWrap: FlattenSimpleInterpolation;
     flexRowNoWrap: FlattenSimpleInterpolation;
+
+    modalStyle: Styles;
   }
 }

@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StyledButton } from '../pages/Launchpad';
+
 import { StyledTable } from '../pages/RocketDetail';
-import { Input, TYPE } from '../theme';
+import Button from './Button';
+import Input from './Input';
+import { TYPE } from '../theme';
 
 const FORM = styled.form`
   display: flex;
+  padding: 1rem 0;
   align-items: center;
   margin-top: 1rem;
   justify-content: space-between;
@@ -20,17 +23,9 @@ const FORM = styled.form`
   }
 `;
 
-const StyledInputGroup = styled.div`
-  & > input {
-    flex: 1 0 auto;
-  }
-`;
+const StyledButton = styled(Button)``;
 
-const StyledSpan = styled.span`
-  color: ${({ theme }) => theme.text3};
-`;
-
-export const Ignite = () => {
+const Ignite = () => {
   return (
     <>
       <TYPE.Header>Ignite</TYPE.Header>
@@ -49,13 +44,12 @@ export const Ignite = () => {
 
       <TYPE.Header>Amount of ETH to ignite</TYPE.Header>
       <FORM>
-        <StyledInputGroup>
-          <Input placeholder="0" />
-          <StyledSpan>ETH</StyledSpan>
-        </StyledInputGroup>
-        <StyledButton>Claim</StyledButton>
+        <Input placeholder="0" type="text" width="30%" />
+        <StyledButton>Ignite</StyledButton>
         <TYPE.Small color="primary1">Your ETH ignited: 1.26 ETH</TYPE.Small>
       </FORM>
     </>
   );
 };
+
+export default Ignite;
