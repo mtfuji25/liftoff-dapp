@@ -7,6 +7,7 @@ import styled, {
 } from 'styled-components';
 import { Text, TextProps } from 'rebass';
 import { Colors } from './styled';
+import Card from '../components/Card';
 
 const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
@@ -151,6 +152,18 @@ export const StyledBody = styled.div<{ color: keyof Colors }>`
   padding: 1rem 1.25rem;`};
 `;
 
+export const StyledRocketCard = styled(Card)`
+  display: flex;
+  color: ${({ theme }) => theme.black};
+  padding: 2rem;
+  flex-direction: column;
+  margin: 0.5rem 0 !important;
+  justify-content: space-between;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 2rem 1rem;
+  `}
+`;
+
 export const StyledContainer = styled.div<{ sWidth: any }>`
   display: flex;
   flex-direction: column;
@@ -186,6 +199,20 @@ export const Input = styled.input`
   }
 `;
 
+export const StatusBadge = styled.div(
+  {
+    borderRadius: 20,
+    textAlign: 'center',
+    padding: '0.5rem 1rem',
+    margin: 5,
+    alignSelf: 'center'
+  },
+  ({ theme, color }: { theme: DefaultTheme } & any) => ({
+    backgroundColor: theme.blue1,
+    color: theme.white
+  })
+);
+
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
   color: ${({ theme }) => theme.text1};
@@ -198,6 +225,7 @@ body {
 input, textarea {
   border: ${({ theme }) => `1px solid ${theme.border}`} !important;
   color: ${({ theme }) => theme.text5} !important;
+  text-decoration: none !important;
   font-family: 'Open Sans', sans-serif;
   border-radius: 5px;
 }

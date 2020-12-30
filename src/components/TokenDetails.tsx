@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TYPE } from '../theme';
+import { StyledRocketCard, TYPE } from '../theme';
 import Card from './Card';
 import { ProgressBar } from './ProgressBar';
 
@@ -18,7 +18,7 @@ const StyledCard = styled(Card)({
 
 const TokenDetails = () => {
   return (
-    <>
+    <StyledRocketCard>
       <TYPE.Header>Token Details</TYPE.Header>
       <ProgressBar completed={20} />
 
@@ -36,7 +36,7 @@ const TokenDetails = () => {
           <TYPE.Header>1500 xETH</TYPE.Header>
         </StyledCard>
       </CardGrid>
-    </>
+    </StyledRocketCard>
   );
 };
 

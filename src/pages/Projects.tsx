@@ -1,7 +1,7 @@
 import React from 'react';
-import styled, { DefaultTheme } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { StyledBody, TYPE } from '../theme';
+import { StyledBody, TYPE, StatusBadge } from '../theme';
 import { STab, STabList, STabPanel, STabs } from '../components/Tab';
 import { Warning } from '../components/Warning';
 import { StyledContainer } from '../theme';
@@ -28,20 +28,6 @@ const StyledCard = styled(Card)({
   flexDirection: 'column'
 });
 
-const StatusBadge = styled.div(
-  {
-    borderRadius: 20,
-    textAlign: 'center',
-    padding: '0.5rem 1rem',
-    margin: 5,
-    alignSelf: 'center'
-  },
-  ({ theme, color }: { theme: DefaultTheme } & Props) => ({
-    backgroundColor: theme.blue1,
-    color: theme.white
-  })
-);
-
 const CapInfo = styled.div({
   display: 'flex',
   flexDirection: 'row',
@@ -52,7 +38,7 @@ const CapInfo = styled.div({
 const LayoutGrid = styled.div(
   {
     display: 'grid',
-    gridGap: 140,
+    gridGap: 70,
     gridTemplateColumns: 'repeat(3, 1fr)'
   },
   ({ theme }) => ({

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { StyledTable } from '../pages/ProjectDetail';
-import { TYPE } from '../theme';
+import { TYPE, StyledRocketCard } from '../theme';
 import Button from './Button';
 
 const CTA = styled.div`
@@ -19,7 +19,7 @@ const StyledButton = styled(Button)``;
 
 const TokenStats: FC = () => {
   return (
-    <>
+    <StyledRocketCard>
       <TYPE.Header>Token Stats</TYPE.Header>
       <StyledTable cellSpacing={0} cellPadding={0}>
         <tbody>
@@ -54,7 +54,7 @@ const TokenStats: FC = () => {
       <CTA>
         <StyledButton>Trade on PenguinSwap</StyledButton>
       </CTA>
-    </>
+    </StyledRocketCard>
   );
 };
 
