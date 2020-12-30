@@ -145,11 +145,6 @@ const Projects = () => {
                     title="Coming Soon"
                     color="blue1"
                   />
-                  <CardState
-                    link="/project/2"
-                    title="Coming Soon"
-                    color="blue1"
-                  />
                 </LayoutGrid>
               </STabPanel>
               <STabPanel>
