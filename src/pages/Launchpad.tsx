@@ -14,7 +14,7 @@ import Textarea from '../components/Textarea';
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 // import IMG_UPLOAD from '../assets/upload.png';
 
-import { useConnectedWeb3Context, useContracts } from '../contexts';
+import { useConnectedWeb3Context } from '../contexts';
 
 const StyledButton = styled(Button)`
   cursor: pointer !important;
@@ -314,10 +314,46 @@ const Launchpad: FC = () => {
                 <TYPE.Header color="black" mb="1.25rem">
                   LIFTOFF Launch Date & Time
                 </TYPE.Header>
+                <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                  Date
+                </TYPE.Body>
                 <Input
-                  name="dateTime"
-                  placeholder="XYZ"
-                  type="datetime-local"
+                  name="Date"
+                  placeholder="mm/dd/yy"
+                  type="text"
+                  ref={register({ required: true })}
+                />
+                <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                  Time (GMT)
+                </TYPE.Body>
+                <Input
+                  name="hardCap"
+                  placeholder="00:00 AM"
+                  type="text"
+                  ref={register({ required: true })}
+                />
+              </Card>
+
+              <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
+                <TYPE.Header color="black" mb="1.25rem">
+                  Soft & Hard Cap
+                </TYPE.Header>
+                <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                  Soft Cap
+                </TYPE.Body>
+                <Input
+                  name="softCap"
+                  placeholder=""
+                  type="text"
+                  ref={register({ required: true })}
+                />
+                <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                  Hard Cap
+                </TYPE.Body>
+                <Input
+                  name="hardCap"
+                  placeholder=""
+                  type="text"
                   ref={register({ required: true })}
                 />
               </Card>

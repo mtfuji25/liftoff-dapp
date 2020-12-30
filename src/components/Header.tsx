@@ -12,6 +12,7 @@ import Close from '../assets/close.svg';
 import { TYPE } from '../theme';
 
 import { shortenAddress } from 'utils';
+import { validNetworkId } from 'utils/networks';
 
 interface Props {}
 
@@ -85,9 +86,7 @@ const StyledMenu = styled.img`
   z-index: 100;
   width: 2rem;
   display: none;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: block;
-`};
+  ${({ theme }) => theme.mediaWidth.upToSmall`display: block;`};
 `;
 
 const Header = (_props: Props) => {

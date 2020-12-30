@@ -43,7 +43,7 @@ export const supportedNetworkURLs = entries(networks).reduce<{
   {}
 );
 
-const validNetworkId = (
+export const validNetworkId = (
   networkId: number | undefined
 ): networkId is NetworkId => {
   return networks[networkId as NetworkId] !== undefined;

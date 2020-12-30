@@ -9,7 +9,7 @@ import { Maybe } from 'utils/types';
 export interface ConnectedWeb3Context {
   account: Maybe<string> | null;
   library: Web3Provider | undefined;
-  networkId: number;
+  networkId: number | undefined;
   rawWeb3Context: any;
 }
 
@@ -63,7 +63,7 @@ export const ConnectedWeb3: React.FC = (props) => {
   const value = {
     account: account || null,
     library,
-    networkId: chainId || 3,
+    networkId: chainId,
     rawWeb3Context: context
   };
 
