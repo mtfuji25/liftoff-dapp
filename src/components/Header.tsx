@@ -114,7 +114,7 @@ const Header = (_props: Props) => {
             <StyledLink to="/">Launchpad</StyledLink>
           </StyledNavListItem>
           <StyledNavListItem onClick={() => setIsOpen(false)}>
-            <StyledLink to="/rockets">Rockets</StyledLink>
+            <StyledLink to="/projects">Projects</StyledLink>
           </StyledNavListItem>
           {isConnected ? (
             <StyledNavListItem>
