@@ -134,7 +134,6 @@ export const TYPE = {
 
 export const Input = styled.input`
   height: 38px;
-  width: 100%;
   border: 1px solid ${({ theme }) => theme.border};
   color: ${({ theme }) => theme.text3};
   padding: 0 2rem 0 1rem;
