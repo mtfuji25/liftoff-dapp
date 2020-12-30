@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, {
   createGlobalStyle,
   DefaultTheme,
@@ -207,11 +207,57 @@ export const StatusBadge = styled.div(
     margin: 5,
     alignSelf: 'center'
   },
-  ({ theme, color }: { theme: DefaultTheme } & any) => ({
+  ({ theme, color }) => ({
     backgroundColor: theme.blue1,
     color: theme.white
   })
 );
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  cursor: pointer;
+  color: ${({ theme }) => theme.primary1};
+  font-weight: 500;
+  :hover {
+    text-decoration: none;
+  }
+  :focus {
+    outline: none;
+    text-decoration: none;
+  }
+  :active {
+    text-decoration: none;
+  }
+`;
+
+export const ExternalLink = ({
+  target = '_blank',
+  href,
+  rel = 'noopener noreferrer',
+  ...rest
+}: Omit<React.HTMLProps<HTMLAnchorElement>, 'as' | 'ref' | 'onClick'> & {
+  href: string;
+}) => {
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      // don't prevent default, don't redirect if it's a new tab
+      if (target === '_blank' || event.ctrlKey || event.metaKey) {
+      } else {
+        event.preventDefault();
+      }
+    },
+    [target]
+  );
+  return (
+    <StyledLink
+      target={target}
+      rel={rel}
+      href={href}
+      onClick={handleClick}
+      {...rest}
+    />
+  );
+};
 
 export const ThemedGlobalStyle = createGlobalStyle`
 html {

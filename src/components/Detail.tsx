@@ -1,9 +1,13 @@
 import React from 'react';
 import { Flex } from 'rebass';
 import styled from 'styled-components';
-import { StyledRocketCard, TYPE, StatusBadge } from '../theme';
+import { StyledRocketCard, TYPE, StatusBadge, ExternalLink } from '../theme';
 import Avatar from './Avatar';
 import Countdown from './Countdown';
+import { ReactComponent as DiscordIcon } from '../assets/svgs/discord.svg';
+import { ReactComponent as TelegramIcon } from '../assets/svgs/telegram.svg';
+import { ReactComponent as TwitterIcon } from '../assets/svgs/twitter.svg';
+import { ReactComponent as FacebookIcon } from '../assets/svgs/facebook.svg';
 
 const StyledRocketDetailHead = styled.div`
   display: flex;
@@ -81,7 +85,7 @@ const Detail = () => {
                 <TYPE.Body>Website</TYPE.Body>
               </td>
               <td width="60%">
-                <TYPE.Body color="primary1">www.website.com</TYPE.Body>
+                <ExternalLink href="website.com">www.website.com</ExternalLink>
               </td>
             </tr>
             <tr>
@@ -89,7 +93,9 @@ const Detail = () => {
                 <TYPE.Body>dApp</TYPE.Body>
               </td>
               <td width="60%">
-                <TYPE.Body color="primary1">www.website.com/dapp</TYPE.Body>
+                <ExternalLink href="website.com/dapp">
+                  www.website.com/dapp
+                </ExternalLink>
               </td>
             </tr>
             <tr>
@@ -97,7 +103,9 @@ const Detail = () => {
                 <TYPE.Body>Whitepaper</TYPE.Body>
               </td>
               <td width="60%">
-                <TYPE.Body color="primary1">Click to view</TYPE.Body>
+                <ExternalLink href="website.com/dapp">
+                  Click to view
+                </ExternalLink>
               </td>
             </tr>
             <tr>
@@ -113,7 +121,24 @@ const Detail = () => {
                 <TYPE.Body>Social Media</TYPE.Body>
               </td>
               <td width="60%">
-                <TYPE.Body color="primary1">11/10/2020 9PM PST</TYPE.Body>
+                <Flex
+                  width="20%"
+                  justifyContent="space-around"
+                  flexDirection="row"
+                >
+                  <ExternalLink href="https://discord.gg">
+                    <DiscordIcon />
+                  </ExternalLink>
+                  <ExternalLink href="https://t.me">
+                    <TelegramIcon />
+                  </ExternalLink>
+                  <ExternalLink href="https://twitter.com">
+                    <TwitterIcon />
+                  </ExternalLink>
+                  <ExternalLink href="https://facebook.com">
+                    <FacebookIcon />
+                  </ExternalLink>
+                </Flex>
               </td>
             </tr>
           </tbody>

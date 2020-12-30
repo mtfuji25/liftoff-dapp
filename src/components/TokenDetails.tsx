@@ -28,7 +28,7 @@ const TokenDetails = () => {
           <TYPE.Header>500 xETH</TYPE.Header>
         </StyledCard>
         <StyledCard>
-          <TYPE.Body color="blue1">Total Ignited</TYPE.Body>
+          <TYPE.Body color="blue1">TOTAL IGNITED</TYPE.Body>
           <TYPE.Header>1500 xETH</TYPE.Header>
         </StyledCard>
         <StyledCard>

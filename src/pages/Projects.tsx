@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { StyledBody, TYPE, StatusBadge } from '../theme';
+import { StyledBody, TYPE, StatusBadge, ExternalLink } from '../theme';
 import { STab, STabList, STabPanel, STabs } from '../components/Tab';
 import { Warning } from '../components/Warning';
 import { StyledContainer } from '../theme';
@@ -64,6 +64,10 @@ const CountdownContainer = styled.div({
   margin: '30px 0'
 });
 
+const StyledLink = styled(ExternalLink)({
+  paddingBottom: '1rem'
+});
+
 type Props = {
   title?: string;
   color?: string;
@@ -108,7 +112,7 @@ const CardState = ({ title, color, link }: Props) => (
       <TYPE.Header>Hard Cap:</TYPE.Header>
       <TYPE.Header>xETH</TYPE.Header>
     </CapInfo>
-    <Link to="website.com">website.com</Link>
+    <StyledLink href="website.com">website.com</StyledLink>
   </StyledCard>
 );
 

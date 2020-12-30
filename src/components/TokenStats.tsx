@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { StyledTable } from '../pages/ProjectDetail';
-import { TYPE, StyledRocketCard } from '../theme';
+import { TYPE, StyledRocketCard, ExternalLink } from '../theme';
 import Button from './Button';
 
 const CTA = styled.div`
@@ -28,9 +28,9 @@ const TokenStats: FC = () => {
               <TYPE.Body>Contract Link</TYPE.Body>
             </td>
             <td width="60%">
-              <TYPE.Body color="primary1">
+              <ExternalLink href="https://etherscan.com/address/0xa205D203543122dd142aE63bB0A5EA9A32FB14f41">
                 0xa205D203543122dd142aE63bB0A5EA9A32FB14f41
-              </TYPE.Body>
+              </ExternalLink>
             </td>
           </tr>
           <tr>
@@ -46,7 +46,10 @@ const TokenStats: FC = () => {
               <TYPE.Body>PenguinSwap Link</TYPE.Body>
             </td>
             <td width="60%">
-              <TYPE.Body color="primary1">penguinswap.eth.link</TYPE.Body>
+              <ExternalLink href="https://penguinswap.eth.link">
+                penguinswap.eth.link
+              </ExternalLink>
+              <TYPE.Body color="primary1"></TYPE.Body>
             </td>
           </tr>
         </tbody>
