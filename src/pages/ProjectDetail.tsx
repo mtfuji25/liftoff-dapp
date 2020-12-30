@@ -6,13 +6,13 @@ import CopyRight from '../components/Copyright';
 import Card from '../components/Card';
 import Countdown from '../components/Countdown';
 import Footer from '../components/Footer';
-import Ignite from '../components/Ignite';
 import Button from '../components/Button';
 import TokenStats from '../components/TokenStats';
 import Avatar from '../components/Avatar';
 import TokenDetails from '../components/TokenDetails';
 
 import { StyledBody, StyledContainer, TYPE } from '../theme';
+import ClaimReward from '../components/ClaimReward';
 
 const StyledButton = styled(Button)`
   height: fit-content;
@@ -56,24 +56,6 @@ const StyledRocketDetailBody = styled.div``;
 const StyledDescription = styled.div`
   max-width: 600px;
 `;
-
-const StyledTitle = styled(TYPE.Header)({
-  paddingLeft: 4
-});
-
-const StatusBadge = styled.div(
-  {
-    borderRadius: 20,
-    textAlign: 'center',
-    padding: '0.5rem 1rem',
-    margin: 5,
-    alignSelf: 'center'
-  },
-  ({ theme }) => ({
-    backgroundColor: theme.blue1,
-    color: theme.white
-  })
-);
 
 export const StyledTable = styled.table`
   padding: 2rem 0;
@@ -133,8 +115,9 @@ const ProjectDetail: FC = () => {
           <StyledRocketCard>
             <TokenDetails />
           </StyledRocketCard>
+
           <StyledRocketCard>
-            <Ignite />
+            <ClaimReward />
           </StyledRocketCard>
           <StyledRocketCard>
             <TokenStats />

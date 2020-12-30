@@ -8,9 +8,7 @@ import { TYPE } from '../theme';
 
 const FORM = styled.form`
   display: flex;
-  padding: 1rem 0;
   align-items: center;
-  margin-top: 1rem;
   justify-content: space-between;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     flex-direction: column;
