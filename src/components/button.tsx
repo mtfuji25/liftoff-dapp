@@ -4,7 +4,7 @@ export const Button = styled.button.attrs<
   { warning: boolean },
   { backgroundColor: string }
 >(({ warning, theme }) => ({
-  backgroundColor: warning ? theme.blue1 : theme.primary1
+  backgroundColor: warning ? theme.red1 : theme.primary1
 }))`
   padding: 0.7rem 2rem 0.7rem 2rem;
   border-radius: 0.5rem;

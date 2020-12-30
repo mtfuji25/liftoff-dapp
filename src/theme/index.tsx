@@ -39,7 +39,7 @@ export const colors: Colors = {
   text4: '#565A69',
   text5: '#2C2F36',
 
-  bg1: '#232628',
+  bg1: '#131717',
   bg2: '#484E5A',
   bg3: '#CFD6E2',
   bg4: '#F9FAFB',
@@ -62,7 +62,10 @@ export const colors: Colors = {
   green1: '#27AE60',
   yellow1: '#FFE270',
   yellow2: '#F3841E',
-  blue1: '#2A7CEA'
+  blue1: '#7289DA',
+
+  border: '#DADADA',
+  grey: '#ABABAB'
 };
 
 export const theme: DefaultTheme = {
@@ -129,6 +132,19 @@ export const TYPE = {
   }
 };
 
+export const Input = styled.input`
+  height: 38px;
+  width: 100%;
+  border: 1px solid ${({ theme }) => theme.border};
+  color: ${({ theme }) => theme.text3};
+  padding: 0 2rem 0 1rem;
+  border-radius: 5px;
+  &:focus {
+    outline: none;
+    border: 2px solid #6e5dcc;
+  }
+`;
+
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
   color: ${({ theme }) => theme.text1};
@@ -137,6 +153,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Open Sans', sans-serif;
+}
+a {
+  text-decoration: none;
 }
 table {
   width: 100%;

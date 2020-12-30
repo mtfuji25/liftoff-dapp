@@ -4,17 +4,16 @@ import { Button } from '../components/button';
 import { Card } from '../components/card';
 import { Disclaimer } from '../components/disclaimer';
 import { Footer } from '../components/footer';
-import { Input } from '../components/input';
 import { Textarea } from '../components/textarea';
-import { StyledBody, TYPE } from '../theme';
+import { StyledBody, TYPE, Input } from '../theme';
 
 interface Props {}
 
-export const StyledContainer = styled.div<{ sWidth: keyof string }>`
+export const StyledContainer = styled.div<{ sWidth: any }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: ${({ sWidth }) => `${sWidth}px`};
+  max-width: ${({ sWidth }) => `${sWidth}`};
   margin: auto;
 `;
 
@@ -62,14 +61,14 @@ export const Launchpad = (props: Props) => {
             <Card marginBottom="1rem">
               <StyledFormItem>
                 <TYPE.Header color="black">Project Name</TYPE.Header>
-                <Input
-                  placeholder="Liquidity Dividends Protocol"
-                  type="text"
-                  hasError=""
-                  isTouched=""
-                  disabled={false}
-                  onChange={(e: any) => {}}
-                />
+                <div>
+                  <Input
+                    placeholder="Liquidity Dividends Protocol"
+                    type="text"
+                    disabled={false}
+                    onChange={(e: any) => {}}
+                  />
+                </div>
               </StyledFormItem>
             </Card>
             <Card marginBottom="1rem">
@@ -78,8 +77,6 @@ export const Launchpad = (props: Props) => {
                 <Input
                   placeholder="XYZ"
                   type="text"
-                  hasError=""
-                  isTouched=""
                   disabled={false}
                   onChange={(e: any) => {}}
                 />
@@ -97,8 +94,6 @@ export const Launchpad = (props: Props) => {
                 <Input
                   placeholder="https://website.com"
                   type="text"
-                  hasError=""
-                  isTouched=""
                   disabled={false}
                   onChange={(e: any) => {}}
                 />
@@ -110,8 +105,6 @@ export const Launchpad = (props: Props) => {
                 <Input
                   placeholder="https://website.com/dapp"
                   type="text"
-                  hasError=""
-                  isTouched=""
                   disabled={false}
                   onChange={(e: any) => {}}
                 />
@@ -123,8 +116,6 @@ export const Launchpad = (props: Props) => {
                 <Input
                   placeholder="https://website.com/whitepaper.pdf"
                   type="text"
-                  hasError=""
-                  isTouched=""
                   disabled={false}
                   onChange={(e: any) => {}}
                 />
@@ -137,8 +128,6 @@ export const Launchpad = (props: Props) => {
                 <Input
                   placeholder="https://discord.gg/"
                   type="text"
-                  hasError=""
-                  isTouched=""
                   disabled={false}
                   onChange={(e: any) => {}}
                 />
@@ -148,8 +137,6 @@ export const Launchpad = (props: Props) => {
                 <Input
                   placeholder="https://t.me/"
                   type="text"
-                  hasError=""
-                  isTouched=""
                   disabled={false}
                   onChange={(e: any) => {}}
                 />
@@ -159,8 +146,6 @@ export const Launchpad = (props: Props) => {
                 <Input
                   placeholder="https://twitter.com/"
                   type="text"
-                  hasError=""
-                  isTouched=""
                   disabled={false}
                   onChange={(e: any) => {}}
                 />
@@ -170,8 +155,6 @@ export const Launchpad = (props: Props) => {
                 <Input
                   placeholder="https://facebook.com/"
                   type="text"
-                  hasError=""
-                  isTouched=""
                   disabled={false}
                   onChange={(e: any) => {}}
                 />
@@ -185,8 +168,6 @@ export const Launchpad = (props: Props) => {
                 <Input
                   placeholder="XYZ"
                   type="text"
-                  hasError=""
-                  isTouched=""
                   disabled={false}
                   onChange={(e: any) => {}}
                 />

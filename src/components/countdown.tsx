@@ -11,6 +11,13 @@ interface Props {
 const CountdownWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 1rem;
+  ${({ theme }) => ({
+    backgroundColor: theme.bg2,
+    color: theme.white
+  })}
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin-top: 1rem;
 `}
@@ -26,6 +33,18 @@ const Time = styled.div`
   margin: 0;
   font-weight: 800;
   padding: 0 1rem;
+  ${({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      padding: '0 0.75rem'
+    })}
+  ${({ theme }) =>
+    theme.mediaWidth.upToMedium({
+      padding: '0 0.8rem'
+    })}
+    ${({ theme }) =>
+    theme.mediaWidth.upToLarge({
+      padding: '0 0.8rem'
+    })};
 `;
 
 export const Countdown = ({ date }: Props) => {
@@ -67,16 +86,25 @@ export const Countdown = ({ date }: Props) => {
         <TYPE.Small>DAYS</TYPE.Small>
       </TimeSection>
       <TimeSection>
+        <Time>:</Time>
+      </TimeSection>
+      <TimeSection>
         <Time>
           <TYPE.Header>{state.hours || '00'}</TYPE.Header>
         </Time>
         <TYPE.Small>HRS</TYPE.Small>
       </TimeSection>
       <TimeSection>
+        <Time>:</Time>
+      </TimeSection>
+      <TimeSection>
         <Time>
           <TYPE.Header>{state.mins || '00'}</TYPE.Header>
         </Time>
         <TYPE.Small>MINS</TYPE.Small>
+      </TimeSection>
+      <TimeSection>
+        <Time>:</Time>
       </TimeSection>
       <TimeSection>
         <Time>

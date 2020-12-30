@@ -5,6 +5,7 @@ import { Header } from '../components/header';
 import { Launchpad } from './Launchpad';
 import { RocketDetail } from './RocketDetail';
 import { Rockets } from './Rockets';
+import { Projects } from './Projects';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Switch>
         <Route path={'/'} component={Launchpad} exact />
         <Route path={'/rockets'} component={Rockets} exact />
+        <Route path={'/projects'} component={Projects} exact />
         <Route path={'/rockets/:id'} component={RocketDetail} />
       </Switch>
     </>
