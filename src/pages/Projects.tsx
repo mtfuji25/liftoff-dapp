@@ -21,8 +21,12 @@ const Container = styled.div(
     })
 );
 
+const Badge = styled(StatusBadge)({
+  marginTop: 11
+});
+
 const StyledCard = styled(Card)({
-  padding: '1rem',
+  padding: '1rem 3rem',
   textAlign: 'center',
   display: 'flex',
   flexDirection: 'column'
@@ -52,7 +56,8 @@ const LayoutGrid = styled.div(
 );
 
 const StyledLogo = styled.div({
-  alignSelf: 'center'
+  alignSelf: 'center',
+  paddingBottom: 16
 });
 
 const CountdownContainer = styled.div({
@@ -90,8 +95,8 @@ const CardState = ({ title, color, link }: Props) => (
         </Link>
       )}
     </StyledLogo>
-    <TYPE.Header textAlign="center">Project Name</TYPE.Header>
-    <StatusBadge color={color}>{title}</StatusBadge>
+    <TYPE.LargeHeader textAlign="center">Project Name</TYPE.LargeHeader>
+    <Badge color={color}>{title}</Badge>
     <CountdownContainer>
       <Countdown date="01/01/2021" />
     </CountdownContainer>

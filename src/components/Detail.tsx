@@ -46,7 +46,7 @@ const Detail = () => {
         >
           <Flex alignItems="center" mr={['0', '1rem']} mb={['1rem', '0']}>
             <Avatar size="4.375rem" />
-            <TYPE.Header ml="2.25rem">[Project Name]</TYPE.Header>
+            <TYPE.Header ml="1.25rem">[Project Name]</TYPE.Header>
           </Flex>
 
           <StatusBadge>Coming Soon</StatusBadge>

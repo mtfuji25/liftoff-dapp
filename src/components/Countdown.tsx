@@ -30,7 +30,7 @@ const TimeSection = styled.div`
 const Time = styled.div`
   margin: 0;
   font-weight: 800;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   ${({ theme }) =>
     theme.mediaWidth.upToSmall({
       padding: '0 0.75rem'

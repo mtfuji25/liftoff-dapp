@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 import { TYPE, StyledRocketCard } from '../theme';
-import { Link } from 'react-router-dom';
 
 const CTA = styled.div`
   display: flex;
@@ -16,10 +15,17 @@ const CTA = styled.div`
   `}
 `;
 
-const Flex = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between'
-});
+const Flex = styled.div(
+  {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      flexDirection: 'column',
+      padding: '10px 0'
+    })
+);
 
 const StyledButton = styled(Button)``;
 
