@@ -11,7 +11,7 @@ const AvatarContainer = styled(Box)<{ size: string }>`
   border-radius: 50%;
   width: ${({ size }) => size};
   height: ${({ size }) => size};
-  background-color: ${({ theme }) => theme.bg6};
+  background-color: ${({ theme }) => theme.bg3};
 `;
 
 const Avatar = (props: IProps) => {
