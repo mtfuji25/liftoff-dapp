@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, {
   createGlobalStyle,
   DefaultTheme,
@@ -7,6 +7,7 @@ import styled, {
 } from 'styled-components';
 import { Text, TextProps } from 'rebass';
 import { Colors } from './styled';
+import Card from '../components/Card';
 
 const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
@@ -39,14 +40,12 @@ export const colors: Colors = {
   text4: '#565A69',
   text5: '#2C2F36',
 
-  bg1: '#232628',
+  bg1: '#131717',
   bg2: '#484E5A',
   bg3: '#CFD6E2',
   bg4: '#F9FAFB',
   bg5: '#B4B4B4',
   bg6: '#D8D8D8',
-
-  border: '#dadada',
 
   primary1: '#2A7CEA',
   primary2: '#FF8CC3',
@@ -66,7 +65,10 @@ export const colors: Colors = {
   green1: '#27AE60',
   yellow1: '#FFE270',
   yellow2: '#F3841E',
-  blue1: '#2A7CEA'
+  blue1: '#7289DA',
+
+  border: '#DADADA',
+  grey: '#ABABAB'
 };
 
 export const theme: DefaultTheme = {
@@ -150,11 +152,23 @@ export const StyledBody = styled.div<{ color: keyof Colors }>`
   padding: 1rem 1.25rem;`};
 `;
 
-export const StyledContainer = styled.div<{ sWidth: keyof string }>`
+export const StyledRocketCard = styled(Card)`
+  display: flex;
+  color: ${({ theme }) => theme.black};
+  padding: 2rem;
+  flex-direction: column;
+  margin: 0.5rem 0 !important;
+  justify-content: space-between;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 2rem 1rem;
+  `}
+`;
+
+export const StyledContainer = styled.div<{ sWidth: any }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: ${({ sWidth }) => `${sWidth}px`};
+  max-width: ${({ sWidth }) => `${sWidth}`};
   margin: auto;
 `;
 
@@ -173,6 +187,78 @@ export const TYPE = {
   }
 };
 
+export const Input = styled.input`
+  height: 38px;
+  border: 1px solid ${({ theme }) => theme.border};
+  color: ${({ theme }) => theme.text3};
+  padding: 0 2rem 0 1rem;
+  border-radius: 5px;
+  &:focus {
+    outline: none;
+    border: 2px solid #6e5dcc;
+  }
+`;
+
+export const StatusBadge = styled.div(
+  {
+    borderRadius: 20,
+    textAlign: 'center',
+    padding: '0.5rem 1rem',
+    margin: 5,
+    alignSelf: 'center'
+  },
+  ({ theme, color }) => ({
+    backgroundColor: theme.blue1,
+    color: theme.white
+  })
+);
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  cursor: pointer;
+  color: ${({ theme }) => theme.primary1};
+  font-weight: 500;
+  :hover {
+    text-decoration: none;
+  }
+  :focus {
+    outline: none;
+    text-decoration: none;
+  }
+  :active {
+    text-decoration: none;
+  }
+`;
+
+export const ExternalLink = ({
+  target = '_blank',
+  href,
+  rel = 'noopener noreferrer',
+  ...rest
+}: Omit<React.HTMLProps<HTMLAnchorElement>, 'as' | 'ref' | 'onClick'> & {
+  href: string;
+}) => {
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      // don't prevent default, don't redirect if it's a new tab
+      if (target === '_blank' || event.ctrlKey || event.metaKey) {
+      } else {
+        event.preventDefault();
+      }
+    },
+    [target]
+  );
+  return (
+    <StyledLink
+      target={target}
+      rel={rel}
+      href={href}
+      onClick={handleClick}
+      {...rest}
+    />
+  );
+};
+
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
   color: ${({ theme }) => theme.text1};
@@ -185,6 +271,7 @@ body {
 input, textarea {
   border: ${({ theme }) => `1px solid ${theme.border}`} !important;
   color: ${({ theme }) => theme.text5} !important;
+  text-decoration: none !important;
   font-family: 'Open Sans', sans-serif;
   border-radius: 5px;
 }

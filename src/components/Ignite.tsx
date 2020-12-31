@@ -1,17 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { StyledTable } from '../pages/RocketDetail';
+import { StyledTable } from '../pages/ProjectDetail';
 import Button from './Button';
 import Input from './Input';
 import { TYPE } from '../theme';
 
 const FORM = styled.form`
   display: flex;
-  padding: 1rem 0;
   align-items: center;
+  justify-content: space-between;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex-direction: column;
+    align-items: flex-start;
+  `}
   button {
-    margin: 0 1rem;
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin: 1rem 0;
+    `}
   }
 `;
 

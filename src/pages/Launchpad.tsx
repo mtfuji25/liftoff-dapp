@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { Box, Flex, Image } from 'rebass';
+import { Box, Flex } from 'rebass';
 import fleekStorage from '@fleekhq/fleek-storage-js';
 
 import CopyRight from '../components/Copyright';
@@ -129,7 +129,7 @@ const Launchpad: FC = () => {
   return (
     <>
       <StyledBody color="bg2">
-        <StyledContainer sWidth={800}>
+        <StyledContainer sWidth="800px">
           <TYPE.LargeHeader color="white" textAlign="center">
             🕹Launchpad for Developers
           </TYPE.LargeHeader>

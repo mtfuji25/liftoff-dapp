@@ -1,9 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
+
 import Launchpad from './Launchpad';
-import RocketDetail from './RocketDetail';
+import ProjectDetail from './ProjectDetail';
 import Rockets from './Rockets';
-import Header from 'components/Header';
+import Projects from './Projects';
+import Header from '../components/Header';
 
 function App() {
   return (
@@ -12,8 +15,10 @@ function App() {
       <Switch>
         <Route path={'/'} component={Launchpad} exact />
         <Route path={'/rockets'} component={Rockets} exact />
-        <Route path={'/rockets/:id'} component={RocketDetail} />
+        <Route path={'/projects'} component={Projects} exact />
+        <Route path={'/project/:id'} component={ProjectDetail} />
       </Switch>
+      <ReactTooltip html={true} />
     </>
   );
 }

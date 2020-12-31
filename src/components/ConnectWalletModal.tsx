@@ -5,10 +5,10 @@ import { useWeb3React } from '@web3-react/core';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { ReactComponent as MetaMaskIcon } from 'assets/svgs/metamask-color.svg';
 import { ReactComponent as WalletConnectIcon } from 'assets/svgs/wallet-connect.svg';
-import { ModalWrapper } from 'components/Modal';
-import { STORAGE_KEY_CONNECTOR } from 'config/constants';
-import connectors from 'utils/connectors';
-import { ConnectorNames } from 'utils/enums';
+import { ModalWrapper } from '../components/Modal';
+import { STORAGE_KEY_CONNECTOR } from '../config/constants';
+import connectors from '../utils/connectors';
+import { ConnectorNames } from '../utils/enums';
 import { TYPE } from '../theme';
 
 interface IProps {

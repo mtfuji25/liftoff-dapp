@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useConnectedWeb3Context } from 'contexts';
+import { useConnectedWeb3Context } from '../contexts';
 
 import Button from './Button';
 import ConnectWalletModal from './ConnectWalletModal';
@@ -11,8 +11,7 @@ import Menu from '../assets/menu.svg';
 import Close from '../assets/close.svg';
 import { TYPE } from '../theme';
 
-import { shortenAddress } from 'utils';
-import { validNetworkId } from 'utils/networks';
+import { shortenAddress } from '../utils';
 
 interface Props {}
 
@@ -113,7 +112,7 @@ const Header = (_props: Props) => {
             <StyledLink to="/">Launchpad</StyledLink>
           </StyledNavListItem>
           <StyledNavListItem onClick={() => setIsOpen(false)}>
-            <StyledLink to="/rockets">Rockets</StyledLink>
+            <StyledLink to="/projects">Projects</StyledLink>
           </StyledNavListItem>
           {isConnected ? (
             <StyledNavListItem>
