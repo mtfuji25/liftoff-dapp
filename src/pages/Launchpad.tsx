@@ -319,7 +319,7 @@ const Launchpad: FC = () => {
                 </TYPE.Body>
                 <Input
                   name="Date"
-                  placeholder="mm/dd/yy"
+                  placeholder="mm/dd/yyyy"
                   type="text"
                   ref={register({ required: true })}
                 />
@@ -343,7 +343,7 @@ const Launchpad: FC = () => {
                 </TYPE.Body>
                 <Input
                   name="softCap"
-                  placeholder=""
+                  placeholder="xETH"
                   type="text"
                   ref={register({ required: true })}
                 />
@@ -352,7 +352,7 @@ const Launchpad: FC = () => {
                 </TYPE.Body>
                 <Input
                   name="hardCap"
-                  placeholder=""
+                  placeholder="xETH"
                   type="text"
                   ref={register({ required: true })}
                 />
