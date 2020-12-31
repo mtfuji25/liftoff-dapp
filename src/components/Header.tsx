@@ -85,9 +85,7 @@ const StyledMenu = styled.img`
   z-index: 100;
   width: 2rem;
   display: none;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: block;
-`};
+  ${({ theme }) => theme.mediaWidth.upToSmall`display: block;`};
 `;
 
 const Header = (_props: Props) => {

@@ -1,12 +1,10 @@
 import { useMemo } from 'react';
-
 import {
   LiftoffEngineService,
   LiftoffInsuranceService,
   LiftoffRegistrationService
-} from '../../services';
-import { getContractAddress } from '../../config/networks';
-
+} from 'services';
+import { getContractAddress } from 'utils/networks';
 import { ConnectedWeb3Context } from '../connectedWeb3';
 
 export const useContracts = (context: ConnectedWeb3Context) => {
