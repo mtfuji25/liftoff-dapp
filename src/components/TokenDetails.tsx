@@ -16,7 +16,11 @@ const StyledCard = styled(Card)({
   marginTop: 10
 });
 
-const TokenDetails = () => {
+type Props = {
+  project: any;
+};
+
+const TokenDetails = ({ project }: Props) => {
   return (
     <StyledRocketCard>
       <TYPE.Header>Token Details</TYPE.Header>
@@ -25,15 +29,15 @@ const TokenDetails = () => {
       <CardGrid>
         <StyledCard>
           <TYPE.Body color="blue1">SOFTCAP</TYPE.Body>
-          <TYPE.Header>500 xETH</TYPE.Header>
+          <TYPE.Header>{project.softCap} xETH</TYPE.Header>
         </StyledCard>
         <StyledCard>
           <TYPE.Body color="blue1">TOTAL IGNITED</TYPE.Body>
-          <TYPE.Header>1500 xETH</TYPE.Header>
+          <TYPE.Header>0 xETH</TYPE.Header>
         </StyledCard>
         <StyledCard>
           <TYPE.Body color="blue1">HARDCAP</TYPE.Body>
-          <TYPE.Header>1500 xETH</TYPE.Header>
+          <TYPE.Header>{project.hardCap} xETH</TYPE.Header>
         </StyledCard>
       </CardGrid>
     </StyledRocketCard>

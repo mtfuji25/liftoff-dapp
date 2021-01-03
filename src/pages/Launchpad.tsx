@@ -56,7 +56,7 @@ const Launchpad: FC = () => {
   const [loading, setLoading] = useState(true);
   const context = useConnectedWeb3Context();
 
-  // console.log(errors);
+  console.log(context);
 
   const convertFormToConfig = (
     data: ILaunchPadInput,
