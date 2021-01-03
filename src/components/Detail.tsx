@@ -40,123 +40,129 @@ export const StyledTable = styled.table`
   padding: 2rem 0;
 `;
 
-const Detail = () => {
+type Props = {
+  project: any;
+};
+const Detail = ({ project }: Props) => {
   return (
-    <StyledRocketCard>
-      <StyledRocketDetailHead>
-        <Flex
-          flexDirection={['column', 'row']}
-          alignItems={['flex-start', 'center']}
-        >
-          <Flex alignItems="center" mr={['0', '1rem']} mb={['1rem', '0']}>
-            <Avatar size="4.375rem" />
-            <TYPE.Header ml="1.25rem">[Project Name]</TYPE.Header>
-          </Flex>
+    <>
+      {project ? (
+        <StyledRocketCard>
+          <StyledRocketDetailHead>
+            <Flex
+              flexDirection={['column', 'row']}
+              alignItems={['flex-start', 'center']}
+            >
+              <Flex alignItems="center" mr={['0', '1rem']} mb={['1rem', '0']}>
+                <Avatar size="4.375rem" />
+                <TYPE.Header ml="1.25rem">{project.projectName}</TYPE.Header>
+              </Flex>
 
-          <StatusBadge>Coming Soon</StatusBadge>
-        </Flex>
+              <StatusBadge>Coming Soon</StatusBadge>
+            </Flex>
 
-        <StyledCountdown>
-          <span>Launch in:</span>
-          <Countdown date="01/01/2021" />
-        </StyledCountdown>
-      </StyledRocketDetailHead>
-      <StyledRocketDetailBody>
-        <StyledTable cellSpacing={0} cellPadding={0}>
-          <tbody>
-            <tr>
-              <td width="40%">
-                <TYPE.Body>Ticker</TYPE.Body>
-              </td>
-              <td width="60%">
-                <TYPE.Body>XYZ</TYPE.Body>
-              </td>
-            </tr>
-            <tr>
-              <td width="40%">
-                <TYPE.Body>Total Supply</TYPE.Body>
-              </td>
-              <td width="60%">
-                <TYPE.Body>10,000,000 XYZ</TYPE.Body>
-              </td>
-            </tr>
-            <tr>
-              <td width="40%">
-                <TYPE.Body>Website</TYPE.Body>
-              </td>
-              <td width="60%">
-                <ExternalLink href="website.com">www.website.com</ExternalLink>
-              </td>
-            </tr>
-            <tr>
-              <td width="40%">
-                <TYPE.Body>dApp</TYPE.Body>
-              </td>
-              <td width="60%">
-                <ExternalLink href="website.com/dapp">
-                  www.website.com/dapp
-                </ExternalLink>
-              </td>
-            </tr>
-            <tr>
-              <td width="40%">
-                <TYPE.Body>Whitepaper</TYPE.Body>
-              </td>
-              <td width="60%">
-                <ExternalLink href="website.com/dapp">
-                  Click to view
-                </ExternalLink>
-              </td>
-            </tr>
-            <tr>
-              <td width="40%">
-                <TYPE.Body>Launch Date</TYPE.Body>
-              </td>
-              <td width="60%">
-                <TYPE.Body>11/10/2020 9PM PST</TYPE.Body>
-              </td>
-            </tr>
-            <tr>
-              <td width="40%">
-                <TYPE.Body>Social Media</TYPE.Body>
-              </td>
-              <td width="60%">
-                <Flex
-                  width="20%"
-                  justifyContent="space-around"
-                  flexDirection="row"
-                >
-                  <ExternalLink href="https://discord.gg">
-                    <DiscordIcon />
-                  </ExternalLink>
-                  <ExternalLink href="https://t.me">
-                    <TelegramIcon />
-                  </ExternalLink>
-                  <ExternalLink href="https://twitter.com">
-                    <TwitterIcon />
-                  </ExternalLink>
-                  <ExternalLink href="https://facebook.com">
-                    <FacebookIcon />
-                  </ExternalLink>
-                </Flex>
-              </td>
-            </tr>
-          </tbody>
-        </StyledTable>
-        <StyledDescription>
-          <TYPE.Body>
-            Project description Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-          </TYPE.Body>
-        </StyledDescription>
-      </StyledRocketDetailBody>
-    </StyledRocketCard>
+            <StyledCountdown>
+              <span>Launch in:</span>
+              <Countdown date={project.date} />
+            </StyledCountdown>
+          </StyledRocketDetailHead>
+          <StyledRocketDetailBody>
+            <StyledTable cellSpacing={0} cellPadding={0}>
+              <tbody>
+                <tr>
+                  <td width="40%">
+                    <TYPE.Body>Ticker</TYPE.Body>
+                  </td>
+                  <td width="60%">
+                    <TYPE.Body>{project.tokenTicker}</TYPE.Body>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="40%">
+                    <TYPE.Body>Total Supply</TYPE.Body>
+                  </td>
+                  <td width="60%">
+                    <TYPE.Body>
+                      {project.totalSupply} {project.tokenTicker}
+                    </TYPE.Body>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="40%">
+                    <TYPE.Body>Website</TYPE.Body>
+                  </td>
+                  <td width="60%">
+                    <ExternalLink href={project.websiteLink}>
+                      {project.websiteLink}
+                    </ExternalLink>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="40%">
+                    <TYPE.Body>dApp</TYPE.Body>
+                  </td>
+                  <td width="60%">
+                    <ExternalLink href={project.dappLink}>
+                      {project.dappLink}
+                    </ExternalLink>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="40%">
+                    <TYPE.Body>Whitepaper</TYPE.Body>
+                  </td>
+                  <td width="60%">
+                    <ExternalLink href={project.whitepaperLink}>
+                      Click to view
+                    </ExternalLink>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="40%">
+                    <TYPE.Body>Launch Date</TYPE.Body>
+                  </td>
+                  <td width="60%">
+                    <TYPE.Body>
+                      {project.date} {project.time} PST
+                    </TYPE.Body>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="40%">
+                    <TYPE.Body>Social Media</TYPE.Body>
+                  </td>
+                  <td width="60%">
+                    <Flex
+                      width="20%"
+                      justifyContent="space-around"
+                      flexDirection="row"
+                    >
+                      <ExternalLink href={project.discord}>
+                        <DiscordIcon />
+                      </ExternalLink>
+                      <ExternalLink href={project.telegram}>
+                        <TelegramIcon />
+                      </ExternalLink>
+                      <ExternalLink href={project.twitter}>
+                        <TwitterIcon />
+                      </ExternalLink>
+                      <ExternalLink href={project.facebook}>
+                        <FacebookIcon />
+                      </ExternalLink>
+                    </Flex>
+                  </td>
+                </tr>
+              </tbody>
+            </StyledTable>
+            <StyledDescription>
+              <TYPE.Body>{project.description}</TYPE.Body>
+            </StyledDescription>
+          </StyledRocketDetailBody>
+        </StyledRocketCard>
+      ) : (
+        <p>Loading</p>
+      )}
+    </>
   );
 };
 

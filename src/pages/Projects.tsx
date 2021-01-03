@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import fleekStorage from '@fleekhq/fleek-storage-js';
 import { StyledBody, TYPE, StatusBadge, ExternalLink } from '../theme';
 import { STab, STabList, STabPanel, STabs } from '../components/Tab';
 import { Warning } from '../components/Warning';
@@ -9,6 +10,8 @@ import Card from '../components/Card';
 import Footer from '../components/Footer';
 import Disclaimer from '../components/Disclaimer';
 import Countdown from '../components/Countdown';
+
+let rocketsData: any[] = [];
 
 const Container = styled.div(
   {
@@ -69,9 +72,10 @@ const StyledLink = styled(ExternalLink)({
 });
 
 type Props = {
-  title?: string;
+  badge?: string;
   color?: string;
   link?: string;
+  rocket?: any;
 };
 
 const Logo = () => (
@@ -90,33 +94,50 @@ const Logo = () => (
   </svg>
 );
 
-const CardState = ({ title, color, link }: Props) => (
+const CardState = ({ badge, color, rocket }: Props) => (
   <StyledCard>
     <StyledLogo>
-      {link && (
-        <Link to={link}>
-          <Logo />
-        </Link>
-      )}
+      <Link to={`project/${rocket.tokenTicker}`}>
+        <Logo />
+      </Link>
     </StyledLogo>
-    <TYPE.LargeHeader textAlign="center">Project Name</TYPE.LargeHeader>
-    <Badge color={color}>{title}</Badge>
+    <TYPE.LargeHeader textAlign="center">{rocket.projectName}</TYPE.LargeHeader>
+    <Badge color={color}>{badge}</Badge>
     <CountdownContainer>
-      <Countdown date="01/01/2021" />
+      <Countdown date={rocket.date} />
     </CountdownContainer>
     <CapInfo>
       <TYPE.Header>Soft Cap:</TYPE.Header>
-      <TYPE.Header>xETH</TYPE.Header>
+      <TYPE.Header>{rocket.softCap} xETH</TYPE.Header>
     </CapInfo>
     <CapInfo>
       <TYPE.Header>Hard Cap:</TYPE.Header>
-      <TYPE.Header>xETH</TYPE.Header>
+      <TYPE.Header>{rocket.hardCap} xETH</TYPE.Header>
     </CapInfo>
-    <StyledLink href="website.com">website.com</StyledLink>
+    <StyledLink href="website.com">{rocket.websiteLink}</StyledLink>
   </StyledCard>
 );
 
 const Projects = () => {
+  const [rockets, setRockets] = useState<any[]>([]);
+  useEffect(() => {
+    const loadProjects = async () => {
+      const projects = ['TNT', 'CXN', 'NVM'];
+
+      for (let index = 0; index < projects.length; index++) {
+        const { data } = await fleekStorage.get({
+          apiKey: process.env.REACT_APP_FLEEK_API_KEY || '',
+          apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || '',
+          key: `lift/${projects[index]}/config.json`,
+          bucket: process.env.REACT_APP_FLEEK_BUCKET || 'iamonuwa-team-bucket'
+        });
+        rocketsData.push(JSON.parse(data.toString()));
+      }
+      setRockets(rocketsData);
+    };
+
+    loadProjects();
+  }, []);
   return (
     <>
       <StyledBody color="bg3">
@@ -149,30 +170,35 @@ const Projects = () => {
               </STabList>
               <STabPanel>
                 <LayoutGrid>
-                  <CardState
-                    link="/project/1"
-                    title="Coming Soon"
-                    color="blue1"
-                  />
+                  {rockets.map((rocket, index: number) => (
+                    <CardState
+                      key={index}
+                      badge="Coming Soon"
+                      color="blue1"
+                      rocket={rocket}
+                    />
+                  ))}
                 </LayoutGrid>
               </STabPanel>
               <STabPanel>
                 <LayoutGrid>
                   <CardState
                     link="/project/3"
-                    title="ACTIVE NOW"
+                    badge="ACTIVE NOW"
                     color="red1"
+                    rocket={{}}
                   />
                   <CardState
                     link="/project/4"
-                    title="ACTIVE NOW"
+                    badge="ACTIVE NOW"
                     color="red1"
+                    rocket={{}}
                   />
                 </LayoutGrid>
               </STabPanel>
               <STabPanel>
                 <LayoutGrid>
-                  <CardState link="/project/5" title="COMPLETED" color="grey" />
+                  <CardState badge="COMPLETED" color="grey" rocket={{}} />
                 </LayoutGrid>
               </STabPanel>
             </STabs>
