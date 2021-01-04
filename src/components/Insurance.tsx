@@ -4,6 +4,7 @@ import ReactTooltip from 'react-tooltip';
 
 import Button from 'components/Button';
 import { TYPE, StyledRocketCard } from 'theme';
+import InputWithAddon from 'components/InputAddon';
 
 const CTA = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ const CTA = styled.div`
   `}
 `;
 
-const Flex = styled.div(
+const RowFlex = styled.div(
   {
     display: 'flex',
     justifyContent: 'space-between'
@@ -29,21 +30,69 @@ const Flex = styled.div(
     })
 );
 
-const StyledButton = styled(Button)``;
+const Redeem = styled.div({
+  marginTop: 20
+});
+
+const FlexWrap = styled.div(
+  {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      flexDirection: 'column',
+      padding: '10px 0'
+    })
+);
+
+const StyledButton = styled(Button)`
+  padding: 0.5rem;
+`;
+
+const RedeemButton = styled(StyledButton)(
+  {
+    margin: '0 1rem'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      margin: 0
+    })
+);
 
 const Insurance: FC = () => {
   return (
     <StyledRocketCard>
-      <Flex>
+      <RowFlex>
         <TYPE.LargeHeader>Insurance</TYPE.LargeHeader>
         <TYPE.Body data-tip data-for="insurance" color="primary1">
           What is LIFTOFF Insurance
         </TYPE.Body>
-      </Flex>
+      </RowFlex>
+
       <TYPE.Body>Redeem XYZ for orignial sale price with 2% fee.</TYPE.Body>
+
+      {/* Redeem insurance */}
+      <TYPE.Body color="blue1">Percentage remaining: 100%</TYPE.Body>
+
+      <TYPE.Body fontWeight="bold" marginBottom="0.5rem" marginTop="1rem">
+        Approve the insurance contract to redeem your tokens
+      </TYPE.Body>
       <CTA>
         <StyledButton>Start Insurance</StyledButton>
       </CTA>
+
+      <Redeem>
+        <TYPE.Body fontWeight="bold">Amount of XYZ to Redeem</TYPE.Body>
+        <FlexWrap>
+          <InputWithAddon placeholder="0" text="xETH" />
+          <RedeemButton>Redeem</RedeemButton>
+
+          <TYPE.Body color="blue1">
+            You will get 0.00 xETH (Current xETH Balance: 0.00)
+          </TYPE.Body>
+        </FlexWrap>
+      </Redeem>
 
       <ReactTooltip id="insurance">
         <p>
