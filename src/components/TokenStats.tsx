@@ -1,12 +1,25 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { StyledTable } from '../pages/ProjectDetail';
-import { TYPE, StyledRocketCard, ExternalLink } from '../theme';
-import Button from './Button';
+import { shortenAddress } from 'utils';
+import { StyledTable } from 'pages/ProjectDetail';
+import {
+  TYPE,
+  StyledRocketCard,
+  ExternalLink,
+  TBody,
+  TData,
+  TRow
+} from 'theme';
+import Button from 'components/Button';
+
+const Card = styled(StyledRocketCard)`
+  padding: 0;
+`;
 
 const CTA = styled.div`
   display: flex;
   align-items: center;
+  padding: 2rem 1rem;
   button {
     margin-right: 1rem;
   }
@@ -17,47 +30,55 @@ const CTA = styled.div`
 
 const StyledButton = styled(Button)``;
 
+const HeaderText = styled(TYPE.LargeHeader)`
+  padding: 2rem 1rem;
+`;
+
+const StyledTData = styled(TData)({
+  width: '66%'
+});
+
 const TokenStats: FC = () => {
   return (
-    <StyledRocketCard>
-      <TYPE.Header>Token Stats</TYPE.Header>
+    <Card>
+      <HeaderText>Token Stats</HeaderText>
       <StyledTable cellSpacing={0} cellPadding={0}>
-        <tbody>
-          <tr>
-            <td width="40%">
+        <TBody>
+          <TRow>
+            <TData>
               <TYPE.Body>Contract Link</TYPE.Body>
-            </td>
-            <td width="60%">
+            </TData>
+            <StyledTData>
               <ExternalLink href="https://etherscan.com/address/0xa205D203543122dd142aE63bB0A5EA9A32FB14f41">
-                0xa205D203543122dd142aE63bB0A5EA9A32FB14f41
+                {shortenAddress('0xa205D203543122dd142aE63bB0A5EA9A32FB14f41')}
               </ExternalLink>
-            </td>
-          </tr>
-          <tr>
-            <td width="40%">
+            </StyledTData>
+          </TRow>
+          <TRow>
+            <TData>
               <TYPE.Body>PenguinSwap Price</TYPE.Body>
-            </td>
-            <td width="60%">
+            </TData>
+            <StyledTData>
               <TYPE.Body>XX.XX</TYPE.Body>
-            </td>
-          </tr>
-          <tr>
-            <td width="40%">
+            </StyledTData>
+          </TRow>
+          <TRow>
+            <TData>
               <TYPE.Body>PenguinSwap Link</TYPE.Body>
-            </td>
-            <td width="60%">
+            </TData>
+            <StyledTData>
               <ExternalLink href="https://penguinswap.eth.link">
                 penguinswap.eth.link
               </ExternalLink>
               <TYPE.Body color="primary1"></TYPE.Body>
-            </td>
-          </tr>
-        </tbody>
+            </StyledTData>
+          </TRow>
+        </TBody>
       </StyledTable>
       <CTA>
         <StyledButton>Trade on PenguinSwap</StyledButton>
       </CTA>
-    </StyledRocketCard>
+    </Card>
   );
 };
 
