@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import fleekStorage from '@fleekhq/fleek-storage-js';
-import { StyledBody, TYPE, StatusBadge, ExternalLink } from '../theme';
 import { STab, STabList, STabPanel, STabs } from '../components/Tab';
 import { Warning } from '../components/Warning';
-import { StyledContainer } from '../theme';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
 import Disclaimer from '../components/Disclaimer';
 import Countdown from '../components/Countdown';
 
-let rocketsData: any[] = [];
+import { useProjects } from 'contexts/useProjects';
+
+import {
+  StyledContainer,
+  StyledBody,
+  TYPE,
+  StatusBadge,
+  ExternalLink
+} from '../theme';
 
 const Container = styled.div(
   {
@@ -123,25 +128,10 @@ const CardState = ({ badge, color, rocket }: Props) => {
 };
 
 const Projects = () => {
-  const [rockets, setRockets] = useState<any[]>([]);
-  useEffect(() => {
-    const loadProjects = async () => {
-      const projects = ['TNT', 'CXN', 'NVM'];
+  const { projects, loading, error } = useProjects();
 
-      for (let index = 0; index < projects.length; index++) {
-        const { data } = await fleekStorage.get({
-          apiKey: process.env.REACT_APP_FLEEK_API_KEY || '',
-          apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || '',
-          key: `lift/${projects[index]}/config.json`,
-          bucket: process.env.REACT_APP_FLEEK_BUCKET || 'iamonuwa-team-bucket'
-        });
-        rocketsData.push(JSON.parse(data.toString()));
-      }
-      setRockets(rocketsData);
-    };
+  console.log(projects, loading);
 
-    loadProjects();
-  }, []);
   return (
     <>
       <StyledBody color="bg3">
@@ -174,14 +164,12 @@ const Projects = () => {
               </STabList>
               <STabPanel>
                 <LayoutGrid>
-                  {rockets.map((rocket, index: number) => (
-                    <CardState
-                      key={index}
-                      badge="Coming Soon"
-                      color="blue1"
-                      rocket={rocket}
-                    />
-                  ))}
+                  <CardState
+                    link="/project/3"
+                    badge="ACTIVE NOW"
+                    color="blue1"
+                    rocket={{}}
+                  />
                 </LayoutGrid>
               </STabPanel>
               <STabPanel>

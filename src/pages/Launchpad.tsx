@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { Box, Flex } from 'rebass';
 import fleekStorage from '@fleekhq/fleek-storage-js';
+import { utils } from 'ethers';
 
 import CopyRight from '../components/Copyright';
 import Button from '../components/Button';
@@ -11,10 +12,11 @@ import Disclaimer from '../components/Disclaimer';
 import Footer from '../components/Footer';
 import Input from '../components/Input';
 import Textarea from '../components/Textarea';
+import Spinner from '../components/Spinner';
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 // import IMG_UPLOAD from '../assets/upload.png';
 
-import { useConnectedWeb3Context } from '../contexts';
+import { useConnectedWeb3Context, useContracts } from '../contexts';
 
 const StyledButton = styled(Button)`
   cursor: pointer !important;
@@ -46,17 +48,20 @@ interface ILaunchPadInput {
   telegram: string;
   twitter: string;
   facebook: string;
-  // dateTime: number;
+  date: string;
+  time: string;
+  softCap: string;
+  hardCap: string;
+  totalSupply: string;
   logo: FileList;
   openGraph: FileList;
 }
 
 const Launchpad: FC = () => {
   const { register, handleSubmit } = useForm();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const context = useConnectedWeb3Context();
-
-  console.log(context);
+  const { liftoffRegistration } = useContracts(context);
 
   const convertFormToConfig = (
     data: ILaunchPadInput,
@@ -80,50 +85,64 @@ const Launchpad: FC = () => {
   };
 
   const onSubmit = async (data: ILaunchPadInput) => {
-    if (loading) {
-      return;
+    try {
+      if (loading) {
+        return;
+      }
+      setLoading(true);
+
+      const startTime = Math.round(
+        new Date(`${data.date} ${data.time}:00 UTC`).getTime() / 1000
+      );
+
+      const baseKey = `liftoff-rockets/${data.tokenTicker}`;
+
+      // upload images
+      const logo = await fleekStorage.upload({
+        apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+        apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+        key: `${baseKey}/logo.png`,
+        data: data.logo[0]
+      });
+
+      const openGraph = await fleekStorage.upload({
+        apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+        apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+        key: `${baseKey}/open-graph.png`,
+        data: data.logo[0]
+      });
+
+      // upload json
+      const configJson = JSON.stringify(
+        convertFormToConfig(data, logo.publicUrl, openGraph.publicUrl)
+      );
+      const configBlob = new Blob([new TextEncoder().encode(configJson)], {
+        type: 'application/json;charset=utf-8'
+      });
+
+      const config = await fleekStorage.upload({
+        apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+        apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+        key: `${baseKey}/config.json`,
+        data: configBlob
+      });
+
+      console.log(config);
+
+      await liftoffRegistration.registerProject(
+        config.hash,
+        startTime,
+        utils.parseEther(data.softCap).toString(),
+        utils.parseEther(data.hardCap).toString(),
+        utils.parseEther(data.totalSupply).toString(),
+        data.projectName,
+        data.tokenTicker
+      );
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
-    setLoading(true);
-
-    const baseKey = `liftoff-rockets/${data.tokenTicker}`;
-
-    // upload images
-    const logo = await fleekStorage.upload({
-      apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
-      apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-      key: `${baseKey}/logo.png`,
-      data: data.logo[0]
-    });
-
-    console.log(logo);
-
-    const openGraph = await fleekStorage.upload({
-      apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
-      apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-      key: `${baseKey}/open-graph.png`,
-      data: data.logo[0]
-    });
-
-    console.log(openGraph);
-
-    // upload json
-    const configJson = JSON.stringify(
-      convertFormToConfig(data, logo.publicUrl, openGraph.publicUrl)
-    );
-    const configBlob = new Blob([new TextEncoder().encode(configJson)], {
-      type: 'application/json;charset=utf-8'
-    });
-
-    const config = await fleekStorage.upload({
-      apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
-      apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-      key: `${baseKey}/config.json`,
-      data: configBlob
-    });
-
-    console.log(config);
-
-    setLoading(false);
   };
 
   return (
@@ -315,35 +334,35 @@ const Launchpad: FC = () => {
                   LIFTOFF Launch Date & Time
                 </TYPE.Header>
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                  Date
+                  Date (GMT)
                 </TYPE.Body>
                 <Input
-                  name="Date"
+                  name="date"
                   placeholder="mm/dd/yyyy"
-                  type="text"
+                  type="date"
                   ref={register({ required: true })}
                 />
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Time (GMT)
                 </TYPE.Body>
                 <Input
-                  name="hardCap"
+                  name="time"
                   placeholder="00:00 AM"
-                  type="text"
+                  type="time"
                   ref={register({ required: true })}
                 />
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
                 <TYPE.Header color="black" mb="1.25rem">
-                  Soft & Hard Cap
+                  Soft & Hard Cap / TotalSupply
                 </TYPE.Header>
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Soft Cap
                 </TYPE.Body>
                 <Input
                   name="softCap"
-                  placeholder="xETH"
+                  placeholder="100"
                   type="text"
                   ref={register({ required: true })}
                 />
@@ -352,7 +371,16 @@ const Launchpad: FC = () => {
                 </TYPE.Body>
                 <Input
                   name="hardCap"
-                  placeholder="xETH"
+                  placeholder="1000"
+                  type="text"
+                  ref={register({ required: true })}
+                />
+                <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                  Total Supply
+                </TYPE.Body>
+                <Input
+                  name="totalSupply"
+                  placeholder="100000"
                   type="text"
                   ref={register({ required: true })}
                 />
@@ -363,6 +391,7 @@ const Launchpad: FC = () => {
             <Disclaimer color="#b4b4b4" />
             <CopyRight mt="1.375rem" />
           </Box>
+          <Spinner loading={loading} />
         </StyledContainer>
       </StyledBody>
       <Footer
