@@ -4,7 +4,11 @@ import ReactDOM from 'react-dom';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 
-import { ConnectedWeb3, ApolloProviderWrapper } from './contexts';
+import {
+  ConnectedWeb3,
+  ApolloProviderWrapper,
+  ModalProvider
+} from './contexts';
 import App from './pages/App';
 import ThemeProvider, { ThemedGlobalStyle } from './theme';
 import reportWebVitals from './reportWebVitals';
@@ -22,9 +26,11 @@ ReactDOM.render(
       <Web3ReactProvider getLibrary={getLibrary}>
         <ConnectedWeb3>
           <ApolloProviderWrapper>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
+            <ModalProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </ModalProvider>
           </ApolloProviderWrapper>
         </ConnectedWeb3>
       </Web3ReactProvider>
