@@ -91,7 +91,7 @@ const Launchpad: FC = () => {
       }
       setLoading(true);
 
-      const startTime = Math.round(
+      const startTime = Math.floor(
         new Date(`${data.date} ${data.time}:00 UTC`).getTime() / 1000
       );
 
