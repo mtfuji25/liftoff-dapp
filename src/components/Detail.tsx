@@ -1,29 +1,43 @@
 import React from 'react';
 import { Flex } from 'rebass';
 import styled from 'styled-components';
-import { StyledRocketCard, TYPE, StatusBadge, ExternalLink } from '../theme';
-import Avatar from './Avatar';
-import Countdown from './Countdown';
-import { ReactComponent as DiscordIcon } from '../assets/svgs/discord.svg';
-import { ReactComponent as TelegramIcon } from '../assets/svgs/telegram.svg';
-import { ReactComponent as TwitterIcon } from '../assets/svgs/twitter.svg';
-import { ReactComponent as FacebookIcon } from '../assets/svgs/facebook.svg';
+import {
+  StyledRocketCard,
+  TYPE,
+  StatusBadge,
+  ExternalLink,
+  TBody,
+  TRow,
+  TData
+} from 'theme';
+import Avatar from 'components/Avatar';
+import Countdown from 'components/Countdown';
+import DiscordIcon from '../assets/pngs/discord.png';
+import TelegramIcon from '../assets/pngs/telegram.png';
+import TwitterIcon from '../assets/pngs/twitter.png';
+import FacebookIcon from '../assets/pngs/facebook.png';
+
+const Card = styled(StyledRocketCard)`
+  padding: 0;
+`;
 
 const StyledRocketDetailHead = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 2rem 1rem;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     flex-direction: column;
   `};
 `;
 const StyledCountdown = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin-top: 1rem;
     flex-direction: column;
-    justify-content: center;
+  align-items: flex-start;
+  justify-content: center;
   `}
   span {
     margin-right: 1rem;
@@ -36,9 +50,57 @@ const StyledDescription = styled.div`
   max-width: 600px;
 `;
 
-export const StyledTable = styled.table`
-  padding: 2rem 0;
-`;
+export const StyledTable = styled.table``;
+
+const StyledFlex = styled.div(
+  {
+    display: 'flex',
+    width: 140,
+    justifyContent: 'space-between'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      width: '100%'
+    })
+);
+
+const WrappedFlex = styled.div(
+  {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      flexDirection: 'column',
+      alignItems: 'flex-start'
+    })
+);
+
+const StyledTData = styled(TData)(
+  {
+    justifyContent: 'space-between'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      width: '45%'
+    })
+);
+
+const SmallText = styled(TYPE.Small)(
+  {
+    marginLeft: '1rem'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      margin: 0
+    })
+);
+
+const StyledImage = styled.img({
+  width: 20,
+  height: 20
+});
 
 type Props = {
   project: any;
@@ -47,7 +109,7 @@ const Detail = ({ project }: Props) => {
   return (
     <>
       {project ? (
-        <StyledRocketCard>
+        <Card>
           <StyledRocketDetailHead>
             <Flex
               flexDirection={['column', 'row']}
@@ -55,10 +117,12 @@ const Detail = ({ project }: Props) => {
             >
               <Flex alignItems="center" mr={['0', '1rem']} mb={['1rem', '0']}>
                 <Avatar size="4.375rem" />
-                <TYPE.Header ml="1.25rem">{project.projectName}</TYPE.Header>
+                <TYPE.LargeHeader ml="1.25rem">
+                  {project.projectName}
+                </TYPE.LargeHeader>
               </Flex>
 
-              <StatusBadge>Coming Soon</StatusBadge>
+              <StatusBadge color="blue1">Coming Soon</StatusBadge>
             </Flex>
 
             <StyledCountdown>
@@ -68,97 +132,105 @@ const Detail = ({ project }: Props) => {
           </StyledRocketDetailHead>
           <StyledRocketDetailBody>
             <StyledTable cellSpacing={0} cellPadding={0}>
-              <tbody>
-                <tr>
-                  <td width="40%">
+              <TBody>
+                <TRow>
+                  <TData width="20%">
                     <TYPE.Body>Ticker</TYPE.Body>
-                  </td>
-                  <td width="60%">
+                  </TData>
+                  <TData width="20%">
                     <TYPE.Body>{project.tokenTicker}</TYPE.Body>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="40%">
+                  </TData>
+                </TRow>
+                <TRow>
+                  <TData width="20%">
                     <TYPE.Body>Total Supply</TYPE.Body>
-                  </td>
-                  <td width="60%">
+                  </TData>
+                  <StyledTData>
                     <TYPE.Body>
                       {project.totalSupply} {project.tokenTicker}
                     </TYPE.Body>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="40%">
+                  </StyledTData>
+                </TRow>
+                <TRow>
+                  <TData width="20%">
                     <TYPE.Body>Website</TYPE.Body>
-                  </td>
-                  <td width="60%">
-                    <ExternalLink href={project.websiteLink}>
-                      {project.websiteLink}
-                    </ExternalLink>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="40%">
+                  </TData>
+                  <StyledTData>
+                    <WrappedFlex>
+                      <ExternalLink href={project.websiteLink}>
+                        {project.websiteLink}
+                      </ExternalLink>
+                      <SmallText color="red">
+                        *Verify by checking site for link to this LIFTOFF launch
+                        page
+                      </SmallText>
+                    </WrappedFlex>
+                  </StyledTData>
+                </TRow>
+                <TRow>
+                  <TData width="20%">
                     <TYPE.Body>dApp</TYPE.Body>
-                  </td>
-                  <td width="60%">
+                  </TData>
+                  <StyledTData>
                     <ExternalLink href={project.dappLink}>
                       {project.dappLink}
                     </ExternalLink>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="40%">
+                  </StyledTData>
+                </TRow>
+                <TRow>
+                  <TData width="20%">
                     <TYPE.Body>Whitepaper</TYPE.Body>
-                  </td>
-                  <td width="60%">
+                  </TData>
+                  <StyledTData>
                     <ExternalLink href={project.whitepaperLink}>
                       Click to view
                     </ExternalLink>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="40%">
+                  </StyledTData>
+                </TRow>
+                <TRow>
+                  <TData width="20%">
                     <TYPE.Body>Launch Date</TYPE.Body>
-                  </td>
-                  <td width="60%">
+                  </TData>
+                  <StyledTData>
                     <TYPE.Body>
                       {project.date} {project.time} PST
                     </TYPE.Body>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="40%">
+                  </StyledTData>
+                </TRow>
+                <TRow>
+                  <TData width="20%">
                     <TYPE.Body>Social Media</TYPE.Body>
-                  </td>
-                  <td width="60%">
-                    <Flex
-                      width="20%"
-                      justifyContent="space-around"
-                      flexDirection="row"
-                    >
+                  </TData>
+                  <StyledTData width="40%">
+                    <StyledFlex>
                       <ExternalLink href={project.discord}>
-                        <DiscordIcon />
+                        <StyledImage src={DiscordIcon} alt="Liftoff Discord" />
                       </ExternalLink>
                       <ExternalLink href={project.telegram}>
-                        <TelegramIcon />
+                        <StyledImage
+                          src={TelegramIcon}
+                          alt="Liftoff Telegram"
+                        />
                       </ExternalLink>
                       <ExternalLink href={project.twitter}>
-                        <TwitterIcon />
+                        <StyledImage src={TwitterIcon} alt="Liftoff Twitter" />
                       </ExternalLink>
                       <ExternalLink href={project.facebook}>
-                        <FacebookIcon />
+                        <StyledImage
+                          src={FacebookIcon}
+                          alt="Liftoff Facebook"
+                        />
                       </ExternalLink>
-                    </Flex>
-                  </td>
-                </tr>
-              </tbody>
+                    </StyledFlex>
+                  </StyledTData>
+                </TRow>
+              </TBody>
             </StyledTable>
             <StyledDescription>
               <TYPE.Body>{project.description}</TYPE.Body>
             </StyledDescription>
           </StyledRocketDetailBody>
-        </StyledRocketCard>
+        </Card>
       ) : (
         <p>Loading</p>
       )}

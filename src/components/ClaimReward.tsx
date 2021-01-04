@@ -20,7 +20,7 @@ const StyledButton = styled(Button)``;
 const ClaimReward: FC = () => {
   return (
     <StyledRocketCard>
-      <TYPE.Header>Claim Token Rewards</TYPE.Header>
+      <TYPE.LargeHeader>Claim Token Rewards</TYPE.LargeHeader>
       <CTA>
         <StyledButton>Claim</StyledButton>
         <TYPE.Small color="primary1">

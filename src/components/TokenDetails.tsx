@@ -7,13 +7,16 @@ import { ProgressBar } from './ProgressBar';
 const CardGrid = styled.div({
   display: 'grid',
   gridGap: 10,
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  marginTop: 20
+  gridTemplateColumns: 'repeat(3, 1fr)'
 });
 
 const StyledCard = styled(Card)({
   border: '2px solid #CFD6E2',
   marginTop: 10
+});
+
+const ProgressStatus = styled.div({
+  padding: '1rem 0'
 });
 
 type Props = {
@@ -23,9 +26,10 @@ type Props = {
 const TokenDetails = ({ project }: Props) => {
   return (
     <StyledRocketCard>
-      <TYPE.Header>Token Details</TYPE.Header>
-      <ProgressBar completed={20} />
-
+      <TYPE.LargeHeader>Token Details</TYPE.LargeHeader>
+      <ProgressStatus>
+        <ProgressBar completed={20} />
+      </ProgressStatus>
       <CardGrid>
         <StyledCard>
           <TYPE.Body color="blue1">SOFTCAP</TYPE.Body>
