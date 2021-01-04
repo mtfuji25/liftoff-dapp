@@ -1,7 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import fleekStorage from '@fleekhq/fleek-storage-js';
 
 import CopyRight from 'components/Copyright';
 import Footer from 'components/Footer';
@@ -14,44 +12,33 @@ import Insurance from 'components/Insurance';
 import Detail from 'components/Detail';
 import ClaimxETH from 'components/ClaimXETH';
 
+import { useProject, useProjectConfig } from 'contexts';
+
 export const StyledTable = styled.table`
   padding: 2rem 0;
 `;
 
-const ProjectDetail: FC = () => {
-  const [projectData, setProjectData] = useState();
-  const history = useHistory();
+interface IProjectDetails {
+  id: string;
+}
+
+const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
+  console.log(id);
 
   useEffect(() => {
-    const loadProject = async () => {
-      try {
-        const project: string = history.location.pathname
-          .split('/')[2]
-          .toUpperCase();
+    console.log('==id', id);
+  }, [id]);
 
-        let { data } = await fleekStorage.get({
-          apiKey: process.env.REACT_APP_FLEEK_API_KEY || '',
-          apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || '',
-          key: `lift/${project}/config.json`
-        });
+  const { project } = useProject(id);
+  const { projectConf } = useProjectConfig(project?.ipfsHash);
 
-        let payload = JSON.parse(data);
-
-        setProjectData({
-          ...payload
-        });
-      } catch (error) {}
-    };
-
-    loadProject();
-  }, [history.location.pathname]);
   return (
     <>
-      {projectData ? (
+      {project && projectConf ? (
         <StyledBody color="bg3">
           <StyledContainer sWidth="85vw">
-            <Detail project={projectData} />
-            <TokenDetails project={projectData} />
+            <Detail date={project.startTime} projectConfig={projectConf} />
+            <TokenDetails project={project} />
             <ClaimReward />
             <TokenStats />
             <Insurance />

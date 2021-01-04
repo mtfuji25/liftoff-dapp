@@ -30,24 +30,22 @@ type GraphResponse = {
   tokenSale: Maybe<TokenSale>;
 };
 
-export const useProject = (tokeSaleId: string) => {
+export const useProject = (tokenSaleId: string) => {
   const [project, setProject] = useState<Maybe<TokenSale>>(null);
 
   const { data, error, loading } = useQuery<GraphResponse>(query, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'network-only',
     variables: {
-      id: tokeSaleId
+      id: tokenSaleId
     }
   });
 
   useEffect(() => {
-    if (!tokeSaleId) setProject(null);
-  }, [tokeSaleId]);
-
-  if (data && data.tokenSale) {
-    setProject(data.tokenSale);
-  }
+    if (data && data.tokenSale && tokenSaleId === data.tokenSale.id) {
+      setProject(data.tokenSale);
+    }
+  }, [data]);
 
   return { project, error, loading };
 };
