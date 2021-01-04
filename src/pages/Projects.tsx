@@ -1,14 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { StyledBody, TYPE, StatusBadge, ExternalLink } from '../theme';
+
 import { STab, STabList, STabPanel, STabs } from '../components/Tab';
 import { Warning } from '../components/Warning';
-import { StyledContainer } from '../theme';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
 import Disclaimer from '../components/Disclaimer';
 import Countdown from '../components/Countdown';
+
+import { useProjects } from 'contexts/useProjects';
+
+import {
+  StyledContainer,
+  StyledBody,
+  TYPE,
+  StatusBadge,
+  ExternalLink
+} from '../theme';
 
 const Container = styled.div(
   {
@@ -117,6 +126,10 @@ const CardState = ({ title, color, link }: Props) => (
 );
 
 const Projects = () => {
+  const { projects, loading, error } = useProjects();
+
+  console.log(projects, loading);
+
   return (
     <>
       <StyledBody color="bg3">
