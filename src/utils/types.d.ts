@@ -50,6 +50,8 @@ export type ProjectConfig = {
   tokenTicker: string;
   projectDescription: string;
   websiteLink: string;
+  whitepaperLink: string;
+  dappLink: string;
   discord: string;
   telegram: string;
   twitter: string;

@@ -18,7 +18,12 @@ function App() {
         <Switch>
           <Route path={'/'} component={Launchpad} exact />
           <Route path={'/projects'} component={Projects} exact />
-          <Route path={'/project/:id'} component={ProjectDetail} />
+          <Route
+            path={'/project/:id'}
+            render={(props) => (
+              <ProjectDetail id={props.match.params.id as string} />
+            )}
+          />
         </Switch>
       )}
     </>
