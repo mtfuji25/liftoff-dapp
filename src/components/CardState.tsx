@@ -72,15 +72,15 @@ interface ICardStateProps {
 const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
   const badges = {
     inactive: {
-      color: '#7289DA',
+      color: 'blue1',
       title: 'COMING SOON'
     },
     active: {
-      color: '#FD6A6A',
+      color: 'red4',
       title: 'ACTIVE NOW'
     },
     completed: {
-      color: '#ABABAB',
+      color: 'grey',
       title: 'COMPLETED'
     }
   };
@@ -101,7 +101,7 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
       <TYPE.LargeHeader textAlign="center">
         {projectConf ? projectConf.projectName : 'Project Name'}
       </TYPE.LargeHeader>
-      <Badge color={badges[type].color}>{badges[type].title}</Badge>
+      <Badge color="red1">{badges[type].title}</Badge>
       <CountdownContainer>
         <Countdown
           date={

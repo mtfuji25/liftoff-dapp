@@ -18,6 +18,8 @@ const CountdownWrapper = styled.div`
   })}
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin-top: 1rem;
+    background-color: transparent;
+    color: ${theme.black}
 `}
 `;
 const TimeSection = styled.div`
@@ -39,10 +41,6 @@ const Time = styled.div`
     theme.mediaWidth.upToMedium({
       padding: '0 0.8rem'
     })}
-    ${({ theme }) =>
-    theme.mediaWidth.upToLarge({
-      padding: '0 0.8rem'
-    })};
 `;
 
 const Countdown = ({ date }: Props) => {
