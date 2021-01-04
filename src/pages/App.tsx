@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import ReactTooltip from 'react-tooltip';
 
 import Launchpad from './Launchpad';
 import ProjectDetail from './ProjectDetail';
@@ -18,7 +17,6 @@ function App() {
         <Route path={'/projects'} component={Projects} exact />
         <Route path={'/project/:id'} component={ProjectDetail} />
       </Switch>
-      <ReactTooltip html={true} />
     </>
   );
 }

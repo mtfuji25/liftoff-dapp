@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import fleekStorage from '@fleekhq/fleek-storage-js';
 
-import CopyRight from '../components/Copyright';
-import Footer from '../components/Footer';
-import TokenStats from '../components/TokenStats';
-import TokenDetails from '../components/TokenDetails';
+import CopyRight from 'components/Copyright';
+import Footer from 'components/Footer';
+import TokenStats from 'components/TokenStats';
+import TokenDetails from 'components/TokenDetails';
 
-import { StyledBody, StyledContainer } from '../theme';
-import ClaimReward from '../components/ClaimReward';
-import Insurance from '../components/Insurance';
-import Detail from '../components/Detail';
-import ClaimxETH from '../components/ClaimXETH';
+import { StyledBody, StyledContainer } from 'theme';
+import ClaimReward from 'components/ClaimReward';
+import Insurance from 'components/Insurance';
+import Detail from 'components/Detail';
+import ClaimxETH from 'components/ClaimXETH';
 
 export const StyledTable = styled.table`
   padding: 2rem 0;

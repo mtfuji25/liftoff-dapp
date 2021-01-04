@@ -152,6 +152,15 @@ export const StyledBody = styled.div<{ color: keyof Colors }>`
   padding: 1rem 1.25rem;`};
 `;
 
+export const TBody = styled.tbody``;
+export const TRow = styled.tr``;
+export const TData = styled.td({}, ({ children, theme }) =>
+  theme.mediaWidth.upToSmall({
+    display: children ? 'table-cell' : 'none',
+    justifyContent: 'space-between'
+  })
+);
+
 export const StyledRocketCard = styled(Card)`
   display: flex;
   color: ${({ theme }) => theme.black};
@@ -199,7 +208,7 @@ export const Input = styled.input`
   }
 `;
 
-export const StatusBadge = styled.div(
+export const StatusBadge = styled.div<{ color: keyof Colors }>(
   {
     borderRadius: 20,
     textAlign: 'center',
@@ -208,9 +217,13 @@ export const StatusBadge = styled.div(
     alignSelf: 'center'
   },
   ({ theme, color }) => ({
-    backgroundColor: theme.blue1,
+    backgroundColor: (theme as any)[color],
     color: theme.white
-  })
+  }),
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      alignSelf: 'flex-start'
+    })
 );
 
 const StyledLink = styled.a`

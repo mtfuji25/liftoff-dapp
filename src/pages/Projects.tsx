@@ -29,7 +29,7 @@ const Badge = styled(StatusBadge)({
 });
 
 const StyledCard = styled(Card)({
-  padding: '1rem 3rem',
+  padding: 0,
   textAlign: 'center',
   display: 'flex',
   flexDirection: 'column'
@@ -39,7 +39,7 @@ const CapInfo = styled.div({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  margin: '20px 0'
+  padding: '1rem 2rem'
 });
 
 const LayoutGrid = styled.div(
@@ -60,11 +60,11 @@ const LayoutGrid = styled.div(
 
 const StyledLogo = styled.div({
   alignSelf: 'center',
-  paddingBottom: 16
+  padding: '16px 0'
 });
 
 const CountdownContainer = styled.div({
-  margin: '30px 0'
+  padding: '1rem 2rem'
 });
 
 const StyledLink = styled(ExternalLink)({
@@ -73,7 +73,7 @@ const StyledLink = styled(ExternalLink)({
 
 type Props = {
   badge?: string;
-  color?: string;
+  color: any;
   link?: string;
   rocket?: any;
 };
@@ -94,29 +94,33 @@ const Logo = () => (
   </svg>
 );
 
-const CardState = ({ badge, color, rocket }: Props) => (
-  <StyledCard>
-    <StyledLogo>
-      <Link to={`project/${rocket.tokenTicker}`}>
-        <Logo />
-      </Link>
-    </StyledLogo>
-    <TYPE.LargeHeader textAlign="center">{rocket.projectName}</TYPE.LargeHeader>
-    <Badge color={color}>{badge}</Badge>
-    <CountdownContainer>
-      <Countdown date={rocket.date} />
-    </CountdownContainer>
-    <CapInfo>
-      <TYPE.Header>Soft Cap:</TYPE.Header>
-      <TYPE.Header>{rocket.softCap} xETH</TYPE.Header>
-    </CapInfo>
-    <CapInfo>
-      <TYPE.Header>Hard Cap:</TYPE.Header>
-      <TYPE.Header>{rocket.hardCap} xETH</TYPE.Header>
-    </CapInfo>
-    <StyledLink href="website.com">{rocket.websiteLink}</StyledLink>
-  </StyledCard>
-);
+const CardState = ({ badge, color, rocket }: Props) => {
+  return (
+    <StyledCard>
+      <StyledLogo>
+        <Link to={`project/${rocket.tokenTicker}`}>
+          <Logo />
+        </Link>
+      </StyledLogo>
+      <TYPE.LargeHeader textAlign="center">
+        {rocket.projectName}
+      </TYPE.LargeHeader>
+      <Badge color={color}>{badge}</Badge>
+      <CountdownContainer>
+        <Countdown date={rocket.date} />
+      </CountdownContainer>
+      <CapInfo>
+        <TYPE.Header>Soft Cap:</TYPE.Header>
+        <TYPE.Header>{rocket.softCap} xETH</TYPE.Header>
+      </CapInfo>
+      <CapInfo>
+        <TYPE.Header>Hard Cap:</TYPE.Header>
+        <TYPE.Header>{rocket.hardCap} xETH</TYPE.Header>
+      </CapInfo>
+      <StyledLink href="website.com">{rocket.websiteLink}</StyledLink>
+    </StyledCard>
+  );
+};
 
 const Projects = () => {
   const [rockets, setRockets] = useState<any[]>([]);

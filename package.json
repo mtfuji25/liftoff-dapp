@@ -25,6 +25,7 @@
     "polished": "^4.0.5",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
+    "react-aria-tooltip": "^1.8.0",
     "react-dom": "^17.0.1",
     "react-form-hooks": "^1.1.5",
     "react-hook-form": "^6.12.2",
