@@ -12,9 +12,6 @@ export const useContracts = (context: ConnectedWeb3Context) => {
 
   const liftoffEngineAddress = getContractAddress(networkId, 'liftoffEngine');
   const liftoffEngine = useMemo(() => {
-    if (!provider) {
-      return null;
-    }
     return new LiftoffEngineService(liftoffEngineAddress, provider, account);
   }, [liftoffEngineAddress, provider, account]);
 
@@ -23,9 +20,6 @@ export const useContracts = (context: ConnectedWeb3Context) => {
     'liftoffInsurance'
   );
   const liftoffInsurance = useMemo(() => {
-    if (!provider) {
-      return null;
-    }
     return new LiftoffInsuranceService(
       liftoffInsuranceAddress,
       provider,
@@ -38,9 +32,6 @@ export const useContracts = (context: ConnectedWeb3Context) => {
     'liftoffRegistration'
   );
   const liftoffRegistration = useMemo(() => {
-    if (!provider) {
-      return null;
-    }
     return new LiftoffRegistrationService(
       liftoffRegistrationAddress,
       provider,

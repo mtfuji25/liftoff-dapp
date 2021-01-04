@@ -11,7 +11,7 @@ const StyledText = styled(Box)`
 const CopyRight = (props: BoxProps) => (
   <StyledText {...props}>
     <TYPE.Body fontWeight={400}>
-      © 2020 Liquidity Dividends Protocol. All rights reserved.
+      © 2021 Liquidity Dividends Protocol. All rights reserved.
     </TYPE.Body>
   </StyledText>
 );

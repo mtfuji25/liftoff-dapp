@@ -13,18 +13,18 @@ const networks: { [K in NetworkId]: INetwork } = {
     label: 'Mainnet',
     url: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
     contracts: {
-      liftoffEngine: '',
-      liftoffInsurance: '',
-      liftoffRegistration: ''
+      liftoffEngine: '0xEcBDC53216769bC2E854BcE9cd21183CDE28df76',
+      liftoffInsurance: '0xea723A65fB681868DaBd6456ae96A92B677a8F27',
+      liftoffRegistration: '0x1c5b37c07d2aa84579bD72e9266f218cc865c8cB'
     }
   },
   [networkIds.ROPSTEN]: {
     label: 'Ropsten',
     url: `https://ropsten.infura.io/v3/${INFURA_PROJECT_ID}`,
     contracts: {
-      liftoffEngine: '0xEcBDC53216769bC2E854BcE9cd21183CDE28df76',
-      liftoffInsurance: '0xea723A65fB681868DaBd6456ae96A92B677a8F27',
-      liftoffRegistration: '0x1c5b37c07d2aa84579bD72e9266f218cc865c8cB'
+      liftoffEngine: '0xD0bf1284B80e526ac8Fe672412cAd25583513ccd',
+      liftoffInsurance: '0xd50f6238EeC61BE7C11d9b3C41633d70C4F97f9c',
+      liftoffRegistration: '0x47e81CA121704626e0938c27147ad52C880eFdd5'
     }
   }
 };
