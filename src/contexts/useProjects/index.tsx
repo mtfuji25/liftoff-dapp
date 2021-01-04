@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
+import { TokenSale } from 'utils/types';
 
 const query = gql`
   query GetProjects {
@@ -25,40 +26,46 @@ const query = gql`
   }
 `;
 
-export type GraphResponseTokenSale = {
-  id: string;
-  tokenId: string;
-  ipfsHash: string;
-  startTime: number;
-  endTime: number;
-  softCap: string;
-  hardCap: string;
-  totalSupply: string;
-  totalIgnited: string;
-  rewardSupply: string;
-  dev: string;
-  deployed: string;
-  pair: string;
-  isSparked: boolean;
-  name: string;
-  symbol: string;
+type GraphResponse = {
+  tokenSales: TokenSale[];
 };
 
-type GraphResponse = {
-  tokenSales: GraphResponseTokenSale[];
+type Projects = {
+  inactive: TokenSale[];
+  active: TokenSale[];
+  completed: TokenSale[];
 };
 
 export const useProjects = () => {
-  const [projects, setProjects] = useState<GraphResponseTokenSale[]>([]);
+  const [projects, setProjects] = useState<Projects>({
+    inactive: [],
+    active: [],
+    completed: []
+  });
 
   const { error, loading } = useQuery<GraphResponse>(query, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'network-only',
     onCompleted: (data: GraphResponse) => {
+      const currentTime = Math.floor(Date.now() / 1000);
+      console.log(currentTime);
+
       if (data.tokenSales.length === 0) {
-        setProjects([]);
+        setProjects({ inactive: [], active: [], completed: [] });
       } else {
-        setProjects(data.tokenSales);
+        setProjects({
+          inactive: data.tokenSales.filter(
+            (tokenSale) => tokenSale.startTime > currentTime
+          ),
+          active: data.tokenSales.filter(
+            (tokenSale) =>
+              tokenSale.startTime <= currentTime &&
+              tokenSale.isSparked === false
+          ),
+          completed: data.tokenSales.filter(
+            (tokenSale) => tokenSale.isSparked === true
+          )
+        });
       }
     }
   });

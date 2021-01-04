@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { TYPE } from '../theme';
 
 interface Props {
-  date: string;
+  date: number;
 }
 
 const CountdownWrapper = styled.div`
@@ -44,7 +44,6 @@ const Time = styled.div`
 `;
 
 const Countdown = ({ date }: Props) => {
-  const [countdownDate] = useState(new Date(date).getTime());
   const [state, setState] = useState({
     days: 0,
     hours: 0,
@@ -54,24 +53,23 @@ const Countdown = ({ date }: Props) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const setNewTime = () => {
-    if (countdownDate) {
-      const currentTime = new Date().getTime();
+    if (date) {
+      const currentTime = Math.floor(new Date().getTime() / 1000);
+      const distanceToDate = date - currentTime > 0 ? date - currentTime : 0;
 
-      const distanceToDate = countdownDate - currentTime;
-
-      let days = Math.floor(distanceToDate / (1000 * 60 * 60 * 24));
-      let hours = Math.floor(
-        (distanceToDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      let mins = Math.floor((distanceToDate % (1000 * 60 * 60)) / (1000 * 60));
-      let secs = Math.floor((distanceToDate % (1000 * 60)) / 1000);
+      let days = Math.floor(distanceToDate / (60 * 60 * 24));
+      let hours = Math.floor((distanceToDate % (60 * 60 * 24)) / (60 * 60));
+      let mins = Math.floor((distanceToDate % (60 * 60)) / 60);
+      let secs = Math.floor(distanceToDate % 60);
 
       setState({ days: days, hours: hours, mins, secs });
     }
   };
 
   useEffect(() => {
-    setInterval(() => setNewTime(), 1000);
+    const interval = setInterval(() => setNewTime(), 1000);
+
+    return () => clearInterval(interval);
   }, [setNewTime]);
 
   return (
