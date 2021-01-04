@@ -112,7 +112,7 @@ const Rockets: FC = () => {
                         </TYPE.Body>
                       </StyledRocketItem>
                       <StyledRocketItem>
-                        <Countdown date={rocketData.date} />
+                        <Countdown date={1609731780} />
                       </StyledRocketItem>
                     </StyledRocketCard>
                   </Fragment>

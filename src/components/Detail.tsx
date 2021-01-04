@@ -58,7 +58,7 @@ const Detail = () => {
 
         <StyledCountdown>
           <span>Launch in:</span>
-          <Countdown date="01/01/2021" />
+          <Countdown date={1609731780} />
         </StyledCountdown>
       </StyledRocketDetailHead>
       <StyledRocketDetailBody>
