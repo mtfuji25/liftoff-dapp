@@ -16,13 +16,15 @@ const walletconnect = new WalletConnectConnector({
   pollingInterval: POLLING_INTERVAL
 });
 
-export const walletlink = new WalletLinkConnector({
+const walletlink = new WalletLinkConnector({
   url: supportedNetworkURLs[1],
   appName: 'liftoff'
 });
 
-export default {
+const connectors = {
   injected,
   walletconnect,
   walletlink
 };
+
+export default connectors;

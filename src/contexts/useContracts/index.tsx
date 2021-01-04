@@ -5,9 +5,9 @@ import {
   LiftoffRegistrationService
 } from 'services';
 import { getContractAddress } from 'utils/networks';
-import { ConnectedWeb3Context } from '../connectedWeb3';
+import { ConnectedWeb3ContextProps } from '../connectedWeb3';
 
-export const useContracts = (context: ConnectedWeb3Context) => {
+export const useContracts = (context: ConnectedWeb3ContextProps) => {
   const { account, library: provider, networkId } = context;
 
   const liftoffEngineAddress = getContractAddress(networkId, 'liftoffEngine');
