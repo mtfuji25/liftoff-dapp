@@ -11,6 +11,8 @@ export type Maybe<T> = T | null;
 export interface INetwork {
   label: string;
   url: string;
+  graphHttpUri: string;
+  graphWsUri: string;
   contracts: {
     liftoffEngine: string;
     liftoffInsurance: string;
