@@ -5,6 +5,7 @@ import { Warning } from '../components/Warning';
 import CardState from '../components/CardState';
 import Footer from '../components/Footer';
 import Disclaimer from '../components/Disclaimer';
+import CopyRight from '../components/Copyright';
 
 import { useProjects } from 'contexts/useProjects';
 import { ProjectKey } from 'utils/types';
@@ -88,13 +89,10 @@ const Projects = () => {
           </Container>
 
           <Disclaimer color="#000000" />
+          <CopyRight mt="1.375rem" color="#000000" />
         </StyledContainer>
       </StyledBody>
-      <Footer
-        noBackground={false}
-        color="bg3"
-        text={'© 2020 Liquidity Dividends Protocol. All rights reserved.'}
-      />
+      <Footer noBackground={false} color="bg3" />
     </>
   );
 };
