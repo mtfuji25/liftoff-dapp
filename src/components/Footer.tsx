@@ -6,7 +6,6 @@ import FooterImage from '../assets/footer.png';
 import { Colors } from '../theme/styled';
 
 interface Props {
-  text: string;
   color: any;
   noBackground: any;
 }

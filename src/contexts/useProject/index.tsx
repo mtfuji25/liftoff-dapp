@@ -45,6 +45,7 @@ export const useProject = (tokenSaleId: string) => {
     if (data && data.tokenSale && tokenSaleId === data.tokenSale.id) {
       setProject(data.tokenSale);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return { project, error, loading };

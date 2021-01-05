@@ -48,7 +48,6 @@ export const useProjects = () => {
     fetchPolicy: 'network-only',
     onCompleted: (data: GraphResponse) => {
       const currentTime = Math.floor(Date.now() / 1000);
-      console.log(currentTime);
 
       if (data.tokenSales.length === 0) {
         setProjects({ inactive: [], active: [], completed: [] });

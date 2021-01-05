@@ -459,11 +459,7 @@ const Launchpad: FC = () => {
           <Spinner loading={loading} />
         </StyledContainer>
       </StyledBody>
-      <Footer
-        noBackground={false}
-        color="bg2"
-        text={'© 2020 Liquidity Dividends Protocol. All rights reserved.'}
-      />
+      <Footer noBackground={false} color="bg2" />
     </>
   );
 };

@@ -10,6 +10,7 @@ import { useProjectConfig } from 'contexts/useProjectConfig';
 import { TokenSale, ProjectKey } from 'utils/types';
 
 import { TYPE, StatusBadge, ExternalLink } from '../theme';
+import { Colors } from 'theme/styled';
 
 const StyledCard = styled(Card)({
   padding: '1rem 3rem',
@@ -101,7 +102,9 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
       <TYPE.LargeHeader textAlign="center">
         {projectConf ? projectConf.projectName : 'Project Name'}
       </TYPE.LargeHeader>
-      <Badge color="red1">{badges[type].title}</Badge>
+      <Badge color={badges[type].color as keyof Colors}>
+        {badges[type].title}
+      </Badge>
       <CountdownContainer>
         <Countdown
           date={
