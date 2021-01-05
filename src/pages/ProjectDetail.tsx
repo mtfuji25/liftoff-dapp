@@ -97,11 +97,11 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
                 amount={igniteInfo ? igniteInfo.ignited : '0'}
               />
             )}
-
-            <TokenStats />
-
-            <Insurance tokenInsurance={tokenInsurance} />
-            <ClaimXETH />
+            {tokenSale.isSparked && <TokenStats />}
+            {tokenSale.isSparked && (
+              <Insurance tokenInsurance={tokenInsurance} />
+            )}
+            {tokenSale.isSparked && <ClaimXETH />}
           </StyledContainer>
 
           <Disclaimer color="#232628" />

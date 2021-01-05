@@ -78,11 +78,15 @@ const Projects = () => {
               </STabList>
               {tabs.map((tab) => (
                 <STabPanel key={tab.key}>
-                  {projects[tab.key].map((project) => (
-                    <LayoutGrid key={project.id}>
-                      <CardState type={tab.key} project={project} />
-                    </LayoutGrid>
-                  ))}
+                  <LayoutGrid>
+                    {projects[tab.key].map((project) => (
+                      <CardState
+                        key={project.id}
+                        type={tab.key}
+                        project={project}
+                      />
+                    ))}
+                  </LayoutGrid>
                 </STabPanel>
               ))}
             </STabs>
