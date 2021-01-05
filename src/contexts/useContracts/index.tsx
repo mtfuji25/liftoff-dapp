@@ -9,35 +9,44 @@ import { ConnectedWeb3ContextProps } from '../connectedWeb3';
 
 export const useContracts = (context: ConnectedWeb3ContextProps) => {
   const { account, library: provider, networkId } = context;
+  let liftoffEngineAddress: any;
+  let liftoffInsuranceAddress: any;
+  let liftoffRegistrationAddress: any;
 
-  const liftoffEngineAddress = getContractAddress(networkId, 'liftoffEngine');
+  if (networkId) {
+    liftoffEngineAddress = getContractAddress(networkId, 'liftoffEngine');
+    liftoffInsuranceAddress = getContractAddress(networkId, 'liftoffInsurance');
+    liftoffRegistrationAddress = getContractAddress(
+      networkId,
+      'liftoffRegistration'
+    );
+  }
+
   const liftoffEngine = useMemo(() => {
-    return new LiftoffEngineService(liftoffEngineAddress, provider, account);
-  }, [liftoffEngineAddress, provider, account]);
+    if (networkId) {
+      return new LiftoffEngineService(liftoffEngineAddress, provider, account);
+    }
+  }, [networkId, liftoffEngineAddress, provider, account]);
 
-  const liftoffInsuranceAddress = getContractAddress(
-    networkId,
-    'liftoffInsurance'
-  );
   const liftoffInsurance = useMemo(() => {
-    return new LiftoffInsuranceService(
-      liftoffInsuranceAddress,
-      provider,
-      account
-    );
-  }, [liftoffInsuranceAddress, provider, account]);
+    if (networkId) {
+      return new LiftoffInsuranceService(
+        liftoffInsuranceAddress,
+        provider,
+        account
+      );
+    }
+  }, [networkId, liftoffInsuranceAddress, provider, account]);
 
-  const liftoffRegistrationAddress = getContractAddress(
-    networkId,
-    'liftoffRegistration'
-  );
   const liftoffRegistration = useMemo(() => {
-    return new LiftoffRegistrationService(
-      liftoffRegistrationAddress,
-      provider,
-      account
-    );
-  }, [liftoffRegistrationAddress, provider, account]);
+    if (networkId) {
+      return new LiftoffRegistrationService(
+        liftoffRegistrationAddress,
+        provider,
+        account
+      );
+    }
+  }, [networkId, liftoffRegistrationAddress, provider, account]);
 
   return useMemo(
     () => ({

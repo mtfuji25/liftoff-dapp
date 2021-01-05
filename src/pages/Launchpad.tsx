@@ -16,7 +16,11 @@ import Spinner from '../components/Spinner';
 import { StyledBody, StyledContainer, TYPE } from '../theme';
 // import IMG_UPLOAD from '../assets/upload.png';
 
-import { useConnectedWeb3Context, useContracts } from '../contexts';
+import {
+  useConnectedWeb3Context,
+  useContracts,
+  useWalletModal
+} from '../contexts';
 
 const StyledButton = styled(Button)`
   cursor: pointer !important;
@@ -63,6 +67,7 @@ const Launchpad: FC = () => {
   const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
   const context = useConnectedWeb3Context();
+  const [, toggleModal] = useWalletModal();
   const { liftoffRegistration } = useContracts(context);
 
   const convertFormToConfig = (
@@ -88,8 +93,65 @@ const Launchpad: FC = () => {
 
   const onSubmit = async (data: ILaunchPadInput) => {
     try {
-      if (loading) {
-        return;
+      if (typeof context.networkId === 'undefined') {
+        toggleModal(true);
+      } else {
+        if (loading) {
+          return;
+        }
+        setLoading(true);
+
+        const startTime = Math.round(
+          new Date(`${data.date} ${data.time}:00 UTC`).getTime() / 1000
+        );
+
+        const baseKey = `liftoff-rockets/${data.tokenTicker}`;
+
+        // upload images
+        const logo = await fleekStorage.upload({
+          apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+          apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+          key: `${baseKey}/logo.png`,
+          data: data.logo[0]
+        });
+
+        const openGraph = await fleekStorage.upload({
+          apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+          apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+          key: `${baseKey}/open-graph.png`,
+          data: data.logo[0]
+        });
+
+        // upload json
+        const configJson = JSON.stringify(
+          convertFormToConfig(data, logo.publicUrl, openGraph.publicUrl)
+        );
+        const configBlob = new Blob([new TextEncoder().encode(configJson)], {
+          type: 'application/json;charset=utf-8'
+        });
+
+        const config = await fleekStorage.upload({
+          apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+          apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+          key: `${baseKey}/config.json`,
+          data: configBlob
+        });
+
+        console.log(config);
+
+        if (liftoffRegistration) {
+          await liftoffRegistration.registerProject(
+            config.hash,
+            startTime,
+            utils.parseEther(data.softCap).toString(),
+            utils.parseEther(data.hardCap).toString(),
+            utils.parseEther(data.totalSupply).toString(),
+            data.projectName,
+            data.tokenTicker
+          );
+        }
+
+        setLoading(false);
       }
       setLoading(true);
 
@@ -129,16 +191,19 @@ const Launchpad: FC = () => {
         data: configBlob
       });
 
-      await liftoffRegistration.registerProject(
-        config.hash,
-        startTime,
-        utils.parseEther(data.softCap).toString(),
-        utils.parseEther(data.hardCap).toString(),
-        utils.parseEther(data.totalSupply).toString(),
-        data.projectName,
-        data.tokenTicker
-      );
+      console.log(config);
 
+      if (liftoffRegistration) {
+        await liftoffRegistration.registerProject(
+          config.hash,
+          startTime,
+          utils.parseEther(data.softCap).toString(),
+          utils.parseEther(data.hardCap).toString(),
+          utils.parseEther(data.totalSupply).toString(),
+          data.projectName,
+          data.tokenTicker
+        );
+      }
       setLoading(false);
     } catch (error) {
       setLoading(false);
