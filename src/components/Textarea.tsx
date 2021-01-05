@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Textarea as UnstyledTextarea } from '@rebass/forms';
 
-const Textarea = styled.textarea`
+const Textarea = styled(UnstyledTextarea)`
   width: 100%;
   resize: none;
   height: 5rem;
