@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 
 import Launchpad from './Launchpad';
 import ProjectDetail from './ProjectDetail';
-import Rockets from './Rockets';
 import Projects from './Projects';
 import Header from '../components/Header';
 import ConnectWalletModal from 'components/ConnectWalletModal';
@@ -16,11 +15,14 @@ function App() {
       <Header />
       <Switch>
         <Route path={'/'} component={Launchpad} exact />
-        <Route path={'/rockets'} component={Rockets} exact />
         <Route path={'/projects'} component={Projects} exact />
-        <Route path={'/project/:id'} component={ProjectDetail} />
+        <Route
+          path={'/project/:id'}
+          render={(props) => (
+            <ProjectDetail id={props.match.params.id as string} />
+          )}
+        />
       </Switch>
-
       <ConnectWalletModal onClose={() => toggleModal(false)} visible={isOpen} />
     </>
   );

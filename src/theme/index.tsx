@@ -62,6 +62,7 @@ export const colors: Colors = {
   red1: '#FF6871',
   red2: '#F82D3A',
   red3: '#DE3636',
+  red4: '#FD6A6A',
   green1: '#27AE60',
   yellow1: '#FFE270',
   yellow2: '#F3841E',

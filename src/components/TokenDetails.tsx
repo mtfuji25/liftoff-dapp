@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StyledRocketCard, TYPE } from '../theme';
+import { utils } from 'ethers';
+import { TokenSale } from 'utils/types';
+
 import Card from './Card';
 import { ProgressBar } from './ProgressBar';
+
+import { StyledRocketCard, TYPE } from '../theme';
 
 const CardGrid = styled.div({
   display: 'grid',
@@ -20,7 +24,7 @@ const ProgressStatus = styled.div({
 });
 
 type Props = {
-  project: any;
+  project: TokenSale;
 };
 
 const TokenDetails = ({ project }: Props) => {
@@ -33,15 +37,17 @@ const TokenDetails = ({ project }: Props) => {
       <CardGrid>
         <StyledCard>
           <TYPE.Body color="blue1">SOFTCAP</TYPE.Body>
-          <TYPE.Header>{project.softCap} xETH</TYPE.Header>
+          <TYPE.Header>{utils.formatEther(project.softCap)} xETH</TYPE.Header>
         </StyledCard>
         <StyledCard>
           <TYPE.Body color="blue1">TOTAL IGNITED</TYPE.Body>
-          <TYPE.Header>0 xETH</TYPE.Header>
+          <TYPE.Header>
+            {utils.formatEther(project.totalIgnited)} xETH
+          </TYPE.Header>
         </StyledCard>
         <StyledCard>
           <TYPE.Body color="blue1">HARDCAP</TYPE.Body>
-          <TYPE.Header>{project.hardCap} xETH</TYPE.Header>
+          <TYPE.Header>{utils.formatEther(project.hardCap)} xETH</TYPE.Header>
         </StyledCard>
       </CardGrid>
     </StyledRocketCard>
