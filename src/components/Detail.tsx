@@ -1,6 +1,7 @@
 import React from 'react';
 import { Flex } from 'rebass';
 import styled from 'styled-components';
+import { utils } from 'ethers';
 import {
   StyledRocketCard,
   TYPE,
@@ -50,6 +51,7 @@ const StyledRocketDetailBody = styled.div``;
 
 const StyledDescription = styled.div`
   max-width: 600px;
+  margin: 1rem;
 `;
 
 export const StyledTable = styled.table``;
@@ -133,6 +135,10 @@ const Detail = ({ project, projectConfig }: Props) => {
       ? 'completed'
       : 'active';
 
+  // TODO: timerText, timer based on project status
+  const timerText = 'Launch in:';
+  const timer = project.startTime;
+
   return (
     <Card>
       <StyledRocketDetailHead>
@@ -141,7 +147,7 @@ const Detail = ({ project, projectConfig }: Props) => {
           alignItems={['flex-start', 'center']}
         >
           <Flex alignItems="center" mr={['0', '1rem']} mb={['1rem', '0']}>
-            <Avatar size="4.375rem" />
+            <Avatar size="4.375rem" imgSrc={projectConfig.logo} />
             <TYPE.LargeHeader ml="1.25rem">
               {projectConfig.projectName}
             </TYPE.LargeHeader>
@@ -153,8 +159,8 @@ const Detail = ({ project, projectConfig }: Props) => {
         </Flex>
 
         <StyledCountdown>
-          <span>Launch in:</span>
-          <Countdown date={project.startTime} />
+          <span>{timerText}</span>
+          <Countdown date={timer} />
         </StyledCountdown>
       </StyledRocketDetailHead>
       <StyledRocketDetailBody>
@@ -174,7 +180,8 @@ const Detail = ({ project, projectConfig }: Props) => {
               </TData>
               <StyledTData>
                 <TYPE.Body>
-                  {projectConfig.totalSupply} {projectConfig.tokenTicker}
+                  {utils.formatEther(project.totalSupply)}{' '}
+                  {projectConfig.tokenTicker}
                 </TYPE.Body>
               </StyledTData>
             </TRow>
@@ -187,7 +194,7 @@ const Detail = ({ project, projectConfig }: Props) => {
                   <ExternalLink href={projectConfig.websiteLink}>
                     {projectConfig.websiteLink}
                   </ExternalLink>
-                  <SmallText color="red">
+                  <SmallText color="red" marginLeft="1rem">
                     *Verify by checking site for link to this LIFTOFF launch
                     page
                   </SmallText>
@@ -230,18 +237,26 @@ const Detail = ({ project, projectConfig }: Props) => {
               </TData>
               <StyledTData width="40%">
                 <StyledFlex>
-                  <ExternalLink href={projectConfig.discord}>
-                    <StyledImage src={DiscordIcon} alt="Liftoff Discord" />
-                  </ExternalLink>
-                  <ExternalLink href={projectConfig.telegram}>
-                    <StyledImage src={TelegramIcon} alt="Liftoff Telegram" />
-                  </ExternalLink>
-                  <ExternalLink href={projectConfig.twitter}>
-                    <StyledImage src={TwitterIcon} alt="Liftoff Twitter" />
-                  </ExternalLink>
-                  <ExternalLink href={projectConfig.facebook}>
-                    <StyledImage src={FacebookIcon} alt="Liftoff Facebook" />
-                  </ExternalLink>
+                  {projectConfig.discord && (
+                    <ExternalLink href={projectConfig.discord}>
+                      <StyledImage src={DiscordIcon} alt="Liftoff Discord" />
+                    </ExternalLink>
+                  )}
+                  {projectConfig.telegram && (
+                    <ExternalLink href={projectConfig.telegram}>
+                      <StyledImage src={TelegramIcon} alt="Liftoff Telegram" />
+                    </ExternalLink>
+                  )}
+                  {projectConfig.twitter && (
+                    <ExternalLink href={projectConfig.twitter}>
+                      <StyledImage src={TwitterIcon} alt="Liftoff Twitter" />
+                    </ExternalLink>
+                  )}
+                  {projectConfig.facebook && (
+                    <ExternalLink href={projectConfig.facebook}>
+                      <StyledImage src={FacebookIcon} alt="Liftoff Facebook" />
+                    </ExternalLink>
+                  )}
                 </StyledFlex>
               </StyledTData>
             </TRow>
