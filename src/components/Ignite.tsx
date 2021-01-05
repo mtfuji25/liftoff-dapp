@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-
-import { StyledTable } from '../pages/ProjectDetail';
+import { utils } from 'ethers';
 import Button from './Button';
 import Input from './Input';
-import { TYPE } from '../theme';
+import { TYPE, StyledRocketCard, ExternalLink } from '../theme';
+import { useConnectedWeb3Context, useContracts } from '../contexts';
+import { Ignitor } from 'utils/types';
 
-const FORM = styled.form`
+const Flex = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     flex-direction: column;
     align-items: flex-start;
@@ -21,32 +21,60 @@ const FORM = styled.form`
   }
 `;
 
-const StyledButton = styled(Button)``;
+const StyledButton = styled(Button)`
+  margin-left: 1.25rem;
+  margin-right: 1.825rem;
+`;
 
-const Ignite = () => {
+interface IProps {
+  tokenSaleId: string;
+  igniteInfo: Maybe<Ignitor>;
+}
+
+const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo }) => {
+  const context = useConnectedWeb3Context();
+  const { liftoffEngine } = useContracts(context);
+
+  const [amount, setAmount] = useState('0');
+
+  const onChangeAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(event.target.value);
+  };
+
+  const onClickIgnite = async () => {
+    if (!amount || amount === '0' || !liftoffEngine) {
+      return;
+    }
+    try {
+      await liftoffEngine.igniteEth(tokenSaleId, amount);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <>
-      <TYPE.Header>Ignite</TYPE.Header>
-      <StyledTable cellSpacing={0} cellPadding={0}>
-        <tbody>
-          <tr>
-            <td width="40%">
-              <TYPE.Body>Total ETH Ignited</TYPE.Body>
-            </td>
-            <td width="60%">
-              <TYPE.Body>135 ETH</TYPE.Body>
-            </td>
-          </tr>
-        </tbody>
-      </StyledTable>
-
-      <TYPE.Header>Amount of ETH to ignite</TYPE.Header>
-      <FORM>
-        <Input placeholder="0" type="text" width="30%" />
-        <StyledButton>Ignite</StyledButton>
-        <TYPE.Small color="primary1">Your ETH ignited: 1.26 ETH</TYPE.Small>
-      </FORM>
-    </>
+    <StyledRocketCard>
+      <TYPE.LargeHeader>Ignite</TYPE.LargeHeader>
+      <TYPE.Body lineHeight="2.25rem">
+        It automatically converts ETH to xETH.{' '}
+        <ExternalLink href="#">Learn about xETH</ExternalLink>
+      </TYPE.Body>
+      <TYPE.Header mt="1.375rem">Amount of ETH to ignite</TYPE.Header>
+      <Flex>
+        <Input
+          placeholder="0"
+          type="text"
+          width="30%"
+          value={amount}
+          onChange={(event) => onChangeAmount(event)}
+        />
+        <StyledButton onClick={onClickIgnite}>Ignite</StyledButton>
+        <TYPE.Small color="primary1">
+          Your ETH ignited:{' '}
+          {igniteInfo ? utils.formatEther(igniteInfo.ignited) : 0} ETH
+        </TYPE.Small>
+      </Flex>
+    </StyledRocketCard>
   );
 };
 
