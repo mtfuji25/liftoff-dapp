@@ -232,6 +232,7 @@ const Launchpad: FC = () => {
                       type="text"
                       error={errors.projectName && errors.projectName.message}
                       value={value}
+                      autoFocus
                       name={name}
                       onChange={onChange}
                       onBlur={onBlur}
@@ -653,7 +654,12 @@ const Launchpad: FC = () => {
                 )}
               </Card>
 
-              <StyledButton type="submit">Launch</StyledButton>
+              <StyledButton
+                disabled={Object.keys(errors).length > 0}
+                type="submit"
+              >
+                Launch
+              </StyledButton>
             </form>
             <Disclaimer color="#b4b4b4" />
             <CopyRight mt="1.375rem" />
