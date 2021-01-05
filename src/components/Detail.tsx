@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex } from 'rebass';
 import styled from 'styled-components';
-import { utils } from 'ethers';
+import { utils, BigNumber } from 'ethers';
 import {
   StyledRocketCard,
   TYPE,
@@ -108,10 +108,11 @@ const StyledImage = styled.img({
 
 type Props = {
   projectConfig: ProjectConfig;
-  project: TokenSale;
+  tokenSale: TokenSale;
+  isInsuranceStarted: boolean;
 };
 
-const Detail = ({ project, projectConfig }: Props) => {
+const Detail = ({ isInsuranceStarted, tokenSale, projectConfig }: Props) => {
   const badges = {
     inactive: {
       color: 'blue1',
@@ -126,18 +127,32 @@ const Detail = ({ project, projectConfig }: Props) => {
       title: 'COMPLETED'
     }
   };
+
   const currentTime = Math.floor(Date.now() / 1000);
 
-  const type: ProjectKey =
-    project.startTime > currentTime
-      ? 'inactive'
-      : project.isSparked
+  const status: ProjectKey =
+    tokenSale.isSparked ||
+    (currentTime > tokenSale.endTime &&
+      BigNumber.from(tokenSale.totalIgnited).lt(
+        BigNumber.from(tokenSale.softCap)
+      ))
       ? 'completed'
+      : tokenSale.startTime > currentTime
+      ? 'inactive'
       : 'active';
 
-  // TODO: timerText, timer based on project status
-  const timerText = 'Launch in:';
-  const timer = project.startTime;
+  let countdownText = '';
+  let countdown = 0;
+  if (status === 'inactive') {
+    countdownText = 'Launch in:';
+    countdown = tokenSale ? tokenSale.startTime : 0;
+  } else if (status === 'active') {
+    countdownText = 'Spark in:';
+    countdown = tokenSale ? tokenSale.endTime : 0;
+  } else if (status === 'completed') {
+    countdownText = isInsuranceStarted ? 'Insurance expires in:' : '';
+    countdown = 0;
+  }
 
   return (
     <Card>
@@ -153,14 +168,14 @@ const Detail = ({ project, projectConfig }: Props) => {
             </TYPE.LargeHeader>
           </Flex>
 
-          <StatusBadge color={badges[type].color as keyof Colors}>
-            {badges[type].title}
+          <StatusBadge color={badges[status].color as keyof Colors}>
+            {badges[status].title}
           </StatusBadge>
         </Flex>
 
         <StyledCountdown>
-          <span>{timerText}</span>
-          <Countdown date={timer} />
+          <span>{countdownText}</span>
+          <Countdown date={countdown} />
         </StyledCountdown>
       </StyledRocketDetailHead>
       <StyledRocketDetailBody>
@@ -180,7 +195,7 @@ const Detail = ({ project, projectConfig }: Props) => {
               </TData>
               <StyledTData>
                 <TYPE.Body>
-                  {utils.formatEther(project.totalSupply)}{' '}
+                  {utils.formatEther(tokenSale.totalSupply)}{' '}
                   {projectConfig.tokenTicker}
                 </TYPE.Body>
               </StyledTData>

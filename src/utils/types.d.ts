@@ -43,6 +43,14 @@ export type TokenSale = {
   symbol: string;
 };
 
+export type Ignitor = {
+  id: string;
+  address: string;
+  ignited: string;
+  hasClaimed: boolean;
+  hasRefunded: boolean;
+};
+
 export type ProjectKey = 'inactive' | 'active' | 'completed';
 
 export type ProjectConfig = {
@@ -63,6 +71,26 @@ export type ProjectConfig = {
   totalSupply: string;
   logo: string;
   openGraph: string;
+};
+
+export type TokenInsurance = {
+  id: string;
+  tokenId: string;
+  isRegistered: boolean;
+  isInitialized: boolean;
+  startTime?: number;
+  totalIgnited?: string;
+  tokensPerEthWad?: string;
+  baseXEth?: string;
+  baseTokenLidPool?: string;
+  redeemedXEth?: string;
+  claimedXEth?: string;
+  claimedTokenLidPool?: string;
+  dev?: string;
+  deployed?: string;
+  pair?: string;
+  isUnwound?: boolean;
+  hasBaseFeeClaimed?: boolean;
 };
 
 declare global {

@@ -1,19 +1,29 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
+import { BigNumber } from 'ethers';
 
 import CopyRight from 'components/Copyright';
 import Disclaimer from 'components/Disclaimer';
 import Footer from 'components/Footer';
 import TokenStats from 'components/TokenStats';
 import TokenDetails from 'components/TokenDetails';
-
-import { StyledBody, StyledContainer } from 'theme';
+import Ignite from 'components/Ignite';
+import Spark from 'components/Spark';
+import ClaimRefund from 'components/ClaimRefund';
 import ClaimReward from 'components/ClaimReward';
 import Insurance from 'components/Insurance';
 import Detail from 'components/Detail';
-import ClaimxETH from 'components/ClaimXETH';
+import ClaimXETH from 'components/ClaimXETH';
 
-import { useProject, useProjectConfig } from 'contexts';
+import { StyledBody, StyledContainer } from 'theme';
+
+import {
+  useProject,
+  useInsurance,
+  useProjectConfig,
+  useIgniteInfo,
+  useConnectedWeb3Context
+} from 'contexts';
 
 export const StyledTable = styled.table`
   padding: 2rem 0;
@@ -24,20 +34,74 @@ interface IProjectDetails {
 }
 
 const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
-  const { project } = useProject(id);
-  const { projectConf } = useProjectConfig(project?.ipfsHash);
+  const { account } = useConnectedWeb3Context();
+  const { project: tokenSale } = useProject(id);
+  const { insurance: tokenInsurance } = useInsurance(id);
+  const { projectConf } = useProjectConfig(tokenSale?.ipfsHash);
+  const { igniteInfo } = useIgniteInfo(tokenSale?.id || '', account);
+
+  const currentTime = Math.floor(Date.now() / 1000);
+
+  let isIgniting = false;
+  let isRefunding = false;
+  let isSparkReady = false;
+  let isClaimable = false;
+  if (tokenSale) {
+    isIgniting =
+      tokenSale.startTime < currentTime &&
+      tokenSale.endTime > currentTime &&
+      BigNumber.from(tokenSale.totalIgnited).lt(
+        BigNumber.from(tokenSale.hardCap)
+      );
+    isRefunding =
+      currentTime > tokenSale.endTime &&
+      BigNumber.from(tokenSale.totalIgnited).lt(
+        BigNumber.from(tokenSale.softCap)
+      );
+    isSparkReady =
+      !tokenSale.isSparked &&
+      (BigNumber.from(tokenSale.totalIgnited).gte(
+        BigNumber.from(tokenSale.hardCap)
+      ) ||
+        (currentTime > tokenSale.endTime &&
+          BigNumber.from(tokenSale.totalIgnited).gte(
+            BigNumber.from(tokenSale.softCap)
+          )));
+    isClaimable =
+      tokenSale.isSparked && !!(igniteInfo && !igniteInfo.hasClaimed);
+  }
+
+  const isInsuranceStarted = !!(tokenInsurance && tokenInsurance.isInitialized);
 
   return (
     <>
-      {project && projectConf ? (
+      {tokenSale && projectConf ? (
         <StyledBody color="bg3">
           <StyledContainer sWidth="85vw">
-            <Detail project={project} projectConfig={projectConf} />
-            <TokenDetails project={project} />
-            <ClaimReward />
+            <Detail
+              isInsuranceStarted={isInsuranceStarted}
+              tokenSale={tokenSale}
+              projectConfig={projectConf}
+            />
+            <TokenDetails tokenSale={tokenSale} />
+            {isIgniting && (
+              <Ignite tokenSaleId={tokenSale.id} igniteInfo={igniteInfo} />
+            )}
+            {isSparkReady && <Spark tokenSaleId={tokenSale.id} />}
+            {isClaimable && (
+              <ClaimReward tokenSale={tokenSale} igniteInfo={igniteInfo} />
+            )}
+            {isRefunding && (
+              <ClaimRefund
+                tokenSaleId={tokenSale.id}
+                amount={igniteInfo ? igniteInfo.ignited : '0'}
+              />
+            )}
+
             <TokenStats />
-            <Insurance />
-            <ClaimxETH />
+
+            <Insurance tokenInsurance={tokenInsurance} />
+            <ClaimXETH />
           </StyledContainer>
 
           <Disclaimer color="#232628" />
