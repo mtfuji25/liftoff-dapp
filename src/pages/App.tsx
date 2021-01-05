@@ -5,27 +5,25 @@ import Launchpad from './Launchpad';
 import ProjectDetail from './ProjectDetail';
 import Projects from './Projects';
 import Header from '../components/Header';
-
-import { useConnectedWeb3Context } from '../contexts';
+import ConnectWalletModal from 'components/ConnectWalletModal';
+import { useWalletModal } from 'contexts';
 
 function App() {
-  const { networkId } = useConnectedWeb3Context();
-
+  const [{ isOpen }, toggleModal] = useWalletModal();
   return (
     <>
       <Header />
-      {!!networkId && (
-        <Switch>
-          <Route path={'/'} component={Launchpad} exact />
-          <Route path={'/projects'} component={Projects} exact />
-          <Route
-            path={'/project/:id'}
-            render={(props) => (
-              <ProjectDetail id={props.match.params.id as string} />
-            )}
-          />
-        </Switch>
-      )}
+      <Switch>
+        <Route path={'/'} component={Launchpad} exact />
+        <Route path={'/projects'} component={Projects} exact />
+        <Route
+          path={'/project/:id'}
+          render={(props) => (
+            <ProjectDetail id={props.match.params.id as string} />
+          )}
+        />
+      </Switch>
+      <ConnectWalletModal onClose={() => toggleModal(false)} visible={isOpen} />
     </>
   );
 }

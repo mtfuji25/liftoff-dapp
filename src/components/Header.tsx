@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useConnectedWeb3Context } from '../contexts';
+import { useConnectedWeb3Context, useWalletModal } from '../contexts';
 
 import Button from './Button';
-import ConnectWalletModal from './ConnectWalletModal';
 
 import Logo from '../assets/logo.png';
 import Menu from '../assets/menu.svg';
@@ -89,8 +88,8 @@ const StyledMenu = styled.img`
 `;
 
 const Header = (_props: Props) => {
+  const [, toggleModal] = useWalletModal();
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setModalState] = useState(false);
   const context = useConnectedWeb3Context();
   const { account } = context;
   const isConnected = !!account;
@@ -120,17 +119,13 @@ const Header = (_props: Props) => {
             </StyledNavListItem>
           ) : (
             <StyledNavListItem onClick={() => setIsOpen(false)}>
-              <StyledButton onClick={() => setModalState(true)}>
+              <StyledButton onClick={() => toggleModal(true)}>
                 Connect wallet
               </StyledButton>
             </StyledNavListItem>
           )}
         </StyledNavList>
       </StyledNavContainer>
-      <ConnectWalletModal
-        onClose={() => setModalState(false)}
-        visible={isModalOpen}
-      />
     </>
   );
 };
