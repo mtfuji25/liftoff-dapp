@@ -81,7 +81,7 @@ const Projects = () => {
                   <LayoutGrid>
                     {projects[tab.key].map((project) => (
                       <CardState
-                        key={tab.key}
+                        key={project.id}
                         type={tab.key}
                         project={project}
                       />
