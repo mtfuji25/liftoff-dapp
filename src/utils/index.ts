@@ -1,3 +1,4 @@
+import { TokenSale, ProjectKey } from 'utils/types';
 import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 
@@ -71,3 +72,20 @@ export const waitSeconds = (sec = 2): Promise<void> =>
       resolve();
     }, sec * 1000);
   });
+
+export const projectStatus = (tokenSale: TokenSale): ProjectKey => {
+  const currentTime = Math.floor(Date.now() / 1000);
+
+  const status =
+    tokenSale.isSparked ||
+    (currentTime > tokenSale.endTime &&
+      BigNumber.from(tokenSale.totalIgnited).lt(
+        BigNumber.from(tokenSale.softCap)
+      ))
+      ? 'completed'
+      : tokenSale.startTime > currentTime
+      ? 'inactive'
+      : 'active';
+
+  return status;
+};
