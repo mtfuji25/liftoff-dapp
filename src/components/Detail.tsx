@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex } from 'rebass';
 import styled from 'styled-components';
-import { utils, BigNumber } from 'ethers';
+import { utils } from 'ethers';
 import {
   StyledRocketCard,
   TYPE,
@@ -17,8 +17,9 @@ import DiscordIcon from '../assets/pngs/discord.png';
 import TelegramIcon from '../assets/pngs/telegram.png';
 import TwitterIcon from '../assets/pngs/twitter.png';
 import FacebookIcon from '../assets/pngs/facebook.png';
-import { ProjectConfig, TokenSale, ProjectKey } from 'utils/types';
+import { ProjectConfig, TokenSale } from 'utils/types';
 import { Colors } from 'theme/styled';
+import { projectStatus } from 'utils';
 
 const Card = styled(StyledRocketCard)`
   padding: 0;
@@ -128,18 +129,7 @@ const Detail = ({ isInsuranceStarted, tokenSale, projectConfig }: Props) => {
     }
   };
 
-  const currentTime = Math.floor(Date.now() / 1000);
-
-  const status: ProjectKey =
-    tokenSale.isSparked ||
-    (currentTime > tokenSale.endTime &&
-      BigNumber.from(tokenSale.totalIgnited).lt(
-        BigNumber.from(tokenSale.softCap)
-      ))
-      ? 'completed'
-      : tokenSale.startTime > currentTime
-      ? 'inactive'
-      : 'active';
+  const status = projectStatus(tokenSale);
 
   let countdownText = '';
   let countdown = 0;
