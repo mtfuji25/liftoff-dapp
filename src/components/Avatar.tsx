@@ -17,7 +17,9 @@ const AvatarContainer = styled(Box)<{ size: string }>`
 const Avatar = (props: IProps) => {
   return (
     <AvatarContainer size={props.size}>
-      {!!props.imgSrc && <Image src={props.imgSrc} />}
+      {!!props.imgSrc && (
+        <Image src={props.imgSrc} width="100%" height="100%" />
+      )}
     </AvatarContainer>
   );
 };
