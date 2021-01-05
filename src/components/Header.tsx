@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useConnectedWeb3Context, useWalletModal } from '../contexts';
 
 import Button from './Button';
-import ConnectWalletModal from './ConnectWalletModal';
 
 import Logo from '../assets/logo.png';
 import Menu from '../assets/menu.svg';
