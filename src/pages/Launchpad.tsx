@@ -139,15 +139,17 @@ const Launchpad: FC = () => {
 
         console.log(config);
 
-        await liftoffRegistration.registerProject(
-          config.hash,
-          startTime,
-          utils.parseEther(data.softCap).toString(),
-          utils.parseEther(data.hardCap).toString(),
-          utils.parseEther(data.totalSupply).toString(),
-          data.projectName,
-          data.tokenTicker
-        );
+        if (liftoffRegistration) {
+          await liftoffRegistration.registerProject(
+            config.hash,
+            startTime,
+            utils.parseEther(data.softCap).toString(),
+            utils.parseEther(data.hardCap).toString(),
+            utils.parseEther(data.totalSupply).toString(),
+            data.projectName,
+            data.tokenTicker
+          );
+        }
 
         setLoading(false);
       }
@@ -191,16 +193,17 @@ const Launchpad: FC = () => {
 
       console.log(config);
 
-      await liftoffRegistration.registerProject(
-        config.hash,
-        startTime,
-        utils.parseEther(data.softCap).toString(),
-        utils.parseEther(data.hardCap).toString(),
-        utils.parseEther(data.totalSupply).toString(),
-        data.projectName,
-        data.tokenTicker
-      );
-
+      if (liftoffRegistration) {
+        await liftoffRegistration.registerProject(
+          config.hash,
+          startTime,
+          utils.parseEther(data.softCap).toString(),
+          utils.parseEther(data.hardCap).toString(),
+          utils.parseEther(data.totalSupply).toString(),
+          data.projectName,
+          data.tokenTicker
+        );
+      }
       setLoading(false);
     } catch (error) {
       setLoading(false);
