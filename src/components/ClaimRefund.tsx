@@ -1,12 +1,9 @@
 import React, { FC } from 'react';
-import { BigNumber } from 'ethers';
+import { utils } from 'ethers';
 import styled from 'styled-components';
 import Button from './Button';
 import { StyledRocketCard, TYPE } from '../theme';
 import { useConnectedWeb3Context, useContracts } from '../contexts';
-
-import { TokenSale, Ignitor } from 'utils/types';
-import { formatBigNumber } from 'utils';
 
 const CTA = styled.div`
   display: flex;
@@ -23,25 +20,21 @@ const CTA = styled.div`
 const StyledButton = styled(Button)``;
 
 interface IProps {
-  tokenSale: TokenSale;
-  igniteInfo: Maybe<Ignitor>;
+  amount: string;
+  tokenSaleId: string;
 }
 
-const ClaimReward: FC<IProps> = ({ igniteInfo, tokenSale }) => {
+const ClaimRefund: FC<IProps> = ({ amount, tokenSaleId }) => {
   const context = useConnectedWeb3Context();
   const { liftoffEngine } = useContracts(context);
   const { account } = context;
 
-  const reward = BigNumber.from(igniteInfo ? igniteInfo.ignited : '0')
-    .mul(BigNumber.from(tokenSale.rewardSupply))
-    .div(BigNumber.from(tokenSale.totalIgnited));
-
-  const onClaimReward = async () => {
+  const onClaimRefund = async () => {
     if (!liftoffEngine || !account) {
       return;
     }
     try {
-      await liftoffEngine.claimReward(tokenSale.id, account);
+      await liftoffEngine.claimRefund(tokenSaleId, account);
     } catch (error) {
       console.log(error);
     }
@@ -49,16 +42,15 @@ const ClaimReward: FC<IProps> = ({ igniteInfo, tokenSale }) => {
 
   return (
     <StyledRocketCard>
-      <TYPE.LargeHeader>Claim Token Rewards</TYPE.LargeHeader>
+      <TYPE.LargeHeader>Claim Refund</TYPE.LargeHeader>
       <CTA>
-        <StyledButton onClick={onClaimReward}>Claim</StyledButton>
+        <StyledButton onClick={onClaimRefund}>Claim Refund</StyledButton>
         <TYPE.Small color="primary1">
-          Current available to claim: {formatBigNumber(reward, 18)}{' '}
-          {tokenSale.symbol}
+          Refund {utils.formatEther(amount)} ETH
         </TYPE.Small>
       </CTA>
     </StyledRocketCard>
   );
 };
 
-export default ClaimReward;
+export default ClaimRefund;

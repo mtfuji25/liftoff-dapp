@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { utils } from 'ethers';
+import { utils, BigNumber } from 'ethers';
 import { TokenSale } from 'utils/types';
 
 import Card from './Card';
@@ -24,30 +24,35 @@ const ProgressStatus = styled.div({
 });
 
 type Props = {
-  project: TokenSale;
+  tokenSale: TokenSale;
 };
 
-const TokenDetails = ({ project }: Props) => {
+const TokenDetails = ({ tokenSale }: Props) => {
+  const percent = BigNumber.from(tokenSale.totalIgnited)
+    .mul(BigNumber.from('100'))
+    .div(BigNumber.from(tokenSale.hardCap))
+    .toNumber();
+
   return (
     <StyledRocketCard>
       <TYPE.LargeHeader>Token Details</TYPE.LargeHeader>
       <ProgressStatus>
-        <ProgressBar completed={20} />
+        <ProgressBar completed={percent} />
       </ProgressStatus>
       <CardGrid>
         <StyledCard>
           <TYPE.Body color="blue1">SOFTCAP</TYPE.Body>
-          <TYPE.Header>{utils.formatEther(project.softCap)} xETH</TYPE.Header>
+          <TYPE.Header>{utils.formatEther(tokenSale.softCap)} xETH</TYPE.Header>
         </StyledCard>
         <StyledCard>
           <TYPE.Body color="blue1">TOTAL IGNITED</TYPE.Body>
           <TYPE.Header>
-            {utils.formatEther(project.totalIgnited)} xETH
+            {utils.formatEther(tokenSale.totalIgnited)} xETH
           </TYPE.Header>
         </StyledCard>
         <StyledCard>
           <TYPE.Body color="blue1">HARDCAP</TYPE.Body>
-          <TYPE.Header>{utils.formatEther(project.hardCap)} xETH</TYPE.Header>
+          <TYPE.Header>{utils.formatEther(tokenSale.hardCap)} xETH</TYPE.Header>
         </StyledCard>
       </CardGrid>
     </StyledRocketCard>
