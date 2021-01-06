@@ -36,9 +36,9 @@ const networks: { [K in NetworkId]: INetwork } = {
     contracts: {
       xEth: '0xA2F864C1c1a27f257c10FfBCFAeCa252B5610B4b',
       xLocker: '0x45a0A95Df3DAE8A9741328a0b7ce04DF55C22124',
-      liftoffEngine: '0xD0bf1284B80e526ac8Fe672412cAd25583513ccd',
-      liftoffInsurance: '0xd50f6238EeC61BE7C11d9b3C41633d70C4F97f9c',
-      liftoffRegistration: '0x47e81CA121704626e0938c27147ad52C880eFdd5'
+      liftoffEngine: '0xF4CCd4483b393A0526FF939CF15E89eBd3958f2B',
+      liftoffInsurance: '0x4f250e2236457259BDac9f651f62e972Ce502Caa',
+      liftoffRegistration: '0xadd1539fb19e03eE66fd365a6F6Cad68b49f981C'
     }
   }
 };
