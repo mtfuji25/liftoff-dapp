@@ -1,20 +1,19 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
+import { utils, BigNumber } from 'ethers';
 
 import Button from 'components/Button';
 import { TYPE, StyledRocketCard } from 'theme';
 import InputWithAddon from 'components/InputAddon';
 
 import { TokenInsurance } from 'utils/types';
+import { useConnectedWeb3Context, useContracts, useToken } from 'contexts';
 
 const CTA = styled.div`
   display: flex;
   align-items: center;
   padding-top: 1rem;
-  button {
-    margin-right: 1rem;
-  }
   ${({ theme }) => theme.mediaWidth.upToSmall`
     justify-content: space-between;
   `}
@@ -48,9 +47,7 @@ const FlexWrap = styled.div(
     })
 );
 
-const StyledButton = styled(Button)`
-  padding: 0.5rem;
-`;
+const StyledButton = styled(Button)``;
 
 const RedeemButton = styled(StyledButton)(
   {
@@ -64,10 +61,98 @@ const RedeemButton = styled(StyledButton)(
 
 interface IProps {
   tokenInsurance: Maybe<TokenInsurance>;
+  symbol: string;
+  tokenSaleId: string;
 }
 
-const Insurance: FC<IProps> = ({ tokenInsurance }) => {
+const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
   const isInsuranceStarted = !!(tokenInsurance && tokenInsurance.isInitialized);
+  const context = useConnectedWeb3Context();
+  const { liftoffInsurance, xEth } = useContracts(context);
+  const { token: xToken } = useToken(context, tokenInsurance?.deployed || '');
+
+  const [isApprovedTokens, setApprovedTokens] = useState(false);
+  const [redeemAmount, setRedeemAmount] = useState('0');
+  const [xEthBalance, setXEthBalance] = useState('0');
+
+  const { account } = context;
+
+  useEffect(() => {
+    if (!xToken || !account || !liftoffInsurance) {
+      return;
+    }
+
+    const checkApprovedTokens = async () => {
+      const balance = await xToken.getBalanceOf(account);
+      const isEnoughAllowance = await xToken.hasEnoughAllowance(
+        account,
+        liftoffInsurance.address,
+        balance
+      );
+      setApprovedTokens(isEnoughAllowance);
+    };
+
+    checkApprovedTokens();
+  }, [xToken, account, liftoffInsurance]);
+
+  useEffect(() => {
+    if (!xEth || !account) {
+      return;
+    }
+    const getXEthBalance = async () => {
+      const balance = await xEth.getBalanceOf(account);
+      setXEthBalance(balance);
+    };
+
+    getXEthBalance();
+  }, [xEth, account]);
+
+  const onClickStartInsurance = async () => {
+    if (!liftoffInsurance || isInsuranceStarted) {
+      return;
+    }
+    try {
+      await liftoffInsurance.createInsurance(tokenSaleId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onClickApprove = async () => {
+    if (!xToken || !liftoffInsurance || isApprovedTokens) {
+      return;
+    }
+
+    try {
+      await xToken.approveUnlimited(liftoffInsurance.address);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onClickRedeem = async () => {
+    if (!liftoffInsurance || !redeemAmount || redeemAmount === '0') {
+      return;
+    }
+
+    try {
+      await liftoffInsurance.redeem(tokenSaleId, redeemAmount);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onChangeRedeemAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRedeemAmount(event.target.value);
+  };
+
+  const xEthEstimation =
+    tokenInsurance && tokenInsurance.tokensPerEthWad && redeemAmount
+      ? BigNumber.from(utils.parseEther(redeemAmount))
+          .mul(BigNumber.from(utils.parseEther('1')))
+          .div(BigNumber.from(tokenInsurance.tokensPerEthWad))
+          .toString()
+      : '0';
 
   return (
     <StyledRocketCard>
@@ -77,28 +162,45 @@ const Insurance: FC<IProps> = ({ tokenInsurance }) => {
           What is LIFTOFF Insurance
         </TYPE.Body>
       </RowFlex>
-      <TYPE.Body>Redeem XYZ for orignial sale price with 2% fee.</TYPE.Body>
-      {/* Redeem insurance */}
+      <TYPE.Body>
+        Redeem {symbol} for orignial sale price with 2% fee.
+      </TYPE.Body>
+      {!isInsuranceStarted && (
+        <CTA>
+          <StyledButton onClick={onClickStartInsurance}>
+            Start Insurance
+          </StyledButton>
+        </CTA>
+      )}
       {isInsuranceStarted && (
         <TYPE.Body color="blue1">Percentage remaining: 100%</TYPE.Body>
       )}
-      {isInsuranceStarted && (
-        <TYPE.Body fontWeight="bold" marginBottom="0.5rem" marginTop="1rem">
-          Approve the insurance contract to redeem your tokens
-        </TYPE.Body>
+      {isInsuranceStarted && !isApprovedTokens && (
+        <>
+          <TYPE.Body fontWeight="bold" marginBottom="0.5rem" marginTop="1rem">
+            Approve the insurance contract to redeem your tokens
+          </TYPE.Body>
+          <CTA>
+            <StyledButton onClick={onClickApprove}>Approve</StyledButton>
+          </CTA>
+        </>
       )}
-      <CTA>
-        <StyledButton>Start Insurance</StyledButton>
-      </CTA>
-      {isInsuranceStarted && (
+      {isInsuranceStarted && isApprovedTokens && (
         <Redeem>
-          <TYPE.Body fontWeight="bold">Amount of XYZ to Redeem</TYPE.Body>
+          <TYPE.Body fontWeight="bold">Amount of {symbol} to Redeem</TYPE.Body>
           <FlexWrap>
-            <InputWithAddon placeholder="0" text="xETH" />
-            <RedeemButton>Redeem</RedeemButton>
+            <InputWithAddon
+              placeholder="0"
+              text={symbol}
+              type="text"
+              value={redeemAmount}
+              onChange={(event) => onChangeRedeemAmount(event)}
+            />
+            <RedeemButton onClick={onClickRedeem}>Redeem</RedeemButton>
 
             <TYPE.Body color="blue1">
-              You will get 0.00 xETH (Current xETH Balance: 0.00)
+              You will get {utils.formatEther(xEthEstimation)} xETH (Current
+              xETH Balance: {utils.formatEther(xEthBalance)})
             </TYPE.Body>
           </FlexWrap>
         </Redeem>

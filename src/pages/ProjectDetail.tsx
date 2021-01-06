@@ -34,7 +34,7 @@ interface IProjectDetails {
 }
 
 const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
-  const { account } = useConnectedWeb3Context();
+  const { account, networkId } = useConnectedWeb3Context();
   const { project: tokenSale } = useProject(id);
   const { insurance: tokenInsurance } = useInsurance(id);
   const { projectConf } = useProjectConfig(tokenSale?.ipfsHash);
@@ -97,11 +97,22 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
                 amount={igniteInfo ? igniteInfo.ignited : '0'}
               />
             )}
-            {tokenSale.isSparked && <TokenStats />}
             {tokenSale.isSparked && (
-              <Insurance tokenInsurance={tokenInsurance} />
+              <TokenStats deployed={tokenSale.deployed} networkId={networkId} />
             )}
-            {tokenSale.isSparked && <ClaimXETH />}
+            {tokenSale.isSparked && (
+              <Insurance
+                tokenInsurance={tokenInsurance}
+                symbol={tokenSale.symbol}
+                tokenSaleId={tokenSale.id}
+              />
+            )}
+            {tokenSale.isSparked && (
+              <ClaimXETH
+                tokenSaleId={tokenSale.id}
+                tokenInsurance={tokenInsurance}
+              />
+            )}
           </StyledContainer>
 
           <Disclaimer color="#232628" />
