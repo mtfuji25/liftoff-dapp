@@ -34,7 +34,7 @@ interface IProjectDetails {
 }
 
 const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
-  const { account } = useConnectedWeb3Context();
+  const { account, networkId } = useConnectedWeb3Context();
   const { project: tokenSale } = useProject(id);
   const { insurance: tokenInsurance } = useInsurance(id);
   const { projectConf } = useProjectConfig(tokenSale?.ipfsHash);
@@ -97,7 +97,9 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
                 amount={igniteInfo ? igniteInfo.ignited : '0'}
               />
             )}
-            {tokenSale.isSparked && <TokenStats />}
+            {tokenSale.isSparked && (
+              <TokenStats deployed={tokenSale.deployed} networkId={networkId} />
+            )}
             {tokenSale.isSparked && (
               <Insurance
                 tokenInsurance={tokenInsurance}
