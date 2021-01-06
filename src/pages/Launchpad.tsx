@@ -4,10 +4,13 @@ import { useForm, Controller } from 'react-hook-form';
 import { Box, Flex } from 'rebass';
 import fleekStorage from '@fleekhq/fleek-storage-js';
 import { utils } from 'ethers';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import CopyRight from '../components/Copyright';
-import Button from '../components/Button';
-import Card from '../components/Card';
+import { LaunchpadSchema } from 'data/launch.schema';
+
+import CopyRight from 'components/Copyright';
+import Button from 'components/Button';
+import Card from 'components/Card';
 import Disclaimer from '../components/Disclaimer';
 import Footer from '../components/Footer';
 import Input from '../components/Input';
@@ -70,7 +73,8 @@ const Launchpad: FC = () => {
   const { liftoffRegistration } = useContracts(context);
 
   const { control, errors, register, handleSubmit } = useForm({
-    mode: 'all'
+    mode: 'all',
+    resolver: yupResolver(LaunchpadSchema)
   });
 
   const convertFormToConfig = (
@@ -232,7 +236,6 @@ const Launchpad: FC = () => {
                       type="text"
                       error={errors.projectName && errors.projectName.message}
                       value={value}
-                      autoFocus
                       name={name}
                       onChange={onChange}
                       onBlur={onBlur}
@@ -313,8 +316,11 @@ const Launchpad: FC = () => {
                   name="logo"
                   type="file"
                   accept="image/x-png"
-                  ref={register({ required: true })}
+                  ref={register}
                 />
+                {errors.logo && (
+                  <TYPE.Small color="red1">{errors.logo.message}</TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -334,8 +340,13 @@ const Launchpad: FC = () => {
                   name="openGraph"
                   type="file"
                   accept="image/x-png"
-                  ref={register({ required: true })}
+                  ref={register}
                 />
+                {errors.openGraph && (
+                  <TYPE.Small color="red1">
+                    {errors.openGraph.message}
+                  </TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -440,15 +451,10 @@ const Launchpad: FC = () => {
                       name={name}
                       onChange={onChange}
                       onBlur={onBlur}
-                      ref={register({
-                        required: 'Project Discord URL is required'
-                      })}
+                      ref={register}
                     />
                   )}
                 />
-                {errors.discord && (
-                  <TYPE.Small color="red1">{errors.discord.message}</TYPE.Small>
-                )}
 
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Telegram
@@ -464,17 +470,10 @@ const Launchpad: FC = () => {
                       name={name}
                       onChange={onChange}
                       onBlur={onBlur}
-                      ref={register({
-                        required: 'Project Telegram URL is required'
-                      })}
+                      ref={register}
                     />
                   )}
                 />
-                {errors.telegram && (
-                  <TYPE.Small color="red1">
-                    {errors.telegram.message}
-                  </TYPE.Small>
-                )}
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Twitter
                 </TYPE.Body>
@@ -489,15 +488,10 @@ const Launchpad: FC = () => {
                       name={name}
                       onChange={onChange}
                       onBlur={onBlur}
-                      ref={register({
-                        required: 'Project Twitter URL is required'
-                      })}
+                      ref={register}
                     />
                   )}
                 />
-                {errors.twitter && (
-                  <TYPE.Small color="red1">{errors.twitter.message}</TYPE.Small>
-                )}
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Facebook
                 </TYPE.Body>
@@ -512,17 +506,10 @@ const Launchpad: FC = () => {
                       name={name}
                       onChange={onChange}
                       onBlur={onBlur}
-                      ref={register({
-                        required: 'Project Facebook URL is required'
-                      })}
+                      ref={register}
                     />
                   )}
                 />
-                {errors.facebook && (
-                  <TYPE.Small color="red1">
-                    {errors.facebook.message}
-                  </TYPE.Small>
-                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -590,7 +577,7 @@ const Launchpad: FC = () => {
                   render={({ onChange, onBlur, value, name }) => (
                     <Input
                       placeholder="100"
-                      type="text"
+                      type="number"
                       name={name}
                       value={value}
                       onChange={onChange}
@@ -613,7 +600,7 @@ const Launchpad: FC = () => {
                   render={({ onChange, onBlur, value, name }) => (
                     <Input
                       placeholder="1000"
-                      type="text"
+                      type="number"
                       name={name}
                       value={value}
                       onChange={onChange}
@@ -636,7 +623,7 @@ const Launchpad: FC = () => {
                   render={({ onChange, onBlur, value, name }) => (
                     <Input
                       placeholder="100000"
-                      type="text"
+                      type="number"
                       name={name}
                       value={value}
                       onChange={onChange}

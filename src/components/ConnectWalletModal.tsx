@@ -31,16 +31,44 @@ interface ButtonProps {
   text: string;
 }
 
-const ButtonStyled = styled(Button)`
-  width: 100%;
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
-  background-color: ${(props) => props.theme.bg5};
-  outline: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-`;
+const ButtonStyled = styled(Button)({
+  width: '100%',
+  backgroundColor: 'transparent !important',
+  border: '1px solid #dadada !important',
+  display: 'flex !important',
+  flexDirection: 'row',
+  padding: '0.8rem 4rem !important',
+  alignItems: 'center',
+  marginTop: '5px !important',
+  cursor: 'pointer'
+});
+
+const CloseButton = styled.div(
+  {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    cursor: 'pointer'
+  },
+  ({ theme }) => ({
+    color: theme.black
+  })
+);
+
+const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    {...props}
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M15.8333 5.34166L14.6583 4.16666L10 8.82499L5.34167 4.16666L4.16667 5.34166L8.82501 9.99999L4.16667 14.6583L5.34167 15.8333L10 11.175L14.6583 15.8333L15.8333 14.6583L11.175 9.99999L15.8333 5.34166Z"
+      fill="black"
+    />
+  </svg>
+);
 
 const ConnectButton = (props: ButtonProps) => {
   const { disabled, icon, onClick, text } = props;
@@ -48,7 +76,9 @@ const ConnectButton = (props: ButtonProps) => {
   return (
     <ButtonStyled disabled={disabled} onClick={onClick}>
       {icon}
-      <TYPE.Header>{text}</TYPE.Header>
+      <TYPE.Header ml={2} fontWeight="normal" color="black">
+        {text}
+      </TYPE.Header>
     </ButtonStyled>
   );
 };
@@ -125,8 +155,11 @@ const ConnectWalletModal = (props: IProps) => {
         onRequestClose={onClickCloseButton}
         isOpen={!context.account && props.visible}
       >
+        <CloseButton onClick={props.onClose}>
+          <CloseIcon />
+        </CloseButton>
         <ContentWrapper>
-          <TYPE.LargeHeader color="text4" mb="0.5rem">
+          <TYPE.LargeHeader fontWeight="normal" color="#232628" mb="1rem">
             {connectingToMetamask ? 'Connecting...' : 'Connect a wallet'}
           </TYPE.LargeHeader>
           <div>
