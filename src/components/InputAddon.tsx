@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Input } from '@rebass/forms';
+import { Input, InputProps } from '@rebass/forms';
 
-type Props = {
+interface Props extends InputProps {
   text: string;
-  placeholder?: string;
-};
+}
 
 const InputContainer = styled.div({});
 
@@ -29,11 +28,11 @@ const StyledText = styled.div(
   })
 );
 
-const InputWithAddon = ({ text, placeholder }: Props) => {
+const InputWithAddon = ({ text, ...restProps }: Props) => {
   return (
     <InputContainer>
       <WrappedInput>
-        <StyledInput placeholder={placeholder} />
+        <StyledInput {...restProps} />
         {text && <StyledText>{text}</StyledText>}
       </WrappedInput>
     </InputContainer>

@@ -99,9 +99,18 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
             )}
             {tokenSale.isSparked && <TokenStats />}
             {tokenSale.isSparked && (
-              <Insurance tokenInsurance={tokenInsurance} />
+              <Insurance
+                tokenInsurance={tokenInsurance}
+                symbol={tokenSale.symbol}
+                tokenSaleId={tokenSale.id}
+              />
             )}
-            {tokenSale.isSparked && <ClaimXETH />}
+            {tokenSale.isSparked && (
+              <ClaimXETH
+                tokenSaleId={tokenSale.id}
+                tokenInsurance={tokenInsurance}
+              />
+            )}
           </StyledContainer>
 
           <Disclaimer color="#232628" />

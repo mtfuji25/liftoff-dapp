@@ -21,6 +21,8 @@ const networks: { [K in NetworkId]: INetwork } = {
     graphHttpUri: MAINNET_SUBGRAPH_HTTP,
     graphWsUri: MAINNET_SUBGRAPH_WS,
     contracts: {
+      xEth: '0x29B109625ac15BC4577d0b70ACB9e4E27F7C07E8',
+      xLocker: '0xAA13f1Fc73baB751Da08930007D4D847EeEafAA2',
       liftoffEngine: '0xEcBDC53216769bC2E854BcE9cd21183CDE28df76',
       liftoffInsurance: '0xea723A65fB681868DaBd6456ae96A92B677a8F27',
       liftoffRegistration: '0x1c5b37c07d2aa84579bD72e9266f218cc865c8cB'
@@ -32,6 +34,8 @@ const networks: { [K in NetworkId]: INetwork } = {
     graphHttpUri: ROPSTEN_SUBGRAPH_HTTP,
     graphWsUri: ROPSTEN_SUBGRAPH_WS,
     contracts: {
+      xEth: '0xA2F864C1c1a27f257c10FfBCFAeCa252B5610B4b',
+      xLocker: '0x45a0A95Df3DAE8A9741328a0b7ce04DF55C22124',
       liftoffEngine: '0xD0bf1284B80e526ac8Fe672412cAd25583513ccd',
       liftoffInsurance: '0xd50f6238EeC61BE7C11d9b3C41633d70C4F97f9c',
       liftoffRegistration: '0x47e81CA121704626e0938c27147ad52C880eFdd5'
