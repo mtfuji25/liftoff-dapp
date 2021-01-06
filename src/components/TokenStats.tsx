@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { shortenAddress } from 'utils';
+import { Token, Fetcher, Route } from '@uniswap/sdk';
+
 import { StyledTable } from 'pages/ProjectDetail';
 import {
   TYPE,
@@ -10,7 +11,8 @@ import {
   TData,
   TRow
 } from 'theme';
-import Button from 'components/Button';
+import { shortenAddress } from 'utils';
+import { getContractAddress } from 'utils/networks';
 
 const Card = styled(StyledRocketCard)`
   padding: 0;
@@ -28,7 +30,18 @@ const CTA = styled.div`
   `}
 `;
 
-const StyledButton = styled(Button)``;
+const StyledButton = styled(ExternalLink)`
+  font-family: 'Open Sans', sans-serif;
+  padding: 0.7rem 2rem 0.7rem 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background-color: #2a7cea;
+  color: #ffffff;
+`;
 
 const HeaderText = styled(TYPE.LargeHeader)`
   padding: 2rem 1rem;
@@ -38,7 +51,34 @@ const StyledTData = styled(TData)({
   width: '66%'
 });
 
-const TokenStats: FC = () => {
+interface IProps {
+  deployed: string;
+  networkId: number | undefined;
+}
+
+const TokenStats: FC<IProps> = ({ deployed, networkId }) => {
+  const xEthAddress = getContractAddress(networkId || 3, 'xEth');
+  const swapLink = `https://penguinswap.eth.link/#/swap?inputCurrency=${xEthAddress}&outputCurrency=${deployed}`;
+  const [tokenPrice, setTokenPrice] = useState('0');
+
+  useEffect(() => {
+    if (!networkId) {
+      return;
+    }
+
+    const getTokenPrice = async () => {
+      const xEth = new Token(networkId, xEthAddress, 18);
+      const token = new Token(networkId, deployed, 18);
+      const pair = await Fetcher.fetchPairData(token, xEth);
+      const route = new Route([pair], xEth);
+
+      setTokenPrice(route.midPrice.invert().toSignificant(6));
+    };
+
+    getTokenPrice();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [networkId]);
+
   return (
     <Card>
       <HeaderText>Token Stats</HeaderText>
@@ -49,8 +89,12 @@ const TokenStats: FC = () => {
               <TYPE.Body>Contract Link</TYPE.Body>
             </TData>
             <StyledTData>
-              <ExternalLink href="https://etherscan.com/address/0xa205D203543122dd142aE63bB0A5EA9A32FB14f41">
-                {shortenAddress('0xa205D203543122dd142aE63bB0A5EA9A32FB14f41')}
+              <ExternalLink
+                href={`https://${
+                  networkId === 3 ? 'ropsten.' : ''
+                }etherscan.com/address/${deployed}`}
+              >
+                {deployed}
               </ExternalLink>
             </StyledTData>
           </TRow>
@@ -59,7 +103,9 @@ const TokenStats: FC = () => {
               <TYPE.Body>PenguinSwap Price</TYPE.Body>
             </TData>
             <StyledTData>
-              <TYPE.Body>XX.XX</TYPE.Body>
+              <TYPE.Body>
+                {tokenPrice === '0' ? 'XX.XX' : tokenPrice} xETH
+              </TYPE.Body>
             </StyledTData>
           </TRow>
           <TRow>
@@ -67,16 +113,18 @@ const TokenStats: FC = () => {
               <TYPE.Body>PenguinSwap Link</TYPE.Body>
             </TData>
             <StyledTData>
-              <ExternalLink href="https://penguinswap.eth.link">
-                penguinswap.eth.link
-              </ExternalLink>
+              <ExternalLink
+                href={swapLink}
+              >{`penguinswap.eth.link/#/swap?inputCurrency=${shortenAddress(
+                xEthAddress
+              )}&outputCurrency=${shortenAddress(deployed)}`}</ExternalLink>
               <TYPE.Body color="primary1"></TYPE.Body>
             </StyledTData>
           </TRow>
         </TBody>
       </StyledTable>
       <CTA>
-        <StyledButton>Trade on PenguinSwap</StyledButton>
+        <StyledButton href={swapLink}>Trade on PenguinSwap</StyledButton>
       </CTA>
     </Card>
   );
