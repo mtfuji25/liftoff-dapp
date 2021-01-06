@@ -151,50 +151,6 @@ const Launchpad: FC = () => {
         }
         setLoading(false);
       }
-      setLoading(true);
-      const startTime = Math.floor(
-        new Date(`${data.date} ${data.time}:00 UTC`).getTime() / 1000
-      );
-      const baseKey = `liftoff-rockets/${data.tokenTicker}`;
-      // upload images
-      const logo = await fleekStorage.upload({
-        apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
-        apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-        key: `${baseKey}/logo.png`,
-        data: data.logo[0]
-      });
-      const openGraph = await fleekStorage.upload({
-        apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
-        apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-        key: `${baseKey}/open-graph.png`,
-        data: data.logo[0]
-      });
-      // upload json
-      const configJson = JSON.stringify(
-        convertFormToConfig(data, logo.publicUrl, openGraph.publicUrl)
-      );
-      const configBlob = new Blob([new TextEncoder().encode(configJson)], {
-        type: 'application/json;charset=utf-8'
-      });
-      const config = await fleekStorage.upload({
-        apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
-        apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-        key: `${baseKey}/config.json`,
-        data: configBlob
-      });
-      console.log(config);
-      if (liftoffRegistration) {
-        await liftoffRegistration.registerProject(
-          config.hash,
-          startTime,
-          utils.parseEther(data.softCap).toString(),
-          utils.parseEther(data.hardCap).toString(),
-          utils.parseEther(data.totalSupply).toString(),
-          data.projectName,
-          data.tokenTicker
-        );
-      }
-      setLoading(false);
     } catch (error) {
       setLoading(false);
     }
@@ -654,11 +610,7 @@ const Launchpad: FC = () => {
           <Spinner loading={loading} />
         </StyledContainer>
       </StyledBody>
-      <Footer
-        noBackground={false}
-        color="bg2"
-        text={'© 2020 Liquidity Dividends Protocol. All rights reserved.'}
-      />
+      <Footer noBackground={false} color="bg2" />
     </>
   );
 };

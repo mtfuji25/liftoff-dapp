@@ -1,4 +1,5 @@
-import { Contract, Wallet, ethers } from 'ethers';
+import { Contract, Wallet, ethers, utils } from 'ethers';
+import { TransactionReceipt } from '@ethersproject/abstract-provider/lib/index';
 
 const liftoffInsuranceAbi = [
   'event Register(uint256 tokenId)',
@@ -45,6 +46,32 @@ class LiftoffInsuranceService {
   get address(): string {
     return this.contract.address;
   }
+
+  createInsurance = async (
+    tokenSaleId: string
+  ): Promise<TransactionReceipt> => {
+    const txObject = await this.contract.createInsurance(tokenSaleId);
+
+    return this.provider.waitForTransaction(txObject.hash);
+  };
+
+  redeem = async (
+    tokenSaleId: string,
+    amount: string
+  ): Promise<TransactionReceipt> => {
+    const txObject = await this.contract.redeem(
+      tokenSaleId,
+      utils.parseEther(amount)
+    );
+
+    return this.provider.waitForTransaction(txObject.hash);
+  };
+
+  claim = async (tokenSaleId: string): Promise<TransactionReceipt> => {
+    const txObject = await this.contract.claim(tokenSaleId);
+
+    return this.provider.waitForTransaction(txObject.hash);
+  };
 }
 
 export { LiftoffInsuranceService };

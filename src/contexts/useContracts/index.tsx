@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import {
+  ERC20Service,
   LiftoffEngineService,
   LiftoffInsuranceService,
   LiftoffRegistrationService
@@ -9,11 +10,13 @@ import { ConnectedWeb3ContextProps } from '../connectedWeb3';
 
 export const useContracts = (context: ConnectedWeb3ContextProps) => {
   const { account, library: provider, networkId } = context;
+  let xEthAddress: any;
   let liftoffEngineAddress: any;
   let liftoffInsuranceAddress: any;
   let liftoffRegistrationAddress: any;
 
   if (networkId) {
+    xEthAddress = getContractAddress(networkId, 'xEth');
     liftoffEngineAddress = getContractAddress(networkId, 'liftoffEngine');
     liftoffInsuranceAddress = getContractAddress(networkId, 'liftoffInsurance');
     liftoffRegistrationAddress = getContractAddress(
@@ -21,6 +24,12 @@ export const useContracts = (context: ConnectedWeb3ContextProps) => {
       'liftoffRegistration'
     );
   }
+
+  const xEth = useMemo(() => {
+    if (networkId) {
+      return new ERC20Service(provider, account, xEthAddress);
+    }
+  }, [networkId, xEthAddress, provider, account]);
 
   const liftoffEngine = useMemo(() => {
     if (networkId) {
@@ -50,11 +59,12 @@ export const useContracts = (context: ConnectedWeb3ContextProps) => {
 
   return useMemo(
     () => ({
+      xEth,
       liftoffEngine,
       liftoffInsurance,
       liftoffRegistration
     }),
-    [liftoffEngine, liftoffInsurance, liftoffRegistration]
+    [xEth, liftoffEngine, liftoffInsurance, liftoffRegistration]
   );
 };
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { TokenSale } from 'utils/types';
+import { projectStatus } from 'utils';
 
 const query = gql`
   query GetProjects {
@@ -47,25 +48,25 @@ export const useProjects = () => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'network-only',
     onCompleted: (data: GraphResponse) => {
-      const currentTime = Math.floor(Date.now() / 1000);
-      console.log(currentTime);
-
       if (data.tokenSales.length === 0) {
         setProjects({ inactive: [], active: [], completed: [] });
       } else {
-        setProjects({
-          inactive: data.tokenSales.filter(
-            (tokenSale) => tokenSale.startTime > currentTime
-          ),
-          active: data.tokenSales.filter(
-            (tokenSale) =>
-              tokenSale.startTime <= currentTime &&
-              tokenSale.isSparked === false
-          ),
-          completed: data.tokenSales.filter(
-            (tokenSale) => tokenSale.isSparked === true
-          )
-        });
+        const newProjects = data.tokenSales.reduce(
+          (sales, tokenSale) => {
+            const status = projectStatus(tokenSale);
+            return {
+              ...sales,
+              [status]: [...sales[status], tokenSale]
+            };
+          },
+          {
+            inactive: [] as TokenSale[],
+            active: [] as TokenSale[],
+            completed: [] as TokenSale[]
+          }
+        );
+
+        setProjects(newProjects);
       }
     }
   });
