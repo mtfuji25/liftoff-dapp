@@ -14,6 +14,8 @@ export interface INetwork {
   graphHttpUri: string;
   graphWsUri: string;
   contracts: {
+    xEth: string;
+    xLocker: string;
     liftoffEngine: string;
     liftoffInsurance: string;
     liftoffRegistration: string;

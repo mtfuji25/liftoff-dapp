@@ -8,3 +8,4 @@ export * from './useProjectConfig';
 export * from './useProject';
 export * from './useIgniteInfo';
 export * from './useInsurance';
+export * from './useToken';
