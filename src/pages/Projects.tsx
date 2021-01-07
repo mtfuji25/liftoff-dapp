@@ -11,7 +11,11 @@ import Spinner from '../components/Spinner';
 import { useProjects } from 'contexts/useProjects';
 import { ProjectKey } from 'utils/types';
 
-import { StyledContainer, StyledBody, TYPE } from '../theme';
+import {
+  StyledContainer as UnstyledContainer,
+  StyledBody,
+  TYPE
+} from '../theme';
 
 const Container = styled.div(
   {
@@ -44,6 +48,11 @@ const LayoutGrid = styled.div(
     })
 );
 
+const StyledContainer = styled(UnstyledContainer)({}, ({ theme }) =>
+  theme.mediaWidth.upToExtraSmall({
+    maxWidth: '100vw !important'
+  })
+);
 interface ITabs {
   title: string;
   key: ProjectKey;

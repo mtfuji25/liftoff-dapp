@@ -151,6 +151,8 @@ export const StyledBody = styled.div<{ color: keyof Colors }>`
   background-color: ${({ color, theme }) => (theme as any)[color]};
   ${({ theme }) => theme.mediaWidth.upToSmall`
   padding: 1rem 1.25rem;`};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  padding: 1rem 0 !important`}
 `;
 
 export const TBody = styled.tbody``;
@@ -169,8 +171,10 @@ export const StyledRocketCard = styled(Card)`
   flex-direction: column;
   margin: 0.5rem 0 !important;
   justify-content: space-between;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    padding: 2rem 0.5rem !important`}
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 2rem 1rem;
+    padding: 2rem 0.5rem !important;
   `}
 `;
 
@@ -302,10 +306,26 @@ table {
     text-align: left;
     padding: 1rem;
     ${({ theme }) =>
-      theme.mediaWidth.upToSmall({
-        padding: '1rem 0.4rem'
+      theme.mediaWidth.upToExtraSmall({
+        padding: '1rem 0'
       })}
+      ${({ theme }) =>
+        theme.mediaWidth.upToSmall({
+          padding: '1rem 0.4rem'
+        })}
   }
+  }
+  tr {
+    ${({ theme }) =>
+      theme.mediaWidth.upToExtraSmall({
+        display: 'flex',
+        flexDirection: 'row'
+      })}
+    ${({ theme }) =>
+      theme.mediaWidth.upToExtraSmall({
+        display: 'flex',
+        flexDirection: 'column'
+      })}
   }
   tr:nth-child(odd) {
     background-color: ${({ theme }) => theme.bg4}
