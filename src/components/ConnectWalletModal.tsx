@@ -38,7 +38,7 @@ const ButtonStyled = styled(Button)({
   flexDirection: 'row',
   padding: '0.8rem 4rem !important',
   alignItems: 'center',
-  margin: '10px 0 !important',
+  margin: '5px 0 !important',
   cursor: 'pointer'
 });
 
