@@ -438,6 +438,7 @@ const Launchpad: FC = () => {
                       <Controller
                         control={control}
                         name="date"
+                        defaultValue={defaultDate}
                         render={({ onChange, onBlur, value, name }) => (
                           <Input
                             placeholder="mm/dd/yyyy"
