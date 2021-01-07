@@ -486,9 +486,7 @@ const Launchpad: FC = () => {
                       onChange={onChange}
                       onBlur={onBlur}
                       name={name}
-                      ref={register({
-                        required: 'Date is required'
-                      })}
+                      ref={register}
                     />
                   )}
                 />

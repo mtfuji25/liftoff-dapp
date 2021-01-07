@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { utils } from 'ethers';
 import Button from './Button';
-import Input from './Input';
+import InputWithAddon from './InputAddon';
 import { TYPE, StyledRocketCard, ExternalLink } from '../theme';
 import { useConnectedWeb3Context, useContracts } from '../contexts';
 import { Ignitor } from 'utils/types';
@@ -25,6 +25,10 @@ const StyledButton = styled(Button)`
   margin-left: 1.25rem;
   margin-right: 1.825rem;
 `;
+
+const StyledInput = styled(InputWithAddon)({}, ({ theme }) =>
+  theme.mediaWidth.upToSmall({})
+);
 
 interface IProps {
   tokenSaleId: string;
@@ -61,10 +65,10 @@ const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo }) => {
       </TYPE.Body>
       <TYPE.Header mt="1.375rem">Amount of ETH to ignite</TYPE.Header>
       <Flex>
-        <Input
+        <StyledInput
           placeholder="0"
           type="text"
-          width="30%"
+          text="xETH"
           value={amount}
           onChange={(event) => onChangeAmount(event)}
         />

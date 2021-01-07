@@ -94,17 +94,21 @@ const StyledTData = styled(TData)(
 
 const SmallText = styled(TYPE.Small)(
   {
-    marginLeft: '1rem'
+    marginLeft: '1rem !important'
   },
   ({ theme }) =>
     theme.mediaWidth.upToSmall({
-      margin: 0
+      margin: '0 !important'
     })
 );
 
 const StyledImage = styled.img({
   width: 20,
   height: 20
+});
+
+const Badge = styled(StatusBadge)({
+  margin: '15px 0 !important'
 });
 
 type Props = {
@@ -158,9 +162,9 @@ const Detail = ({ isInsuranceStarted, tokenSale, projectConfig }: Props) => {
             </TYPE.LargeHeader>
           </Flex>
 
-          <StatusBadge color={badges[status].color as keyof Colors}>
+          <Badge color={badges[status].color as keyof Colors}>
             {badges[status].title}
-          </StatusBadge>
+          </Badge>
         </Flex>
 
         <StyledCountdown>
@@ -199,7 +203,7 @@ const Detail = ({ isInsuranceStarted, tokenSale, projectConfig }: Props) => {
                   <ExternalLink href={projectConfig.websiteLink}>
                     {projectConfig.websiteLink}
                   </ExternalLink>
-                  <SmallText color="red" marginLeft="1rem">
+                  <SmallText color="red">
                     *Verify by checking site for link to this LIFTOFF launch
                     page
                   </SmallText>
