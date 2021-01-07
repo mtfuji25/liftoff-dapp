@@ -6,6 +6,7 @@ import CardState from '../components/CardState';
 import Footer from '../components/Footer';
 import Disclaimer from '../components/Disclaimer';
 import CopyRight from '../components/Copyright';
+import Spinner from '../components/Spinner';
 
 import { useProjects } from 'contexts/useProjects';
 import { ProjectKey } from 'utils/types';
@@ -98,6 +99,8 @@ const Projects = () => {
 
           <Disclaimer color="#000000" />
           <CopyRight mt="1.375rem" color="#000000" />
+
+          <Spinner loading={loading} />
         </StyledContainer>
       </StyledBody>
       <Footer noBackground={false} color="bg3" />

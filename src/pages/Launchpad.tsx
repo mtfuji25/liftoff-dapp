@@ -153,9 +153,9 @@ const Launchpad: FC = () => {
           await liftoffRegistration.registerProject(
             config.hash,
             startTime,
-            utils.parseEther(data.softCap).toString(),
-            utils.parseEther(data.hardCap).toString(),
-            utils.parseEther(data.totalSupply).toString(),
+            utils.parseEther(data.softCap.toString()).toString(),
+            utils.parseEther(data.hardCap.toString()).toString(),
+            utils.parseEther(data.totalSupply.toString()).toString(),
             data.projectName,
             data.tokenTicker
           );
