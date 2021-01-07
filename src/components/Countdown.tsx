@@ -21,6 +21,11 @@ const CountdownWrapper = styled.div`
     background-color: transparent;
     color: ${theme.black}
 `}
+${({ theme }) => theme.mediaWidth.upToMedium`
+    margin-top: 1rem;
+    background-color: transparent;
+    color: ${theme.black}
+`}
 `;
 const TimeSection = styled.div`
   display: flex;

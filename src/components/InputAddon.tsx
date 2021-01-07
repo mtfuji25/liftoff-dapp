@@ -15,7 +15,7 @@ const WrappedInput = styled.div({
 });
 
 const StyledInput = styled(Input)({
-  width: '100%'
+  // width: '100%'
 });
 
 const StyledText = styled.div(

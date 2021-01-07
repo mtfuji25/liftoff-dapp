@@ -1,13 +1,16 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Box, Flex } from 'rebass';
 import fleekStorage from '@fleekhq/fleek-storage-js';
 import { utils } from 'ethers';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import CopyRight from '../components/Copyright';
-import Button from '../components/Button';
-import Card from '../components/Card';
+import { LaunchpadSchema } from 'data/launch.schema';
+
+import CopyRight from 'components/Copyright';
+import Button from 'components/Button';
+import Card from 'components/Card';
 import Disclaimer from '../components/Disclaimer';
 import Footer from '../components/Footer';
 import Input from '../components/Input';
@@ -64,11 +67,15 @@ interface ILaunchPadInput {
 }
 
 const Launchpad: FC = () => {
-  const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
   const context = useConnectedWeb3Context();
   const [, toggleModal] = useWalletModal();
   const { liftoffRegistration } = useContracts(context);
+
+  const { control, errors, register, handleSubmit } = useForm({
+    mode: 'all',
+    resolver: yupResolver(LaunchpadSchema)
+  });
 
   const convertFormToConfig = (
     data: ILaunchPadInput,
@@ -100,13 +107,10 @@ const Launchpad: FC = () => {
           return;
         }
         setLoading(true);
-
         const startTime = Math.round(
           new Date(`${data.date} ${data.time}:00 UTC`).getTime() / 1000
         );
-
         const baseKey = `liftoff-rockets/${data.tokenTicker}`;
-
         // upload images
         const logo = await fleekStorage.upload({
           apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
@@ -114,14 +118,12 @@ const Launchpad: FC = () => {
           key: `${baseKey}/logo.png`,
           data: data.logo[0]
         });
-
         const openGraph = await fleekStorage.upload({
           apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
           apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
           key: `${baseKey}/open-graph.png`,
           data: data.logo[0]
         });
-
         // upload json
         const configJson = JSON.stringify(
           convertFormToConfig(data, logo.publicUrl, openGraph.publicUrl)
@@ -129,14 +131,12 @@ const Launchpad: FC = () => {
         const configBlob = new Blob([new TextEncoder().encode(configJson)], {
           type: 'application/json;charset=utf-8'
         });
-
         const config = await fleekStorage.upload({
           apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
           apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
           key: `${baseKey}/config.json`,
           data: configBlob
         });
-
         if (liftoffRegistration) {
           await liftoffRegistration.registerProject(
             config.hash,
@@ -148,7 +148,6 @@ const Launchpad: FC = () => {
             data.tokenTicker
           );
         }
-
         setLoading(false);
       }
     } catch (error) {
@@ -187,35 +186,79 @@ const Launchpad: FC = () => {
                 <TYPE.Header color="black" mb="1.25rem">
                   Project Name
                 </TYPE.Header>
-                <Input
+                <Controller
+                  control={control}
                   name="projectName"
-                  placeholder="Liquidity Dividends Protocol"
-                  type="text"
-                  ref={register({ required: true })}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="Liquidity Dividends Protocol"
+                      type="text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register({ required: 'Project Name is required' })}
+                    />
+                  )}
                 />
+                {errors.projectName && (
+                  <TYPE.Small color="red1">
+                    {errors.projectName.message}
+                  </TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
                 <TYPE.Header color="black" mb="1.25rem">
                   Token ticker
                 </TYPE.Header>
-                <Input
+                <Controller
+                  control={control}
                   name="tokenTicker"
-                  placeholder="XYZ"
-                  type="text"
-                  ref={register({ required: true })}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="XYZ"
+                      type="text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register({ required: 'Token ticker is required' })}
+                    />
+                  )}
                 />
+                {errors.tokenTicker && (
+                  <TYPE.Small color="red1">
+                    {errors.tokenTicker.message}
+                  </TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
                 <TYPE.Header color="black" mb="1.25rem">
                   Project Description
                 </TYPE.Header>
-                <Textarea
+                <Controller
+                  control={control}
                   name="projectDescription"
-                  placeholder="Text"
-                  ref={register({ required: true })}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Textarea
+                      placeholder="Text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register({
+                        required: 'Project description is required'
+                      })}
+                    />
+                  )}
                 />
+                {errors.projectDescription && (
+                  <TYPE.Small color="red1">
+                    {errors.projectDescription.message}
+                  </TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -227,17 +270,15 @@ const Launchpad: FC = () => {
                     (Image format: png, jpg, svg)
                   </TYPE.Body>
                 </Flex>
-
-                {/* <AddFileButton>
-                  <Image src={IMG_UPLOAD}></Image>
-                  <TYPE.Body ml="1rem">Add file</TYPE.Body> */}
                 <Input
                   name="logo"
                   type="file"
                   accept="image/x-png"
-                  ref={register({ required: true })}
+                  ref={register}
                 />
-                {/* </AddFileButton> */}
+                {errors.logo && (
+                  <TYPE.Small color="red1">{errors.logo.message}</TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -257,46 +298,97 @@ const Launchpad: FC = () => {
                   name="openGraph"
                   type="file"
                   accept="image/x-png"
-                  ref={register({ required: true })}
+                  ref={register}
                 />
-                {/* </AddFileButton> */}
+                {errors.openGraph && (
+                  <TYPE.Small color="red1">
+                    {errors.openGraph.message}
+                  </TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
                 <TYPE.Header color="black" mb="1.25rem">
                   Website Link
                 </TYPE.Header>
-                <Input
+                <Controller
+                  control={control}
                   name="websiteLink"
-                  placeholder="https://website.com"
-                  type="text"
-                  ref={register}
-                  required
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="https://website.com"
+                      type="text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register({
+                        required: 'Website URL is required'
+                      })}
+                    />
+                  )}
                 />
+                {errors.websiteLink && (
+                  <TYPE.Small color="red1">
+                    {errors.websiteLink.message}
+                  </TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
                 <TYPE.Header color="black" mb="1.25rem">
                   dApp Link
                 </TYPE.Header>
-                <Input
+                <Controller
+                  control={control}
                   name="dappLink"
-                  placeholder="https://website.com/dapp"
-                  type="text"
-                  ref={register({ required: true })}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="https://website.com/dapp"
+                      type="text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register({
+                        required: 'DApp URL is required'
+                      })}
+                    />
+                  )}
                 />
+                {errors.dappLink && (
+                  <TYPE.Small color="red1">
+                    {errors.dappLink.message}
+                  </TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
                 <TYPE.Header color="black" mb="1.25rem">
                   Whitepaper Link
                 </TYPE.Header>
-                <Input
+                <Controller
+                  control={control}
                   name="whitepaperLink"
-                  placeholder="https://website.com/whitepaper.pdf"
-                  type="text"
-                  ref={register({ required: true })}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="https://website.com/whitepaper.pdf"
+                      type="text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register({
+                        required: 'Whitepaper URL is required'
+                      })}
+                    />
+                  )}
                 />
+                {errors.whitepaperLink && (
+                  <TYPE.Small color="red1">
+                    {errors.whitepaperLink.message}
+                  </TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -306,41 +398,75 @@ const Launchpad: FC = () => {
                 <TYPE.Body color="black" mb="0.5rem">
                   Discord
                 </TYPE.Body>
-                <Input
+                <Controller
+                  control={control}
                   name="discord"
-                  placeholder="https://discord.gg/"
-                  type="text"
-                  ref={register}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="https://discord.gg/"
+                      type="text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register}
+                    />
+                  )}
                 />
 
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Telegram
                 </TYPE.Body>
-                <Input
+                <Controller
+                  control={control}
                   name="telegram"
-                  placeholder="https://t.me/"
-                  type="text"
-                  ref={register}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="https://t.me/"
+                      type="text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register}
+                    />
+                  )}
                 />
-
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Twitter
                 </TYPE.Body>
-                <Input
+                <Controller
+                  control={control}
                   name="twitter"
-                  placeholder="https://twitter.com/"
-                  type="text"
-                  ref={register}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="https://twitter.com/"
+                      type="text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register}
+                    />
+                  )}
                 />
-
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Facebook
                 </TYPE.Body>
-                <Input
+                <Controller
+                  control={control}
                   name="facebook"
-                  placeholder="https://facebook.com/"
-                  type="text"
-                  ref={register}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="https://facebook.com/"
+                      type="text"
+                      value={value}
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register}
+                    />
+                  )}
                 />
               </Card>
 
@@ -351,21 +477,48 @@ const Launchpad: FC = () => {
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Date (GMT)
                 </TYPE.Body>
-                <Input
+                <Controller
+                  control={control}
                   name="date"
-                  placeholder="mm/dd/yyyy"
-                  type="date"
-                  ref={register({ required: true })}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="mm/dd/yyyy"
+                      type="date"
+                      value={value}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      name={name}
+                      ref={register}
+                    />
+                  )}
                 />
+                {errors.date && (
+                  <TYPE.Small color="red1">{errors.date.message}</TYPE.Small>
+                )}
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Time (GMT)
                 </TYPE.Body>
-                <Input
+                <Controller
+                  control={control}
                   name="time"
-                  placeholder="00:00 AM"
-                  type="time"
-                  ref={register({ required: true })}
+                  defaultValue="00:00"
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="00:00 AM"
+                      type="time"
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                      onBlur={onBlur}
+                      ref={register({
+                        required: 'Time is required'
+                      })}
+                    />
+                  )}
                 />
+                {errors.time && (
+                  <TYPE.Small color="red1">{errors.time.message}</TYPE.Small>
+                )}
               </Card>
 
               <Card marginBottom="1rem" paddingX="1.375rem" paddingY="1.875rem">
@@ -375,33 +528,82 @@ const Launchpad: FC = () => {
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Soft Cap
                 </TYPE.Body>
-                <Input
+                <Controller
+                  control={control}
                   name="softCap"
-                  placeholder="100"
-                  type="text"
-                  ref={register({ required: true })}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="100"
+                      type="number"
+                      name={name}
+                      value={value}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register({
+                        required: 'Softcap is required'
+                      })}
+                    />
+                  )}
                 />
+                {errors.softCap && (
+                  <TYPE.Small color="red1">{errors.softCap.message}</TYPE.Small>
+                )}
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Hard Cap
                 </TYPE.Body>
-                <Input
+                <Controller
+                  control={control}
                   name="hardCap"
-                  placeholder="1000"
-                  type="text"
-                  ref={register({ required: true })}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="1000"
+                      type="number"
+                      name={name}
+                      value={value}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register({
+                        required: 'Hardcap is required'
+                      })}
+                    />
+                  )}
                 />
+                {errors.hardCap && (
+                  <TYPE.Small color="red1">{errors.hardCap.message}</TYPE.Small>
+                )}
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                   Total Supply
                 </TYPE.Body>
-                <Input
+                <Controller
+                  control={control}
                   name="totalSupply"
-                  placeholder="100000"
-                  type="text"
-                  ref={register({ required: true })}
+                  render={({ onChange, onBlur, value, name }) => (
+                    <Input
+                      placeholder="100000"
+                      type="number"
+                      name={name}
+                      value={value}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      ref={register({
+                        required: 'Total Supply is required'
+                      })}
+                    />
+                  )}
                 />
+                {errors.totalSupply && (
+                  <TYPE.Small color="red1">
+                    {errors.totalSupply.message}
+                  </TYPE.Small>
+                )}
               </Card>
 
-              <StyledButton type="submit">Launch</StyledButton>
+              <StyledButton
+                disabled={Object.keys(errors).length > 0}
+                type="submit"
+              >
+                Launch
+              </StyledButton>
             </form>
             <Disclaimer color="#b4b4b4" />
             <CopyRight mt="1.375rem" />
