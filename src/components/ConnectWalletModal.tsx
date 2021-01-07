@@ -21,7 +21,6 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 230px;
 `;
 
 interface ButtonProps {
@@ -39,7 +38,7 @@ const ButtonStyled = styled(Button)({
   flexDirection: 'row',
   padding: '0.8rem 4rem !important',
   alignItems: 'center',
-  marginTop: '5px !important',
+  margin: '10px 0 !important',
   cursor: 'pointer'
 });
 
