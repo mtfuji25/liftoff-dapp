@@ -137,8 +137,6 @@ const Launchpad: FC = () => {
           data: configBlob
         });
 
-        console.log(config);
-
         if (liftoffRegistration) {
           await liftoffRegistration.registerProject(
             config.hash,
@@ -154,6 +152,10 @@ const Launchpad: FC = () => {
         setLoading(false);
       }
     } catch (error) {
+      console.log(error);
+
+      alert(error.message || error);
+
       setLoading(false);
     }
   };
