@@ -85,7 +85,6 @@ export type ProjectConfig = {
   hardCap: string;
   totalSupply: string;
   logo: string;
-  openGraph: string;
 };
 
 export type TokenInsurance = {

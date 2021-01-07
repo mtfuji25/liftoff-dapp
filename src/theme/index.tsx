@@ -209,7 +209,10 @@ export const Input = styled.input`
   }
 `;
 
-export const StatusBadge = styled.div<{ color: keyof Colors }>(
+export const StatusBadge = styled.div<{
+  color: keyof Colors;
+  center?: boolean;
+}>(
   {
     borderRadius: 20,
     textAlign: 'center',
@@ -221,9 +224,9 @@ export const StatusBadge = styled.div<{ color: keyof Colors }>(
     backgroundColor: (theme as any)[color],
     color: theme.white
   }),
-  ({ theme }) =>
+  ({ center, theme }) =>
     theme.mediaWidth.upToSmall({
-      alignSelf: 'flex-start'
+      alignSelf: center ? 'center' : 'flex-start'
     })
 );
 
@@ -298,9 +301,20 @@ table {
   td, th {
     text-align: left;
     padding: 1rem;
+    ${({ theme }) =>
+      theme.mediaWidth.upToSmall({
+        padding: '1rem 0.4rem'
+      })}
   }
   }
   tr:nth-child(odd) {
     background-color: ${({ theme }) => theme.bg4}
   }
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+}
 `;
