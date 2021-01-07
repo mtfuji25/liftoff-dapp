@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { utils } from 'ethers';
 
 import Card from './Card';
@@ -87,6 +87,7 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
   };
 
   const { projectConf } = useProjectConfig(project.ipfsHash);
+  const history = useHistory();
 
   let countdown = 0;
   if (type === 'inactive') {
@@ -97,16 +98,18 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
     countdown = 0;
   }
 
+  const onClickCard = () => {
+    history.push(`/project/${project.id}`);
+  };
+
   return (
-    <StyledCard>
+    <StyledCard onClick={onClickCard}>
       <StyledLogo>
-        <Link to={`/project/${project.id}`}>
-          {projectConf ? (
-            <Logo src={projectConf.logo} alt="project logo" />
-          ) : (
-            <DefaultLogo />
-          )}
-        </Link>
+        {projectConf ? (
+          <Logo src={projectConf.logo} alt="project logo" />
+        ) : (
+          <DefaultLogo />
+        )}
       </StyledLogo>
       <TYPE.LargeHeader textAlign="center">
         {projectConf ? projectConf.projectName : 'Project Name'}
@@ -125,7 +128,7 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
         <TYPE.Header>Hard Cap:</TYPE.Header>
         <TYPE.Header>{utils.formatEther(project.hardCap)} xETH</TYPE.Header>
       </CapInfo>
-      <StyledLink href="website.com">
+      <StyledLink href={projectConf ? projectConf.websiteLink : '#'}>
         {projectConf ? projectConf.websiteLink : ''}
       </StyledLink>
     </StyledCard>
