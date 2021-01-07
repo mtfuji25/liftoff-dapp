@@ -20,6 +20,19 @@ export interface INetwork {
     liftoffInsurance: string;
     liftoffRegistration: string;
   };
+  settings: {
+    ethXLockBP: number;
+    tokenUserBP: number;
+    baseFeeBP: number;
+    ethBuyBP: number;
+    projectDevBP: number;
+    mainFeeBP: number;
+    lidPoolBP: number;
+    softCapTimer: number;
+    insurancePeriod: number;
+    minTimeToLaunch: number;
+    maxTimeToLaunch: number;
+  };
 }
 
 export type NetworkId = 1 | 3;

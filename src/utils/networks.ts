@@ -26,6 +26,19 @@ const networks: { [K in NetworkId]: INetwork } = {
       liftoffEngine: '0xEcBDC53216769bC2E854BcE9cd21183CDE28df76',
       liftoffInsurance: '0xea723A65fB681868DaBd6456ae96A92B677a8F27',
       liftoffRegistration: '0x1c5b37c07d2aa84579bD72e9266f218cc865c8cB'
+    },
+    settings: {
+      ethXLockBP: 1200,
+      tokenUserBP: 8101,
+      baseFeeBP: 200,
+      ethBuyBP: 3300,
+      projectDevBP: 3500,
+      mainFeeBP: 650,
+      lidPoolBP: 2350,
+      softCapTimer: 3600,
+      insurancePeriod: 604800,
+      minTimeToLaunch: 300,
+      maxTimeToLaunch: 7776000
     }
   },
   [networkIds.ROPSTEN]: {
@@ -39,6 +52,19 @@ const networks: { [K in NetworkId]: INetwork } = {
       liftoffEngine: '0xF4CCd4483b393A0526FF939CF15E89eBd3958f2B',
       liftoffInsurance: '0x4f250e2236457259BDac9f651f62e972Ce502Caa',
       liftoffRegistration: '0xadd1539fb19e03eE66fd365a6F6Cad68b49f981C'
+    },
+    settings: {
+      ethXLockBP: 1200,
+      tokenUserBP: 8101,
+      baseFeeBP: 200,
+      ethBuyBP: 3300,
+      projectDevBP: 3500,
+      mainFeeBP: 650,
+      lidPoolBP: 2350,
+      softCapTimer: 3600,
+      insurancePeriod: 14400,
+      minTimeToLaunch: 300,
+      maxTimeToLaunch: 7776000
     }
   }
 };
@@ -61,6 +87,13 @@ export const validNetworkId = (
   networkId: number | undefined
 ): networkId is NetworkId => {
   return networks[networkId as NetworkId] !== undefined;
+};
+
+export const getLiftoffSettings = (networkId: number | undefined) => {
+  if (!validNetworkId(networkId)) {
+    throw new Error(`Unsupported network id: '${networkId}'`);
+  }
+  return networks[networkId].settings;
 };
 
 export const getContractAddress = (
