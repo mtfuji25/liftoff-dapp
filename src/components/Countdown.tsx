@@ -17,6 +17,9 @@ const CountdownWrapper = styled.div`
     backgroundColor: theme.bg2,
     color: theme.white
   })}
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  padding: 0 !important;
+  `}
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin-top: 1rem;
     background-color: transparent;
@@ -39,6 +42,10 @@ const Time = styled.div`
   margin: 0;
   font-weight: 800;
   padding: 0 0.5rem;
+  ${({ theme }) =>
+    theme.mediaWidth.upToExtraSmall({
+      padding: '0 0.5rem !important'
+    })}
   ${({ theme }) =>
     theme.mediaWidth.upToSmall({
       padding: '0 0.75rem'

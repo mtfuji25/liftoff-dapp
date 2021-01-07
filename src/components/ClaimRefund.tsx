@@ -13,7 +13,6 @@ const CTA = styled.div`
     margin-right: 1rem;
   }
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    justify-content: space-between;
   `}
 `;
 

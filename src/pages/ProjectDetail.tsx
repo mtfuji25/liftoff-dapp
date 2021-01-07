@@ -16,7 +16,7 @@ import Insurance from 'components/Insurance';
 import Detail from 'components/Detail';
 import ClaimXETH from 'components/ClaimXETH';
 
-import { StyledBody, StyledContainer } from 'theme';
+import { StyledBody, StyledContainer as UnstyledContainer } from 'theme';
 
 import {
   useProject,
@@ -30,6 +30,11 @@ export const StyledTable = styled.table`
   padding: 2rem 0;
 `;
 
+const StyledContainer = styled(UnstyledContainer)({}, ({ theme }) =>
+  theme.mediaWidth.upToExtraSmall({
+    maxWidth: '100vw !important'
+  })
+);
 interface IProjectDetails {
   id: string;
 }
