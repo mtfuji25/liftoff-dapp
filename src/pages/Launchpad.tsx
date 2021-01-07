@@ -7,27 +7,40 @@ import { utils } from 'ethers';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { LaunchpadSchema } from 'data/launch.schema';
+import { Timezones } from 'data/timezones';
 
 import CopyRight from 'components/Copyright';
 import Button from 'components/Button';
 import Card from 'components/Card';
-import Disclaimer from '../components/Disclaimer';
-import Footer from '../components/Footer';
-import Input from '../components/Input';
-import Textarea from '../components/Textarea';
-import Spinner from '../components/Spinner';
-import { StyledBody, StyledContainer, TYPE } from '../theme';
+import Disclaimer from 'components/Disclaimer';
+import Footer from 'components/Footer';
+import Input from 'components/Input';
+import Select from 'components/Select';
+import Textarea from 'components/Textarea';
+import Spinner from 'components/Spinner';
+import { StyledBody, StyledContainer, TYPE } from 'theme';
+
 // import IMG_UPLOAD from '../assets/upload.png';
 
 import {
   useConnectedWeb3Context,
   useContracts,
   useWalletModal
-} from '../contexts';
+} from 'contexts';
 
 const StyledButton = styled(Button)`
   cursor: pointer !important;
 `;
+
+const DateFlex = styled(Flex)(
+  {
+    justifyContent: 'space-between'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      flexDirection: 'column'
+    })
+);
 
 // const AddFileButton = styled.label`
 //   display: flex;
@@ -64,6 +77,7 @@ interface ILaunchPadInput {
   totalSupply: string;
   logo: FileList;
   openGraph: FileList;
+  timezone: string;
 }
 
 const Launchpad: FC = () => {
@@ -474,29 +488,62 @@ const Launchpad: FC = () => {
                 <TYPE.Header color="black" mb="1.25rem">
                   LIFTOFF Launch Date & Time
                 </TYPE.Header>
-                <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                  Date (GMT)
-                </TYPE.Body>
-                <Controller
-                  control={control}
-                  name="date"
-                  render={({ onChange, onBlur, value, name }) => (
-                    <Input
-                      placeholder="mm/dd/yyyy"
-                      type="date"
-                      value={value}
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      name={name}
-                      ref={register}
+                <DateFlex>
+                  <Box>
+                    <TYPE.Body color="black" mt="0.5rem" mb="0.5rem">
+                      Date
+                    </TYPE.Body>
+                    <Controller
+                      control={control}
+                      name="date"
+                      render={({ onChange, onBlur, value, name }) => (
+                        <Input
+                          placeholder="mm/dd/yyyy"
+                          type="date"
+                          value={value}
+                          onChange={onChange}
+                          onBlur={onBlur}
+                          name={name}
+                          ref={register}
+                        />
+                      )}
                     />
-                  )}
-                />
-                {errors.date && (
-                  <TYPE.Small color="red1">{errors.date.message}</TYPE.Small>
-                )}
+                    {errors.date && (
+                      <TYPE.Small color="red1">
+                        {errors.date.message}
+                      </TYPE.Small>
+                    )}
+                  </Box>
+                  <Box>
+                    <TYPE.Body color="black" mt="0.5rem" mb="0.5rem">
+                      Timezone
+                    </TYPE.Body>
+                    <Controller
+                      control={control}
+                      name="timezone"
+                      render={({ onChange, onBlur, value, name }) => (
+                        <Select
+                          value={value}
+                          onChange={onChange}
+                          onBlur={onBlur}
+                          name={name}
+                          ref={register}
+                        >
+                          {Timezones.map((timezone, index) => (
+                            <option key={index}>{timezone.text}</option>
+                          ))}
+                        </Select>
+                      )}
+                    />
+                    {errors.timezone && (
+                      <TYPE.Small color="red1">
+                        {errors.timezone.message}
+                      </TYPE.Small>
+                    )}
+                  </Box>
+                </DateFlex>
                 <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                  Time (GMT)
+                  Time
                 </TYPE.Body>
                 <Controller
                   control={control}
