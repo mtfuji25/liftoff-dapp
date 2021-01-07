@@ -88,6 +88,15 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
 
   const { projectConf } = useProjectConfig(project.ipfsHash);
 
+  let countdown = 0;
+  if (type === 'inactive') {
+    countdown = project.startTime;
+  } else if (type === 'active') {
+    countdown = project.endTime;
+  } else if (type === 'completed') {
+    countdown = 0;
+  }
+
   return (
     <StyledCard>
       <StyledLogo>
@@ -106,15 +115,7 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
         {badges[type].title}
       </Badge>
       <CountdownContainer>
-        <Countdown
-          date={
-            type === 'completed'
-              ? 0
-              : type === 'active'
-              ? project.endTime
-              : project.startTime
-          }
-        />
+        <Countdown date={countdown} />
       </CountdownContainer>
       <CapInfo>
         <TYPE.Header>Soft Cap:</TYPE.Header>
