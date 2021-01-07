@@ -6,7 +6,6 @@ export const LaunchpadSchema = yup.object().shape({
   tokenTicker: yup.string().required('Token ticker is required'),
   projectDescription: yup.string().required('Project description is required'),
   logo: yup.mixed().required('Logo is required'),
-  openGraph: yup.mixed().required('Open Graph is required'),
   websiteLink: yup
     .string()
     .matches(

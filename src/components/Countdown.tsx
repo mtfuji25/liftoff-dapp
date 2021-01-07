@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import { TYPE } from '../theme';
 
 interface Props {
@@ -59,7 +60,7 @@ const Countdown = ({ date }: Props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const setNewTime = () => {
     if (date) {
-      const currentTime = Math.floor(new Date().getTime() / 1000);
+      const currentTime = moment().unix();
       const distanceToDate = date - currentTime > 0 ? date - currentTime : 0;
 
       let days = Math.floor(distanceToDate / (60 * 60 * 24));
