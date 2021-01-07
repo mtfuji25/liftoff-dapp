@@ -298,6 +298,10 @@ table {
   td, th {
     text-align: left;
     padding: 1rem;
+    ${({ theme }) =>
+      theme.mediaWidth.upToSmall({
+        padding: '1rem 0.5rem'
+      })}
   }
   }
   tr:nth-child(odd) {
