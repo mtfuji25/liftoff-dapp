@@ -36,6 +36,10 @@ const LayoutGrid = styled.div(
     theme.mediaWidth.upToSmall({
       color: theme.black,
       gridTemplateColumns: '1fr'
+    }),
+  ({ theme }) =>
+    theme.mediaWidth.upToMedium({
+      gridTemplateColumns: 'repeat(2, 1fr)'
     })
 );
 
