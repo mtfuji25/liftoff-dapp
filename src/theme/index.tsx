@@ -300,7 +300,7 @@ table {
     padding: 1rem;
     ${({ theme }) =>
       theme.mediaWidth.upToSmall({
-        padding: '1rem 0.5rem'
+        padding: '1rem 0.4rem'
       })}
   }
   }
