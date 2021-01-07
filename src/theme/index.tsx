@@ -303,4 +303,11 @@ table {
   tr:nth-child(odd) {
     background-color: ${({ theme }) => theme.bg4}
   }
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+}
 `;
