@@ -1,16 +1,22 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 import { useConnectedWeb3Context, useWalletModal } from '../contexts';
 
 import Button from './Button';
 
+import { ReactComponent as NetworkStatusMainnetIcon } from '../assets/svgs/network_status_mainnet.svg';
+import { ReactComponent as NetworkStatusRopstenIcon } from '../assets/svgs/network_status_ropsten.svg';
+import { ReactComponent as WalletAddressIcon } from '../assets/svgs/wallet-address.svg';
 import Logo from '../assets/logo.png';
 import Menu from '../assets/menu.svg';
 import Close from '../assets/close.svg';
 import { TYPE } from '../theme';
 
 import { shortenAddress } from '../utils';
+
+const RopstenNetworkId = 3  // mainnet network id: 1
 
 interface Props {}
 
@@ -71,6 +77,19 @@ const StyledLogo = styled.img`
   width: 2rem;
 `;
 
+const StyledIcon = styled.span`
+  display: flex;
+  margin-right: 1rem;
+  align-items: center;
+`;
+
+const StyledContainer = styled.div`
+  display: flex;
+  background: #3A3D40;
+  border-radius: 5px;
+  padding: 7px 16px 7px 12px;
+`;
+
 const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
@@ -94,7 +113,7 @@ const Header = (_props: Props) => {
   const [, toggleModal] = useWalletModal();
   const [isOpen, setIsOpen] = useState(false);
   const context = useConnectedWeb3Context();
-  const { account } = context;
+  const { account, networkId } = context;
   const isConnected = !!account;
 
   const disconnect = useCallback(() => {}, []);
@@ -119,9 +138,32 @@ const Header = (_props: Props) => {
             <StyledLink to="/projects">Projects</StyledLink>
           </StyledNavListItem>
           {isConnected ? (
-            <StyledNavListItem onClick={disconnect}>
-              {shortenAddress(account || '')}
-            </StyledNavListItem>
+            <>
+            {networkId === RopstenNetworkId ? (
+              <>
+                <StyledIcon data-tip data-for="network_ropsten">
+                  <NetworkStatusRopstenIcon />
+                </StyledIcon>
+                <ReactTooltip id="network_ropsten">
+                  <p>
+                    You are on Ropsten. LIFTOFF dapp <br />requires you connect to Mainnet.
+                  </p>
+                </ReactTooltip>
+                </>
+              ) : (
+                <StyledIcon>
+                  <NetworkStatusMainnetIcon />
+                </StyledIcon>
+              )}
+              <StyledNavListItem onClick={disconnect}>
+                  <StyledContainer>
+                    <StyledIcon>
+                      <WalletAddressIcon />
+                    </StyledIcon>
+                    {shortenAddress(account || '')}
+                  </StyledContainer>
+              </StyledNavListItem>
+            </>
           ) : (
             <StyledNavListItem onClick={() => setIsOpen(false)}>
               <StyledButton onClick={() => toggleModal(true)}>
