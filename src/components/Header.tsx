@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useConnectedWeb3Context, useWalletModal } from '../contexts';
@@ -53,12 +53,15 @@ const StyledNavList = styled.ul<{ open: boolean }>`
   }
 `;
 
-const StyledNavListItem = styled.li`
+const StyledNavListItem = styled.li<{ onClick: any }>`
   a {
     margin-right: 2rem;
     color: ${({ theme }) => theme.white};
     text-decoration: none;
   }
+  ${({ onClick }) => ({
+    cursor: onClick ? 'pointer' : 'default'
+  })}
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 1rem;
   `}
@@ -94,6 +97,8 @@ const Header = (_props: Props) => {
   const { account } = context;
   const isConnected = !!account;
 
+  const disconnect = useCallback(() => {}, []);
+
   return (
     <>
       <StyledNavContainer>
@@ -114,7 +119,7 @@ const Header = (_props: Props) => {
             <StyledLink to="/projects">Projects</StyledLink>
           </StyledNavListItem>
           {isConnected ? (
-            <StyledNavListItem>
+            <StyledNavListItem onClick={disconnect}>
               {shortenAddress(account || '')}
             </StyledNavListItem>
           ) : (

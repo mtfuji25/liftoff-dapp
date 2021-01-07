@@ -13,7 +13,7 @@ import { TYPE, StatusBadge, ExternalLink } from '../theme';
 import { Colors } from 'theme/styled';
 
 const StyledCard = styled(Card)({
-  padding: '1rem 3rem',
+  padding: '1rem 2rem',
   textAlign: 'center',
   display: 'flex',
   flexDirection: 'column'
@@ -36,7 +36,7 @@ const CapInfo = styled.div({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  margin: '20px 0'
+  margin: '10px 0'
 });
 
 const StyledLink = styled(ExternalLink)({
