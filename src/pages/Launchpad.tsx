@@ -499,6 +499,7 @@ const Launchpad: FC = () => {
                 <Controller
                   control={control}
                   name="time"
+                  defaultValue="00:00"
                   render={({ onChange, onBlur, value, name }) => (
                     <Input
                       placeholder="00:00 AM"
