@@ -209,7 +209,10 @@ export const Input = styled.input`
   }
 `;
 
-export const StatusBadge = styled.div<{ color: keyof Colors }>(
+export const StatusBadge = styled.div<{
+  color: keyof Colors;
+  center?: boolean;
+}>(
   {
     borderRadius: 20,
     textAlign: 'center',
@@ -221,9 +224,9 @@ export const StatusBadge = styled.div<{ color: keyof Colors }>(
     backgroundColor: (theme as any)[color],
     color: theme.white
   }),
-  ({ theme }) =>
+  ({ center, theme }) =>
     theme.mediaWidth.upToSmall({
-      alignSelf: 'flex-start'
+      alignSelf: center ? 'center' : 'flex-start'
     })
 );
 
