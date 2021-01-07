@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { BigNumber } from 'ethers';
+import moment from 'moment';
 
 import CopyRight from 'components/Copyright';
 import Disclaimer from 'components/Disclaimer';
@@ -40,7 +41,7 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
   const { projectConf } = useProjectConfig(tokenSale?.ipfsHash);
   const { igniteInfo } = useIgniteInfo(tokenSale?.id || '', account);
 
-  const currentTime = Math.floor(Date.now() / 1000);
+  const currentTime = moment().unix();
 
   let isIgniting = false;
   let isRefunding = false;

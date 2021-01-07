@@ -1,6 +1,7 @@
 import { TokenSale, ProjectKey } from 'utils/types';
 import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
+import moment from 'moment';
 
 export const shortenAddress = (address: string) => {
   return `${address.substring(0, 6)}...${address.substring(
@@ -74,7 +75,7 @@ export const waitSeconds = (sec = 2): Promise<void> =>
   });
 
 export const projectStatus = (tokenSale: TokenSale): ProjectKey => {
-  const currentTime = Math.floor(Date.now() / 1000);
+  const currentTime = moment().unix();
 
   const status =
     tokenSale.isSparked ||
