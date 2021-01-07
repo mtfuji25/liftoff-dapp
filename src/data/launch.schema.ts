@@ -35,7 +35,16 @@ export const LaunchpadSchema = yup.object().shape({
   currentDate: yup.date(),
   // date: yup.date().when(''),
   time: yup.string().required('Launch time is required'),
-  softCap: yup.number().required('Soft cap is required'),
-  hardCap: yup.number().required('Hard cap is required'),
-  totalSupply: yup.number().required('Total supply is required')
+  softCap: yup
+    .number()
+    .typeError('Soft cap must be a number')
+    .required('Soft cap is required'),
+  hardCap: yup
+    .number()
+    .typeError('Hardcap must be a number')
+    .required('Hard cap is required'),
+  totalSupply: yup
+    .number()
+    .typeError('Total supply must be a number')
+    .required('Total supply is required')
 });
