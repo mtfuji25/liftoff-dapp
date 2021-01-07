@@ -137,7 +137,6 @@ const Launchpad: FC = () => {
           key: `${baseKey}/config.json`,
           data: configBlob
         });
-        console.log(config);
         if (liftoffRegistration) {
           await liftoffRegistration.registerProject(
             config.hash,
@@ -152,6 +151,10 @@ const Launchpad: FC = () => {
         setLoading(false);
       }
     } catch (error) {
+      console.log(error);
+
+      alert(error.message || error);
+
       setLoading(false);
     }
   };
@@ -190,7 +193,6 @@ const Launchpad: FC = () => {
                     <Input
                       placeholder="Liquidity Dividends Protocol"
                       type="text"
-                      error={errors.projectName && errors.projectName.message}
                       value={value}
                       name={name}
                       onChange={onChange}
