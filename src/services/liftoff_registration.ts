@@ -39,7 +39,7 @@ class LiftoffRegistrationService {
 
   registerProject = async (
     ipfsHash: string,
-    launchTime: number,
+    launchTime: string,
     softCap: string,
     hardCap: string,
     totalSupplyWad: string,

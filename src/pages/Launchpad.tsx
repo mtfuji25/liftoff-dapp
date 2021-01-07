@@ -5,6 +5,7 @@ import { Box, Flex } from 'rebass';
 import fleekStorage from '@fleekhq/fleek-storage-js';
 import { utils } from 'ethers';
 import { yupResolver } from '@hookform/resolvers/yup';
+import moment from 'moment';
 
 import { LaunchpadSchema } from 'data/launch.schema';
 
@@ -111,10 +112,12 @@ const Launchpad: FC = () => {
           return;
         }
         const settings = getLiftoffSettings(context.networkId);
-        const startTime = Math.round(
-          new Date(`${data.date} ${data.time}:00 UTC`).getTime() / 1000
-        );
-        const currentTime = Math.round(Date.now() / 1000);
+        const startTime = moment(
+          `${data.date} ${data.time} +0000`,
+          'YYYY-MM-DD HH:mm Z'
+        ).unix();
+
+        const currentTime = moment().unix();
         if (
           startTime < currentTime + settings.minTimeToLaunch ||
           startTime > currentTime + settings.maxTimeToLaunch
@@ -152,7 +155,7 @@ const Launchpad: FC = () => {
         if (liftoffRegistration) {
           await liftoffRegistration.registerProject(
             config.hash,
-            startTime,
+            startTime.toString(),
             utils.parseEther(data.softCap.toString()).toString(),
             utils.parseEther(data.hardCap.toString()).toString(),
             utils.parseEther(data.totalSupply.toString()).toString(),
