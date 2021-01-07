@@ -111,7 +111,7 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
       <TYPE.LargeHeader textAlign="center">
         {projectConf ? projectConf.projectName : 'Project Name'}
       </TYPE.LargeHeader>
-      <Badge color={badges[type].color as keyof Colors}>
+      <Badge center color={badges[type].color as keyof Colors}>
         {badges[type].title}
       </Badge>
       <CountdownContainer>
