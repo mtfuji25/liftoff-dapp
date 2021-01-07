@@ -9,8 +9,7 @@ const Container = styled.div({
   height: 20,
   width: '100%',
   backgroundColor: '#e0e0de',
-  borderRadius: 50,
-  display: 'flex'
+  borderRadius: 50
 });
 
 const Filler = styled.div(
@@ -35,7 +34,8 @@ const Label = styled.label({
 
 export const ProgressBar = ({ completed }: Props) => (
   <Container>
-    <Filler completed={completed}></Filler>
-    <Label>{`${completed}%`}</Label>
+    <Filler completed={completed}>
+      <Label>{`${completed}%`}</Label>
+    </Filler>
   </Container>
 );
