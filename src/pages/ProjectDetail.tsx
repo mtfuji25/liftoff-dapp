@@ -78,7 +78,7 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
     <>
       {tokenSale && projectConf ? (
         <StyledBody color="bg3">
-          <StyledContainer sWidth="85vw">
+          <StyledContainer sWidth="90vw">
             <Detail
               isInsuranceStarted={isInsuranceStarted}
               tokenSale={tokenSale}
