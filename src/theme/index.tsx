@@ -151,6 +151,8 @@ export const StyledBody = styled.div<{ color: keyof Colors }>`
   background-color: ${({ color, theme }) => (theme as any)[color]};
   ${({ theme }) => theme.mediaWidth.upToSmall`
   padding: 1rem 1.25rem;`};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  padding: 1rem 5px !important`}
 `;
 
 export const TBody = styled.tbody``;
@@ -169,8 +171,10 @@ export const StyledRocketCard = styled(Card)`
   flex-direction: column;
   margin: 0.5rem 0 !important;
   justify-content: space-between;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    padding: 2rem 0.5rem !important`}
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 2rem 1rem;
+    padding: 2rem 0.5rem !important;
   `}
 `;
 
@@ -235,6 +239,7 @@ const StyledLink = styled.a`
   cursor: pointer;
   color: ${({ theme }) => theme.primary1};
   font-weight: 500;
+  word-break: break-all;
   :hover {
     text-decoration: none;
   }
@@ -302,10 +307,27 @@ table {
     text-align: left;
     padding: 1rem;
     ${({ theme }) =>
-      theme.mediaWidth.upToSmall({
-        padding: '1rem 0.4rem'
+      theme.mediaWidth.upToExtraSmall({
+        padding: '1rem 0',
+        width: '100%'
       })}
+      ${({ theme }) =>
+        theme.mediaWidth.upToSmall({
+          padding: '1rem 0.4rem'
+        })}
   }
+  }
+  tr {
+    ${({ theme }) =>
+      theme.mediaWidth.upToExtraSmall({
+        display: 'flex',
+        flexDirection: 'row'
+      })}
+    ${({ theme }) =>
+      theme.mediaWidth.upToExtraSmall({
+        display: 'flex',
+        flexDirection: 'column'
+      })}
   }
   tr:nth-child(odd) {
     background-color: ${({ theme }) => theme.bg4}

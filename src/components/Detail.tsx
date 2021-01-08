@@ -6,7 +6,7 @@ import {
   StyledRocketCard,
   TYPE,
   StatusBadge,
-  ExternalLink,
+  ExternalLink as UnstyledExternalLink,
   TBody,
   TRow,
   TData
@@ -21,6 +21,9 @@ import { ProjectConfig, TokenSale } from 'utils/types';
 import { Colors } from 'theme/styled';
 import { projectStatus } from 'utils';
 
+const ExternalLink = styled(UnstyledExternalLink)({
+  wordBreak: 'break-all'
+});
 const Card = styled(StyledRocketCard)`
   padding: 0;
 `;
@@ -32,6 +35,7 @@ const StyledRocketDetailHead = styled.div`
   padding: 2rem 1rem;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     flex-direction: column;
+    padding: 1rem 0 !important;
   `};
 `;
 const StyledCountdown = styled.div`
@@ -40,12 +44,16 @@ const StyledCountdown = styled.div`
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin-top: 1rem;
     flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+    align-items: center;
+    justify-content: center;
   `}
   span {
     margin-right: 1rem;
   }
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    align-items: center;
+    align-self: center !important;
+    `}
 `;
 
 const StyledRocketDetailBody = styled.div``;
@@ -56,6 +64,13 @@ const StyledDescription = styled.div`
 `;
 
 export const StyledTable = styled.table``;
+
+const HeaderFlex = styled(Flex)({}, ({ theme }) =>
+  theme.mediaWidth.upToExtraSmall({
+    flexDirection: 'column',
+    width: '100vw'
+  })
+);
 
 const StyledFlex = styled.div(
   {
@@ -87,6 +102,10 @@ const StyledTData = styled(TData)(
     justifyContent: 'space-between'
   },
   ({ theme }) =>
+    theme.mediaWidth.upToExtraSmall({
+      width: '100% !important'
+    }),
+  ({ theme }) =>
     theme.mediaWidth.upToSmall({
       width: '45%'
     })
@@ -99,6 +118,7 @@ const SmallText = styled(TYPE.Small)(
   ({ theme }) =>
     theme.mediaWidth.upToSmall({
       margin: '0 !important'
+      // width: '100vw'
     })
 );
 
@@ -107,9 +127,19 @@ const StyledImage = styled.img({
   height: 20
 });
 
-const Badge = styled(StatusBadge)({
-  margin: '15px 0 !important'
-});
+const Badge = styled(StatusBadge)(
+  {
+    margin: '15px 0 !important'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToExtraSmall({
+      alignSelf: 'center'
+    }),
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      alignSelf: 'center'
+    })
+);
 
 type Props = {
   projectConfig: ProjectConfig;
@@ -153,14 +183,14 @@ const Detail = ({ isInsuranceStarted, tokenSale, projectConfig }: Props) => {
       <StyledRocketDetailHead>
         <Flex
           flexDirection={['column', 'row']}
-          alignItems={['flex-start', 'center']}
+          alignItems={['center', 'center']}
         >
-          <Flex alignItems="center" mr={['0', '1rem']} mb={['1rem', '0']}>
+          <HeaderFlex alignItems="center" mr={['0', '1rem']} mb={['1rem', '0']}>
             <Avatar size="4.375rem" imgSrc={projectConfig.logo} />
             <TYPE.LargeHeader ml="1.25rem">
               {projectConfig.projectName}
             </TYPE.LargeHeader>
-          </Flex>
+          </HeaderFlex>
 
           <Badge color={badges[status].color as keyof Colors}>
             {badges[status].title}
