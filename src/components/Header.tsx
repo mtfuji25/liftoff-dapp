@@ -74,15 +74,29 @@ const StyledLogo = styled.img`
   width: 2rem;
 `;
 
-const StyledNetwork = styled.span`
+const StyledAccountInfo = styled.div`
+  display: flex;
+
+  @media (max-width: 720px) {
+    flex-direction: column-reverse;
+  }
+`;
+
+const StyledNetwork = styled.span<{ isCorrectNetwork: boolean }>`
+  width: fit-content;
+  margin-left: 1rem;
   margin-right: 1rem;
   border: 1px solid #3A3D40;
   border-radius: 5px;
   padding: 7px 20px 7px 20px;
   font-size: 16px;
   line-height: 22px;
-  color: #FD4281;
+  color: ${({ isCorrectNetwork }) => (isCorrectNetwork ? '#29ADA5' : '#FD4281')};
   cursor: default;
+
+  @media (max-width: 720px) {
+    margin-top: 0.7rem;
+  }
 `;
 
 const StyledIcon = styled.span`
@@ -158,20 +172,20 @@ const Header = (_props: Props) => {
             <StyledLink to="/projects">Projects</StyledLink>
           </StyledNavListItem>
           {isConnected ? (
-            <>
-            {networkId !== correctNetworkId ? (
-              <>
-                <StyledNetwork data-tip data-for="wrong_network">
-                  {networkNames[networkId as networkIds]}
-                </StyledNetwork>
-                <ReactTooltip id="wrong_network">
-                  <p>
-                    You are on {networkNames[networkId as networkIds]}. LIFTOFF dapp <br />requires you connect to {networkNames[correctNetworkId as networkIds]}.
-                  </p>
-                </ReactTooltip>
+            <StyledAccountInfo>
+              {networkId !== correctNetworkId ? (
+                <>
+                  <StyledNetwork isCorrectNetwork={false} data-tip data-for="wrong_network">
+                    {networkNames[networkId as networkIds]}
+                  </StyledNetwork>
+                  <ReactTooltip id="wrong_network">
+                    <p>
+                      You are on {networkNames[networkId as networkIds]}. LIFTOFF dapp <br />requires you connect to {networkNames[correctNetworkId as networkIds]}.
+                    </p>
+                  </ReactTooltip>
                 </>
               ) : (                                                                                                                                                                                                       
-                <StyledNetwork>
+                <StyledNetwork isCorrectNetwork={true}>
                   {networkNames[networkId as networkIds]}
                 </StyledNetwork>
               )}
@@ -183,7 +197,7 @@ const Header = (_props: Props) => {
                     {shortenAddress(account || '')}
                   </StyledContainer>
               </StyledNavListItem>
-            </>
+            </StyledAccountInfo>
           ) : (
             <StyledNavListItem onClick={() => setIsOpen(false)}>
               <StyledButton onClick={() => toggleModal(true)}>
