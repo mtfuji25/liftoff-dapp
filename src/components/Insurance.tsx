@@ -43,7 +43,8 @@ const FlexWrap = styled.div(
   ({ theme }) =>
     theme.mediaWidth.upToSmall({
       flexDirection: 'column',
-      padding: '10px 0'
+      padding: '10px 0',
+      alignItems: 'flex-start'
     })
 );
 
@@ -55,7 +56,7 @@ const RedeemButton = styled(StyledButton)(
   },
   ({ theme }) =>
     theme.mediaWidth.upToSmall({
-      margin: 0
+      margin: '5px 0'
     })
 );
 
