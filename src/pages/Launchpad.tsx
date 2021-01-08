@@ -109,9 +109,10 @@ const Launchpad: FC = () => {
           throw new Error(`Invalid Timezone`);
         }
 
+        const offsetAbs = Math.abs(offset);
         const startTime = moment(
           `${data.date} ${data.time} ${offset >= 0 ? '+' : '-'}${
-            Math.abs(offset) > 10 ? offset.toString() : `0${offset}`
+            offsetAbs >= 10 ? offsetAbs.toString() : `0${offsetAbs}`
           }00`,
           'YYYY-MM-DD HH:mm Z'
         ).unix();
@@ -134,7 +135,7 @@ const Launchpad: FC = () => {
         const logo = await fleekStorage.upload({
           apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
           apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-          key: `${baseKey}/logo.png`,
+          key: `${baseKey}/logo.${data.logo[0].name.split('.').pop()}`,
           data: data.logo[0]
         });
 
@@ -304,7 +305,7 @@ const Launchpad: FC = () => {
                   <Input
                     name="logo"
                     type="file"
-                    accept="image/x-png"
+                    accept="image/*"
                     ref={register}
                   />
                   {errors.logo && (
