@@ -21,8 +21,6 @@ import Textarea from 'components/Textarea';
 import Spinner from 'components/Spinner';
 import { StyledBody, StyledContainer, TYPE } from 'theme';
 
-// import IMG_UPLOAD from '../assets/upload.png';
-
 import {
   useConnectedWeb3Context,
   useContracts,
@@ -44,23 +42,6 @@ const DateFlex = styled(Flex)(
     })
 );
 
-// const AddFileButton = styled.label`
-//   display: flex;
-//   align-items: center;
-//   color: ${({ theme }) => theme.primary1};
-//   border: ${({ theme }) => `1px solid ${theme.border}`};
-//   border-radius: 5px;
-//   background: none;
-//   padding: 0.5rem 1rem;
-//   width: fit-content;
-
-//   > input {
-//     width: 0;
-//     height: 0;
-//     padding: 0;
-//   }
-// `;
-
 interface ILaunchPadInput {
   projectName: string;
   tokenTicker: string;
@@ -74,6 +55,7 @@ interface ILaunchPadInput {
   facebook: string;
   date: string;
   time: string;
+  timezone: string;
   softCap: string;
   hardCap: string;
   totalSupply: string;
@@ -106,15 +88,10 @@ const Launchpad: FC = () => {
     return config;
   };
 
-  const today = new Date();
-  const defaultDate =
-    today.getFullYear() +
-    '-' +
-    (today.getMonth() > 8
-      ? today.getMonth() + 1
-      : '0' + (today.getMonth() + 1)) +
-    '-' +
-    (today.getDate() > 9 ? today.getDate() : '0' + today.getDate());
+  const defaultDate = moment().format('YYYY-MM-DD');
+  const utcOffset = moment().utcOffset() / 60;
+  const defaultTimezone = Timezones.find((zone) => zone.offset === utcOffset)
+    ?.text;
 
   const onSubmit = async (data: ILaunchPadInput) => {
     try {
@@ -125,8 +102,17 @@ const Launchpad: FC = () => {
           return;
         }
         const settings = getLiftoffSettings(context.networkId);
+        const offset = Timezones.find((zone) => zone.text === data.timezone)
+          ?.offset;
+
+        if (offset === undefined) {
+          throw new Error(`Invalid Timezone`);
+        }
+
         const startTime = moment(
-          `${data.date} ${data.time} +0000`,
+          `${data.date} ${data.time} ${offset >= 0 ? '+' : '-'}${
+            Math.abs(offset) > 10 ? offset.toString() : `0${offset}`
+          }00`,
           'YYYY-MM-DD HH:mm Z'
         ).unix();
 
@@ -205,7 +191,7 @@ const Launchpad: FC = () => {
             <br />
             3. Submit and pay the gas fee.
             <br />
-            4. Liftoff will create your ERC20 token and your project's liftoff
+            4. LIFTOFF will create your ERC20 token and your project's LIFTOFF
             page.
           </TYPE.Body>
           <Box width="100%" mt="2.5rem">
@@ -224,7 +210,7 @@ const Launchpad: FC = () => {
                     name="projectName"
                     render={({ onChange, onBlur, value, name }) => (
                       <Input
-                        placeholder="Liquidity Dividends Protocol"
+                        placeholder="Your Project Name"
                         type="text"
                         value={value}
                         name={name}
@@ -464,6 +450,7 @@ const Launchpad: FC = () => {
                       <Controller
                         control={control}
                         name="timezone"
+                        defaultValue={defaultTimezone}
                         render={({ onChange, onBlur, value, name }) => (
                           <Select
                             value={value}
@@ -473,7 +460,9 @@ const Launchpad: FC = () => {
                             ref={register}
                           >
                             {Timezones.map((timezone, index) => (
-                              <option key={index}>{timezone.text}</option>
+                              <option key={index} value={timezone.text}>
+                                {timezone.text}
+                              </option>
                             ))}
                           </Select>
                         )}
