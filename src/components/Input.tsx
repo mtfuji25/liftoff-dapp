@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Input as UnstyledInput } from '@rebass/forms';
 
-const Input = styled(UnstyledInput)<{ error?: keyof String }>`
+const Input = styled(UnstyledInput)<{ error?: string }>`
   border-radius: 5px;
   outline: none;
   height: 2.375rem;
