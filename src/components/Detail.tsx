@@ -6,7 +6,7 @@ import {
   StyledRocketCard,
   TYPE,
   StatusBadge,
-  ExternalLink,
+  ExternalLink as UnstyledExternalLink,
   TBody,
   TRow,
   TData
@@ -20,6 +20,10 @@ import FacebookIcon from '../assets/pngs/facebook.png';
 import { ProjectConfig, TokenSale } from 'utils/types';
 import { Colors } from 'theme/styled';
 import { projectStatus } from 'utils';
+
+const ExternalLink = styled(UnstyledExternalLink)({
+  wordBreak: 'break-all'
+});
 
 const Card = styled(StyledRocketCard)`
   padding: 0;
