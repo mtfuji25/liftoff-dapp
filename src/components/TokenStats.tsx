@@ -21,7 +21,6 @@ const Card = styled(StyledRocketCard)`
 const CTA = styled.div`
   display: flex;
   align-items: center;
-  padding: 2rem 1rem;
   button {
     margin-right: 1rem;
   }
@@ -43,13 +42,17 @@ const StyledButton = styled(ExternalLink)`
   color: #ffffff;
 `;
 
-const HeaderText = styled(TYPE.LargeHeader)`
-  padding: 2rem 1rem;
-`;
+const HeaderText = styled(TYPE.LargeHeader)``;
 
-const StyledTData = styled(TData)({
-  width: '66%'
-});
+const StyledTData = styled(TData)(
+  {
+    width: '66%'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      width: '100%'
+    })
+);
 
 interface IProps {
   deployed: string;
