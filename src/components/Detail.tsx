@@ -266,7 +266,8 @@ const Detail = ({ isInsuranceStarted, tokenSale, projectConfig }: Props) => {
               </TData>
               <StyledTData>
                 <TYPE.Body>
-                  {projectConfig.date} {projectConfig.time} UTC
+                  {projectConfig.date} {projectConfig.time}{' '}
+                  {projectConfig.timezone || 'UTC'}
                 </TYPE.Body>
               </StyledTData>
             </TRow>

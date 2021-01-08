@@ -39,7 +39,10 @@ const Spark: FC<IProps> = ({ tokenSaleId }) => {
 
   return (
     <StyledRocketCard>
-      <TYPE.LargeHeader>Spark Project</TYPE.LargeHeader>
+      <TYPE.LargeHeader mb="1rem">Spark Project</TYPE.LargeHeader>
+      <TYPE.Body lineHeight="1.5rem">
+        Spark to initiate the token on both PenguinSwap and LiftoffInsurance.
+      </TYPE.Body>
       <CTA>
         <StyledButton onClick={onClickSpark}>Spark</StyledButton>
       </CTA>

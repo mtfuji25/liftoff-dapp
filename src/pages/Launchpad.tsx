@@ -8,17 +8,18 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import moment from 'moment';
 
 import { LaunchpadSchema } from 'data/launch.schema';
+import { Timezones } from 'data/timezones';
 
 import CopyRight from 'components/Copyright';
 import Button from 'components/Button';
 import Card from 'components/Card';
-import Disclaimer from '../components/Disclaimer';
-import Footer from '../components/Footer';
-import Input from '../components/Input';
-import Textarea from '../components/Textarea';
-import Spinner from '../components/Spinner';
-import { StyledBody, StyledContainer, TYPE } from '../theme';
-// import IMG_UPLOAD from '../assets/upload.png';
+import Disclaimer from 'components/Disclaimer';
+import Footer from 'components/Footer';
+import Input from 'components/Input';
+import Select from 'components/Select';
+import Textarea from 'components/Textarea';
+import Spinner from 'components/Spinner';
+import { StyledBody, StyledContainer, TYPE } from 'theme';
 
 import {
   useConnectedWeb3Context,
@@ -31,22 +32,15 @@ const StyledButton = styled(Button)`
   cursor: pointer !important;
 `;
 
-// const AddFileButton = styled.label`
-//   display: flex;
-//   align-items: center;
-//   color: ${({ theme }) => theme.primary1};
-//   border: ${({ theme }) => `1px solid ${theme.border}`};
-//   border-radius: 5px;
-//   background: none;
-//   padding: 0.5rem 1rem;
-//   width: fit-content;
-
-//   > input {
-//     width: 0;
-//     height: 0;
-//     padding: 0;
-//   }
-// `;
+const DateFlex = styled(Flex)(
+  {
+    justifyContent: 'space-between'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      flexDirection: 'column'
+    })
+);
 
 interface ILaunchPadInput {
   projectName: string;
@@ -61,6 +55,7 @@ interface ILaunchPadInput {
   facebook: string;
   date: string;
   time: string;
+  timezone: string;
   softCap: string;
   hardCap: string;
   totalSupply: string;
@@ -93,15 +88,10 @@ const Launchpad: FC = () => {
     return config;
   };
 
-  const today = new Date();
-  const defaultDate =
-    today.getFullYear() +
-    '-' +
-    (today.getMonth() > 8
-      ? today.getMonth() + 1
-      : '0' + (today.getMonth() + 1)) +
-    '-' +
-    (today.getDate() > 9 ? today.getDate() : '0' + today.getDate());
+  const defaultDate = moment().format('YYYY-MM-DD');
+  const utcOffset = moment().utcOffset() / 60;
+  const defaultTimezone = Timezones.find((zone) => zone.offset === utcOffset)
+    ?.text;
 
   const onSubmit = async (data: ILaunchPadInput) => {
     try {
@@ -112,8 +102,18 @@ const Launchpad: FC = () => {
           return;
         }
         const settings = getLiftoffSettings(context.networkId);
+        const offset = Timezones.find((zone) => zone.text === data.timezone)
+          ?.offset;
+
+        if (offset === undefined) {
+          throw new Error(`Invalid Timezone`);
+        }
+
+        const offsetAbs = Math.abs(offset);
         const startTime = moment(
-          `${data.date} ${data.time} +0000`,
+          `${data.date} ${data.time} ${offset >= 0 ? '+' : '-'}${
+            offsetAbs >= 10 ? offsetAbs.toString() : `0${offsetAbs}`
+          }00`,
           'YYYY-MM-DD HH:mm Z'
         ).unix();
 
@@ -135,7 +135,7 @@ const Launchpad: FC = () => {
         const logo = await fleekStorage.upload({
           apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
           apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-          key: `${baseKey}/logo.png`,
+          key: `${baseKey}/logo.${data.logo[0].name.split('.').pop()}`,
           data: data.logo[0]
         });
 
@@ -192,7 +192,7 @@ const Launchpad: FC = () => {
             <br />
             3. Submit and pay the gas fee.
             <br />
-            4. Liftoff will create your ERC20 token and your project's liftoff
+            4. LIFTOFF will create your ERC20 token and your project's LIFTOFF
             page.
           </TYPE.Body>
           <Box width="100%" mt="2.5rem">
@@ -211,7 +211,7 @@ const Launchpad: FC = () => {
                     name="projectName"
                     render={({ onChange, onBlur, value, name }) => (
                       <Input
-                        placeholder="Liquidity Dividends Protocol"
+                        placeholder="Your Project Name"
                         type="text"
                         value={value}
                         name={name}
@@ -305,7 +305,7 @@ const Launchpad: FC = () => {
                   <Input
                     name="logo"
                     type="file"
-                    accept="image/x-png"
+                    accept="image/*"
                     ref={register}
                   />
                   {errors.logo && (
@@ -415,115 +415,68 @@ const Launchpad: FC = () => {
                   paddingY="1.875rem"
                 >
                   <TYPE.Header color="black" mb="1.25rem">
-                    Social Media Links
-                  </TYPE.Header>
-                  <TYPE.Body color="black" mb="0.5rem">
-                    Discord
-                  </TYPE.Body>
-                  <Controller
-                    control={control}
-                    name="discord"
-                    render={({ onChange, onBlur, value, name }) => (
-                      <Input
-                        placeholder="https://discord.gg/"
-                        type="text"
-                        value={value}
-                        name={name}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        ref={register}
-                      />
-                    )}
-                  />
-
-                  <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                    Telegram
-                  </TYPE.Body>
-                  <Controller
-                    control={control}
-                    name="telegram"
-                    render={({ onChange, onBlur, value, name }) => (
-                      <Input
-                        placeholder="https://t.me/"
-                        type="text"
-                        value={value}
-                        name={name}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        ref={register}
-                      />
-                    )}
-                  />
-                  <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                    Twitter
-                  </TYPE.Body>
-                  <Controller
-                    control={control}
-                    name="twitter"
-                    render={({ onChange, onBlur, value, name }) => (
-                      <Input
-                        placeholder="https://twitter.com/"
-                        type="text"
-                        value={value}
-                        name={name}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        ref={register}
-                      />
-                    )}
-                  />
-                  <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                    Facebook
-                  </TYPE.Body>
-                  <Controller
-                    control={control}
-                    name="facebook"
-                    render={({ onChange, onBlur, value, name }) => (
-                      <Input
-                        placeholder="https://facebook.com/"
-                        type="text"
-                        value={value}
-                        name={name}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        ref={register}
-                      />
-                    )}
-                  />
-                </Card>
-
-                <Card
-                  marginBottom="1rem"
-                  paddingX="1.375rem"
-                  paddingY="1.875rem"
-                >
-                  <TYPE.Header color="black" mb="1.25rem">
                     LIFTOFF Launch Date & Time
                   </TYPE.Header>
-                  <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                    Date (GMT)
-                  </TYPE.Body>
-                  <Controller
-                    control={control}
-                    name="date"
-                    defaultValue={defaultDate}
-                    render={({ onChange, onBlur, value, name }) => (
-                      <Input
-                        placeholder="mm/dd/yyyy"
-                        type="date"
-                        value={value}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        name={name}
-                        ref={register}
+                  <DateFlex>
+                    <Box>
+                      <TYPE.Body color="black" mt="0.5rem" mb="0.5rem">
+                        Date
+                      </TYPE.Body>
+                      <Controller
+                        control={control}
+                        name="date"
+                        defaultValue={defaultDate}
+                        render={({ onChange, onBlur, value, name }) => (
+                          <Input
+                            placeholder="mm/dd/yyyy"
+                            type="date"
+                            value={value}
+                            onChange={onChange}
+                            onBlur={onBlur}
+                            name={name}
+                            ref={register}
+                          />
+                        )}
                       />
-                    )}
-                  />
-                  {errors.date && (
-                    <TYPE.Small color="red1">{errors.date.message}</TYPE.Small>
-                  )}
+                      {errors.date && (
+                        <TYPE.Small color="red1">
+                          {errors.date.message}
+                        </TYPE.Small>
+                      )}
+                    </Box>
+                    <Box>
+                      <TYPE.Body color="black" mt="0.5rem" mb="0.5rem">
+                        Timezone
+                      </TYPE.Body>
+                      <Controller
+                        control={control}
+                        name="timezone"
+                        defaultValue={defaultTimezone}
+                        render={({ onChange, onBlur, value, name }) => (
+                          <Select
+                            value={value}
+                            onChange={onChange}
+                            onBlur={onBlur}
+                            name={name}
+                            ref={register}
+                          >
+                            {Timezones.map((timezone, index) => (
+                              <option key={index} value={timezone.text}>
+                                {timezone.text}
+                              </option>
+                            ))}
+                          </Select>
+                        )}
+                      />
+                      {errors.timezone && (
+                        <TYPE.Small color="red1">
+                          {errors.timezone.message}
+                        </TYPE.Small>
+                      )}
+                    </Box>
+                  </DateFlex>
                   <TYPE.Body color="black" mt="1rem" mb="0.5rem">
-                    Time (GMT)
+                    Time
                   </TYPE.Body>
                   <Controller
                     control={control}
@@ -543,9 +496,6 @@ const Launchpad: FC = () => {
                       />
                     )}
                   />
-                  {errors.time && (
-                    <TYPE.Small color="red1">{errors.time.message}</TYPE.Small>
-                  )}
                 </Card>
 
                 <Card
