@@ -6,7 +6,11 @@ interface Props extends InputProps {
   text: string;
 }
 
-const InputContainer = styled.div({});
+const InputContainer = styled.div({}, ({ theme }) =>
+  theme.mediaWidth.upToSmall({
+    width: '100%'
+  })
+);
 
 const WrappedInput = styled.div({
   display: 'flex',
