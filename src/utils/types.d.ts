@@ -81,6 +81,7 @@ export type ProjectConfig = {
   facebook: string;
   date: string;
   time: string;
+  timezone?: string;
   softCap: string;
   hardCap: string;
   totalSupply: string;
