@@ -12,6 +12,7 @@ import { useProjects } from 'contexts/useProjects';
 import { ProjectKey } from 'utils/types';
 
 import { StyledContainer, StyledBody, TYPE } from '../theme';
+import { Flex } from 'rebass';
 
 const Container = styled.div(
   {
@@ -83,15 +84,28 @@ const Projects = () => {
               </STabList>
               {tabs.map((tab) => (
                 <STabPanel key={tab.key}>
-                  <LayoutGrid>
-                    {projects[tab.key].map((project) => (
-                      <CardState
-                        key={project.id}
-                        type={tab.key}
-                        project={project}
-                      />
-                    ))}
-                  </LayoutGrid>
+                  {projects[tab.key].length > 0 ? (
+                    <LayoutGrid>
+                      {projects[tab.key].map((project) => (
+                        <CardState
+                          key={project.id}
+                          type={tab.key}
+                          project={project}
+                        />
+                      ))}
+                    </LayoutGrid>
+                  ) : (
+                    <Flex
+                      height="40vh"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <TYPE.Header color="grey">
+                        There are currently no projects{' '}
+                        {tab.title.toLowerCase()}.
+                      </TYPE.Header>
+                    </Flex>
+                  )}
                 </STabPanel>
               ))}
             </STabs>
