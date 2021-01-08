@@ -152,7 +152,7 @@ export const StyledBody = styled.div<{ color: keyof Colors }>`
   ${({ theme }) => theme.mediaWidth.upToSmall`
   padding: 1rem 1.25rem;`};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-  padding: 1rem 0 !important`}
+  padding: 1rem 5px !important`}
 `;
 
 export const TBody = styled.tbody``;
@@ -239,6 +239,7 @@ const StyledLink = styled.a`
   cursor: pointer;
   color: ${({ theme }) => theme.primary1};
   font-weight: 500;
+  word-break: break-all;
   :hover {
     text-decoration: none;
   }
@@ -307,7 +308,8 @@ table {
     padding: 1rem;
     ${({ theme }) =>
       theme.mediaWidth.upToExtraSmall({
-        padding: '1rem 0'
+        padding: '1rem 0',
+        width: '100%'
       })}
       ${({ theme }) =>
         theme.mediaWidth.upToSmall({
