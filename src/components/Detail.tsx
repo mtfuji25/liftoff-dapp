@@ -24,7 +24,6 @@ import { projectStatus } from 'utils';
 const ExternalLink = styled(UnstyledExternalLink)({
   wordBreak: 'break-all'
 });
-
 const Card = styled(StyledRocketCard)`
   padding: 0;
 `;
