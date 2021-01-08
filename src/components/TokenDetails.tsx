@@ -8,11 +8,17 @@ import { ProgressBar } from './ProgressBar';
 
 import { StyledRocketCard, TYPE } from '../theme';
 
-const CardGrid = styled.div({
-  display: 'grid',
-  gridGap: 10,
-  gridTemplateColumns: 'repeat(3, 1fr)'
-});
+const CardGrid = styled.div(
+  {
+    display: 'grid',
+    gridGap: 10,
+    gridTemplateColumns: 'repeat(3, 1fr)'
+  },
+  ({ theme }) =>
+    theme.mediaWidth.upToExtraSmall({
+      gridTemplateColumns: '1fr'
+    })
+);
 
 const StyledCard = styled(Card)({
   border: '2px solid #CFD6E2',
