@@ -7,10 +7,10 @@ import {
   ROPSTEN_SUBGRAPH_WS
 } from 'config/constants';
 
-export const networkIds = {
-  MAINNET: 1,
-  ROPSTEN: 3
-} as const;
+export enum networkIds {
+  MAINNET = 1,
+  ROPSTEN = 3
+};
 
 const INFURA_PROJECT_ID = 'f9df69e5cfef48799e2d20eaa7d15697';
 
@@ -133,3 +133,8 @@ export const TokenEthereum = {
   decimals: 18,
   symbol: 'ETH'
 };
+
+export const networkNames = {
+  [networkIds.MAINNET]: 'Mainnet',
+  [networkIds.ROPSTEN]: 'Ropsten'
+}
