@@ -1,22 +1,19 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
+import * as blockies from 'blockies-ts';
 import { useConnectedWeb3Context, useWalletModal } from '../contexts';
 
 import Button from './Button';
 
-import { ReactComponent as NetworkStatusMainnetIcon } from '../assets/svgs/network_status_mainnet.svg';
-import { ReactComponent as NetworkStatusRopstenIcon } from '../assets/svgs/network_status_ropsten.svg';
-import { ReactComponent as WalletAddressIcon } from '../assets/svgs/wallet-address.svg';
 import Logo from '../assets/logo.png';
 import Menu from '../assets/menu.svg';
 import Close from '../assets/close.svg';
 import { TYPE } from '../theme';
 
 import { shortenAddress } from '../utils';
-
-const RopstenNetworkId = 3  // mainnet network id: 1
+import { networkIds, networkNames } from 'utils/networks';
 
 interface Props {}
 
@@ -77,10 +74,26 @@ const StyledLogo = styled.img`
   width: 2rem;
 `;
 
+const StyledNetwork = styled.span`
+  margin-right: 1rem;
+  border: 1px solid #3A3D40;
+  border-radius: 5px;
+  padding: 7px 20px 7px 20px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #FD4281;
+  cursor: default;
+`;
+
 const StyledIcon = styled.span`
   display: flex;
   margin-right: 1rem;
   align-items: center;
+
+  img {
+  	border-radius: 50%;
+	  width: 1.3rem;
+  }
 `;
 
 const StyledContainer = styled.div`
@@ -112,9 +125,16 @@ const StyledMenu = styled.img`
 const Header = (_props: Props) => {
   const [, toggleModal] = useWalletModal();
   const [isOpen, setIsOpen] = useState(false);
+  const [addrImgSrc, setAddrImgSrc] = useState('');
   const context = useConnectedWeb3Context();
   const { account, networkId } = context;
   const isConnected = !!account;
+  const correctNetworkId = parseInt(process.env.REACT_APP_CORRECT_NETWORK_ID || '1');
+
+  useEffect(() => {
+    const imgSrc = blockies.create({ seed: account || '' }).toDataURL();
+    setAddrImgSrc(imgSrc);
+  }, [account]);
 
   const disconnect = useCallback(() => {}, []);
 
@@ -139,26 +159,26 @@ const Header = (_props: Props) => {
           </StyledNavListItem>
           {isConnected ? (
             <>
-            {networkId === RopstenNetworkId ? (
+            {networkId !== correctNetworkId ? (
               <>
-                <StyledIcon data-tip data-for="network_ropsten">
-                  <NetworkStatusRopstenIcon />
-                </StyledIcon>
-                <ReactTooltip id="network_ropsten">
+                <StyledNetwork data-tip data-for="wrong_network">
+                  {networkNames[networkId as networkIds]}
+                </StyledNetwork>
+                <ReactTooltip id="wrong_network">
                   <p>
-                    You are on Ropsten. LIFTOFF dapp <br />requires you connect to Mainnet.
+                    You are on {networkNames[networkId as networkIds]}. LIFTOFF dapp <br />requires you connect to {networkNames[correctNetworkId as networkIds]}.
                   </p>
                 </ReactTooltip>
                 </>
-              ) : (
-                <StyledIcon>
-                  <NetworkStatusMainnetIcon />
-                </StyledIcon>
+              ) : (                                                                                                                                                                                                       
+                <StyledNetwork>
+                  {networkNames[networkId as networkIds]}
+                </StyledNetwork>
               )}
               <StyledNavListItem onClick={disconnect}>
                   <StyledContainer>
                     <StyledIcon>
-                      <WalletAddressIcon />
+                      <img src={addrImgSrc} alt='' />
                     </StyledIcon>
                     {shortenAddress(account || '')}
                   </StyledContainer>
