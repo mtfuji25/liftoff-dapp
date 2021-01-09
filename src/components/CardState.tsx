@@ -16,7 +16,8 @@ const StyledCard = styled(Card)({
   padding: '1rem 2rem',
   textAlign: 'center',
   display: 'flex',
-  flexDirection: 'column'
+  flexDirection: 'column',
+  cursor: 'pointer'
 });
 
 const StyledLogo = styled.div({
