@@ -35,9 +35,9 @@ const networks: { [K in NetworkId]: INetwork } = {
       projectDevBP: 3500,
       mainFeeBP: 650,
       lidPoolBP: 2350,
-      softCapTimer: 3600,
+      softCapTimer: 172800,
       insurancePeriod: 604800,
-      minTimeToLaunch: 300,
+      minTimeToLaunch: 86400,
       maxTimeToLaunch: 7776000
     }
   },
