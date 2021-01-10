@@ -115,6 +115,7 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
     try {
       await liftoffInsurance.createInsurance(tokenSaleId);
     } catch (error) {
+      alert(error.message || error);
       console.log(error);
     }
   };
@@ -127,6 +128,7 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
     try {
       await xToken.approveUnlimited(liftoffInsurance.address);
     } catch (error) {
+      alert(error.message || error);
       console.log(error);
     }
   };
@@ -139,6 +141,7 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
     try {
       await liftoffInsurance.redeem(tokenSaleId, redeemAmount);
     } catch (error) {
+      alert(error.message || error);
       console.log(error);
     }
   };
@@ -155,6 +158,18 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
           .toString()
       : '0';
 
+  const percent =
+    tokenInsurance &&
+    tokenInsurance.totalIgnited &&
+    tokenInsurance.claimedXEth &&
+    !BigNumber.from(tokenInsurance.totalIgnited).isZero()
+      ? BigNumber.from(tokenInsurance.totalIgnited)
+          .sub(BigNumber.from(tokenInsurance.claimedXEth))
+          .mul(BigNumber.from('1000'))
+          .div(BigNumber.from(tokenInsurance.totalIgnited))
+          .toNumber() / 10
+      : '0';
+
   return (
     <StyledRocketCard>
       <RowFlex>
@@ -164,7 +179,7 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
         </TYPE.Body>
       </RowFlex>
       <TYPE.Body>
-        Redeem {symbol} for orignial sale price with 2% fee.
+        Redeem {symbol} for original sale price with 2% fee.
       </TYPE.Body>
       {!isInsuranceStarted && (
         <CTA>
@@ -174,7 +189,7 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
         </CTA>
       )}
       {isInsuranceStarted && (
-        <TYPE.Body color="blue1">Percentage remaining: 100%</TYPE.Body>
+        <TYPE.Body color="blue1">Percentage remaining: {percent}%</TYPE.Body>
       )}
       {isInsuranceStarted && !isApprovedTokens && (
         <>
