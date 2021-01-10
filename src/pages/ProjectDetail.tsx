@@ -114,6 +114,7 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
             )}
             {tokenSale.isSparked && (
               <ClaimXETH
+                networkId={networkId}
                 tokenSaleId={tokenSale.id}
                 tokenInsurance={tokenInsurance}
               />
