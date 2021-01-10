@@ -23,9 +23,9 @@ const networks: { [K in NetworkId]: INetwork } = {
     contracts: {
       xEth: '0x29B109625ac15BC4577d0b70ACB9e4E27F7C07E8',
       xLocker: '0xAA13f1Fc73baB751Da08930007D4D847EeEafAA2',
-      liftoffEngine: '0xEcBDC53216769bC2E854BcE9cd21183CDE28df76',
-      liftoffInsurance: '0xea723A65fB681868DaBd6456ae96A92B677a8F27',
-      liftoffRegistration: '0x1c5b37c07d2aa84579bD72e9266f218cc865c8cB'
+      liftoffEngine: '0x22bCFca3E18B2e7f114e17245e50D9dBf8Bb5e47',
+      liftoffInsurance: '0x4013F4366beEccb04d2462b061b0C78499eE8FfD',
+      liftoffRegistration: '0xA4Bf30C2f474fB2ffa35dBF432142DEa08D6655E'
     },
     settings: {
       ethXLockBP: 1200,
