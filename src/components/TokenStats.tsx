@@ -14,10 +14,6 @@ import {
 import { shortenAddress } from 'utils';
 import { getContractAddress } from 'utils/networks';
 
-const Card = styled(StyledRocketCard)`
-  padding: 0;
-`;
-
 const CTA = styled.div`
   display: flex;
   align-items: center;
@@ -83,7 +79,7 @@ const TokenStats: FC<IProps> = ({ deployed, networkId }) => {
   }, [networkId]);
 
   return (
-    <Card>
+    <StyledRocketCard>
       <HeaderText>Token Stats</HeaderText>
       <StyledTable cellSpacing={0} cellPadding={0}>
         <TBody>
@@ -129,7 +125,7 @@ const TokenStats: FC<IProps> = ({ deployed, networkId }) => {
       <CTA>
         <StyledButton href={swapLink}>Trade on PenguinSwap</StyledButton>
       </CTA>
-    </Card>
+    </StyledRocketCard>
   );
 };
 
