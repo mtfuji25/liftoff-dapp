@@ -67,6 +67,7 @@ const Launchpad: FC = () => {
   const context = useConnectedWeb3Context();
   const [, toggleModal] = useWalletModal();
   const { liftoffRegistration } = useContracts(context);
+  const settings = getLiftoffSettings(context.networkId || 1);
 
   const { control, errors, register, handleSubmit } = useForm({
     mode: 'all',
@@ -87,8 +88,16 @@ const Launchpad: FC = () => {
 
     return config;
   };
+  const now = moment().unix();
 
-  const defaultDate = moment().format('YYYY-MM-DD');
+  // earliest possible launch time(now + minTimeToLaunch + 5 mins)
+  const earliestLaunchTime = moment(
+    (now + settings.minTimeToLaunch + 5 * 60) * 1000
+  ).format('YYYY-MM-DD hh:mm');
+
+  const defaultDate = earliestLaunchTime.split(' ')[0];
+  const defaultTime = earliestLaunchTime.split(' ')[1];
+
   const utcOffset = moment().utcOffset() / 60;
   const defaultTimezone = Timezones.find((zone) => zone.offset === utcOffset)
     ?.text;
@@ -101,7 +110,6 @@ const Launchpad: FC = () => {
         if (loading) {
           return;
         }
-        const settings = getLiftoffSettings(context.networkId);
         const offset = Timezones.find((zone) => zone.text === data.timezone)
           ?.offset;
 
@@ -481,7 +489,7 @@ const Launchpad: FC = () => {
                   <Controller
                     control={control}
                     name="time"
-                    defaultValue="00:00"
+                    defaultValue={defaultTime}
                     render={({ onChange, onBlur, value, name }) => (
                       <Input
                         placeholder="00:00 AM"
