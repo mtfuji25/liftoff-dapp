@@ -2,6 +2,9 @@
   "name": "liftoff",
   "version": "0.1.0",
   "private": true,
+  "author": "lid-protocol",
+  "license": "GPL-3.0-only",
+  "homepage": "./",
   "dependencies": {
     "@apollo/client": "^3.3.6",
     "@fleekhq/fleek-storage-js": "^1.0.4",
