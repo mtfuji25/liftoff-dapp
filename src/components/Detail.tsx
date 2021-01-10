@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex } from 'rebass';
 import styled from 'styled-components';
 import { utils } from 'ethers';
+import moment from 'moment';
 import {
   StyledRocketCard,
   TYPE,
@@ -17,9 +18,10 @@ import DiscordIcon from '../assets/pngs/discord.png';
 import TelegramIcon from '../assets/pngs/telegram.png';
 import TwitterIcon from '../assets/pngs/twitter.png';
 import FacebookIcon from '../assets/pngs/facebook.png';
-import { ProjectConfig, TokenSale } from 'utils/types';
+import { ProjectConfig, TokenInsurance, TokenSale } from 'utils/types';
 import { Colors } from 'theme/styled';
 import { projectStatus } from 'utils';
+import { getLiftoffSettings } from 'utils/networks';
 
 const ExternalLink = styled(UnstyledExternalLink)({
   wordBreak: 'break-all'
@@ -142,12 +144,18 @@ const Badge = styled(StatusBadge)(
 );
 
 type Props = {
+  networkId: number | undefined;
   projectConfig: ProjectConfig;
   tokenSale: TokenSale;
-  isInsuranceStarted: boolean;
+  tokenInsurance: Maybe<TokenInsurance>;
 };
 
-const Detail = ({ isInsuranceStarted, tokenSale, projectConfig }: Props) => {
+const Detail = ({
+  networkId,
+  tokenInsurance,
+  tokenSale,
+  projectConfig
+}: Props) => {
   const badges = {
     inactive: {
       color: 'blue1',
@@ -164,6 +172,9 @@ const Detail = ({ isInsuranceStarted, tokenSale, projectConfig }: Props) => {
   };
 
   const status = projectStatus(tokenSale);
+  const setting = getLiftoffSettings(networkId);
+
+  const currentTime = moment().unix();
 
   let countdownText = '';
   let countdown = 0;
@@ -174,8 +185,29 @@ const Detail = ({ isInsuranceStarted, tokenSale, projectConfig }: Props) => {
     countdownText = 'Spark in:';
     countdown = tokenSale ? tokenSale.endTime : 0;
   } else if (status === 'completed') {
-    countdownText = isInsuranceStarted ? 'Insurance expires in:' : '';
-    countdown = 0;
+    if (
+      !tokenInsurance ||
+      !tokenInsurance.isInitialized ||
+      !tokenInsurance.startTime
+    ) {
+      countdownText = 'Insurance is not started or Refunding';
+      countdown = 0;
+    } else if (
+      currentTime <
+      tokenInsurance.startTime + setting.insurancePeriod
+    ) {
+      countdownText = '100% insurance expires in:';
+      countdown = tokenInsurance.startTime + setting.insurancePeriod;
+    } else if (
+      currentTime <
+      tokenInsurance.startTime + setting.insurancePeriod * 10
+    ) {
+      countdownText = 'Remaining insurance expires in:';
+      countdown = tokenInsurance.startTime + setting.insurancePeriod * 10;
+    } else {
+      countdownText = 'Insurance expired:';
+      countdown = 0;
+    }
   }
 
   return (
