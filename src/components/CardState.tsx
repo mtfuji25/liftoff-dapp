@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { utils } from 'ethers';
+import moment from 'moment';
 
 import Card from './Card';
 import Countdown from './Countdown';
@@ -11,6 +12,9 @@ import { TokenSale, ProjectKey } from 'utils/types';
 
 import { TYPE, StatusBadge, ExternalLink } from '../theme';
 import { Colors } from 'theme/styled';
+
+import { useInsurance, useConnectedWeb3Context } from 'contexts';
+import { getLiftoffSettings } from 'utils/networks';
 
 const StyledCard = styled(Card)({
   padding: '1rem 2rem',
@@ -87,8 +91,13 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
     }
   };
 
+  const { networkId } = useConnectedWeb3Context();
   const { projectConf } = useProjectConfig(project.ipfsHash);
+  const { insurance } = useInsurance(project.id);
+  const setting = getLiftoffSettings(networkId || 1);
+
   const history = useHistory();
+  const currentTime = moment().unix();
 
   let countdown = 0;
   if (type === 'inactive') {
@@ -97,6 +106,18 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
     countdown = project.endTime;
   } else if (type === 'completed') {
     countdown = 0;
+    if (!insurance || !insurance.isInitialized || !insurance.startTime) {
+      countdown = 0;
+    } else if (currentTime < insurance.startTime + setting.insurancePeriod) {
+      countdown = insurance.startTime + setting.insurancePeriod;
+    } else if (
+      currentTime <
+      insurance.startTime + setting.insurancePeriod * 10
+    ) {
+      countdown = insurance.startTime + setting.insurancePeriod * 10;
+    } else {
+      countdown = 0;
+    }
   }
 
   const onClickCard = () => {

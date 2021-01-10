@@ -77,15 +77,14 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
       tokenSale.isSparked && !!(igniteInfo && !igniteInfo.hasClaimed);
   }
 
-  const isInsuranceStarted = !!(tokenInsurance && tokenInsurance.isInitialized);
-
   return (
     <>
       {tokenSale && projectConf ? (
         <StyledBody color="bg3">
           <StyledContainer sWidth="90vw">
             <Detail
-              isInsuranceStarted={isInsuranceStarted}
+              networkId={networkId}
+              tokenInsurance={tokenInsurance}
               tokenSale={tokenSale}
               projectConfig={projectConf}
             />
