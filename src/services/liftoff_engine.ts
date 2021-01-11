@@ -48,37 +48,41 @@ class LiftoffEngineService {
   igniteEth = async (
     tokenSaleId: string,
     amount: string
-  ): Promise<TransactionReceipt> => {
+  ): Promise<string> => {
     const txObject = await this.contract.igniteEth(tokenSaleId, {
       value: utils.parseEther(amount)
     });
 
-    return this.provider.waitForTransaction(txObject.hash);
+    return txObject.hash;
   };
 
-  spark = async (tokenSaleId: string): Promise<TransactionReceipt> => {
+  spark = async (tokenSaleId: string): Promise<string> => {
     const txObject = await this.contract.spark(tokenSaleId);
 
-    return this.provider.waitForTransaction(txObject.hash);
+    return txObject.hash;
   };
 
   claimReward = async (
     tokenSaleId: string,
     address: string
-  ): Promise<TransactionReceipt> => {
+  ): Promise<string> => {
     const txObject = await this.contract.claimReward(tokenSaleId, address);
 
-    return this.provider.waitForTransaction(txObject.hash);
+    return txObject.hash;
   };
 
   claimRefund = async (
     tokenSaleId: string,
     address: string
-  ): Promise<TransactionReceipt> => {
+  ): Promise<string> => {
     const txObject = await this.contract.claimRefund(tokenSaleId, address);
 
-    return this.provider.waitForTransaction(txObject.hash);
+    return txObject.hash;
   };
+
+  waitForTransaction = (txHash: string): Promise<TransactionReceipt> => {
+    return this.provider.waitForTransaction(txHash);
+  }
 }
 
 export { LiftoffEngineService };

@@ -33,7 +33,8 @@ const ClaimRefund: FC<IProps> = ({ amount, tokenSaleId }) => {
       return;
     }
     try {
-      await liftoffEngine.claimRefund(tokenSaleId, account);
+      const txHash = await liftoffEngine.claimRefund(tokenSaleId, account);
+      await liftoffEngine.waitForTransaction(txHash);
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +46,7 @@ const ClaimRefund: FC<IProps> = ({ amount, tokenSaleId }) => {
       <CTA>
         <StyledButton onClick={onClaimRefund}>Claim Refund</StyledButton>
         <TYPE.Small color="primary1">
-          Refund {utils.formatEther(amount)} ETH
+          {utils.formatEther(amount)} ETH already refunded
         </TYPE.Small>
       </CTA>
     </StyledRocketCard>
