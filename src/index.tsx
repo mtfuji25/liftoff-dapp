@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
@@ -7,6 +6,7 @@ import { Web3Provider } from '@ethersproject/providers';
 import {
   ConnectedWeb3,
   ApolloProviderWrapper,
+  RouterWrapper,
   ModalProvider
 } from './contexts';
 import App from './pages/App';
@@ -27,9 +27,9 @@ ReactDOM.render(
         <ConnectedWeb3>
           <ApolloProviderWrapper>
             <ModalProvider>
-              <BrowserRouter>
+              <RouterWrapper>
                 <App />
-              </BrowserRouter>
+              </RouterWrapper>
             </ModalProvider>
           </ApolloProviderWrapper>
         </ConnectedWeb3>
