@@ -56,7 +56,7 @@ interface IProps {
 }
 
 const TokenStats: FC<IProps> = ({ deployed, networkId }) => {
-  const xEthAddress = getContractAddress(networkId || 3, 'xEth');
+  const xEthAddress = getContractAddress(networkId || 1, 'xEth');
   const swapLink = `https://penguinswap.eth.link/#/swap?inputCurrency=${xEthAddress}&outputCurrency=${deployed}`;
   const [tokenPrice, setTokenPrice] = useState('0');
 
