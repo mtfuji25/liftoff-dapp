@@ -31,7 +31,8 @@ const Spark: FC<IProps> = ({ tokenSaleId }) => {
       return;
     }
     try {
-      await liftoffEngine.spark(tokenSaleId);
+      const txHash = await liftoffEngine.spark(tokenSaleId);
+      await liftoffEngine.waitForTransaction(txHash);
     } catch (error) {
       console.log(error);
     }

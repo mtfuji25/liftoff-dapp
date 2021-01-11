@@ -50,7 +50,8 @@ const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo }) => {
       return;
     }
     try {
-      await liftoffEngine.igniteEth(tokenSaleId, amount);
+      const txHash = await liftoffEngine.igniteEth(tokenSaleId, amount);
+      await liftoffEngine.waitForTransaction(txHash);
     } catch (error) {
       console.log(error);
     }
