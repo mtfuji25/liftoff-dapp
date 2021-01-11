@@ -28,6 +28,8 @@ import {
 } from '../contexts';
 import { getLiftoffSettings } from 'utils/networks';
 
+const ipfsInfura = require('ipfs-http-client')({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+
 const StyledButton = styled(Button)`
   cursor: pointer !important;
 `;
@@ -139,30 +141,54 @@ const Launchpad: FC = () => {
 
         setLoading(true);
 
-        // upload images
-        const logo = await fleekStorage.upload({
-          apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
-          apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-          key: `${baseKey}/logo.${data.logo[0].name.split('.').pop()}`,
-          data: data.logo[0]
-        });
+        let configHash = "";
 
-        // upload json
-        const configJson = JSON.stringify(
-          convertFormToConfig(data, logo.publicUrl)
-        );
-        const configBlob = new Blob([new TextEncoder().encode(configJson)], {
-          type: 'application/json;charset=utf-8'
-        });
-        const config = await fleekStorage.upload({
-          apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
-          apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
-          key: `${baseKey}/config.json`,
-          data: configBlob
-        });
-        if (liftoffRegistration) {
+        try{
+
+          // upload images
+          const logo = await fleekStorage.upload({
+            apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+            apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+            key: `${baseKey}/logo.${data.logo[0].name.split('.').pop()}`,
+            data: data.logo[0]
+          });
+
+          // upload json
+          const configJson = JSON.stringify(
+            convertFormToConfig(data, logo.publicUrl)
+          );
+          const configBlob = new Blob([new TextEncoder().encode(configJson)], {
+            type: 'application/json;charset=utf-8'
+          });
+          const config = await fleekStorage.upload({
+            apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
+            apiSecret: process.env.REACT_APP_FLEEK_API_SECRET || 'api-secret',
+            key: `${baseKey}/config.json`,
+            data: configBlob
+          });
+          configHash = config.hash;
+
+        } catch (error) {
+          //Use ipfsInfura instead, since fleek is down.
+          // upload images
+          console.log("Fleek down. Trying ipfsInfura...");
+          const logo = await ipfsInfura.add(data.logo[0]);
+          console.log("logo link:","https://ipfs.io/ipfs/"+logo.cid.string);
+          // upload json
+          const configJson = JSON.stringify(
+            convertFormToConfig(data, "https://ipfs.io/ipfs/"+logo.cid.string)
+          );
+          const configBlob = new Blob([new TextEncoder().encode(configJson)], {
+            type: 'application/json;charset=utf-8'
+          });
+          const config = await ipfsInfura.add(configBlob);
+          console.log("config link:","https://ipfs.io/ipfs/"+config.cid.string);
+          configHash = config.cid.string;
+          
+        }
+        if (liftoffRegistration && configHash != "") {
           await liftoffRegistration.registerProject(
-            config.hash,
+            configHash,
             startTime.toString(),
             utils.parseEther(data.softCap.toString()).toString(),
             utils.parseEther(data.hardCap.toString()).toString(),
@@ -170,11 +196,12 @@ const Launchpad: FC = () => {
             data.projectName,
             data.tokenTicker
           );
+          setLoading(false);
         }
-        setLoading(false);
       }
     } catch (error) {
       console.log(error);
+      
 
       alert(error.message || error);
 
