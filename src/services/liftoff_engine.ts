@@ -1,5 +1,4 @@
 import { Contract, Wallet, ethers, utils } from 'ethers';
-import { TransactionReceipt } from '@ethersproject/abstract-provider/lib/index';
 
 const liftoffEnginesAbi = [
   'event LaunchToken(uint256 tokenId, uint256 startTime, uint256 endTime, uint256 softCap, uint256 hardCap, uint256 totalSupply, string name, string symbol, address dev)',
@@ -79,10 +78,6 @@ class LiftoffEngineService {
 
     return txObject.hash;
   };
-
-  waitForTransaction = (txHash: string): Promise<TransactionReceipt> => {
-    return this.provider.waitForTransaction(txHash);
-  }
 }
 
 export { LiftoffEngineService };

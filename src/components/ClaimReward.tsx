@@ -1,9 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { BigNumber } from 'ethers';
 import styled from 'styled-components';
 import Button from './Button';
 import { StyledRocketCard, TYPE } from '../theme';
-import { useConnectedWeb3Context, useContracts } from '../contexts';
+import { useConnectedWeb3Context, useContracts, useTxModal } from '../contexts';
 
 import { TokenSale, Ignitor } from 'utils/types';
 import { formatBigNumber } from 'utils';
@@ -29,8 +29,7 @@ interface IProps {
 }
 
 const ClaimReward: FC<IProps> = ({ igniteInfo, tokenSale }) => {
-  const [txHash, setTxHash] = useState('');
-  const [txStatus, setTxStatus] = useState(0);  // 1: error, 2: sent, 3: success
+  const [{ txStatus, txHash }, updateTxStatus, toggleTxModal, onClose] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffEngine } = useContracts(context);
   const { account } = context;
@@ -45,20 +44,12 @@ const ClaimReward: FC<IProps> = ({ igniteInfo, tokenSale }) => {
     }
     try {
       const txHash = await liftoffEngine.claimReward(tokenSale.id, account);
-      setTxHash(txHash);
-      setTxStatus(2);
-      await liftoffEngine.waitForTransaction(txHash)
-      setTxStatus(3);
+      await toggleTxModal(liftoffEngine.provider, txHash);
     } catch (error) {
       console.log(error);
-      setTxStatus(1);
+      updateTxStatus(1);
     }
   };
-
-  const onClose = () => {
-    setTxHash('');
-    setTxStatus(0);
-  }
 
   return (
     <>
