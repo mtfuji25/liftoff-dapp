@@ -15,7 +15,7 @@ import { useConnectedWeb3Context } from '../connectedWeb3';
 export const ApolloProviderWrapper: React.FC = ({ children }) => {
   const { networkId } = useConnectedWeb3Context();
   const client = useMemo(() => {
-    const { httpUri } = getGraphUris(networkId || 3);
+    const { httpUri } = getGraphUris(networkId || 1);
 
     const httpLink = new HttpLink({
       uri: httpUri
