@@ -3,7 +3,8 @@ import { utils } from 'ethers';
 import styled from 'styled-components';
 import Button from './Button';
 import { StyledRocketCard, TYPE } from '../theme';
-import { useConnectedWeb3Context, useContracts } from '../contexts';
+import { useConnectedWeb3Context, useContracts, useTxModal } from '../contexts';
+import TxModal from './TxModal';
 
 const CTA = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ interface IProps {
 }
 
 const ClaimRefund: FC<IProps> = ({ amount, tokenSaleId }) => {
+  const [{ txStatus, txHash }, updateTxStatus, toggleTxModal, onClose] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffEngine } = useContracts(context);
   const { account } = context;
@@ -34,22 +36,30 @@ const ClaimRefund: FC<IProps> = ({ amount, tokenSaleId }) => {
     }
     try {
       const txHash = await liftoffEngine.claimRefund(tokenSaleId, account);
-      await liftoffEngine.waitForTransaction(txHash);
+      await toggleTxModal(liftoffEngine.provider, txHash);
     } catch (error) {
       console.log(error);
+      updateTxStatus(1);
     }
   };
 
   return (
-    <StyledRocketCard>
-      <TYPE.LargeHeader>Claim Refund</TYPE.LargeHeader>
-      <CTA>
-        <StyledButton onClick={onClaimRefund}>Claim Refund</StyledButton>
-        <TYPE.Small color="primary1">
-          {utils.formatEther(amount)} ETH already refunded
-        </TYPE.Small>
-      </CTA>
-    </StyledRocketCard>
+    <>
+      <StyledRocketCard>
+        <TYPE.LargeHeader>Claim Refund</TYPE.LargeHeader>
+        <CTA>
+          <StyledButton onClick={onClaimRefund}>Claim Refund</StyledButton>
+          <TYPE.Small color="primary1">
+            Claim Refund: {utils.formatEther(amount)} ETH
+          </TYPE.Small>
+        </CTA>
+      </StyledRocketCard>
+      <TxModal
+        txStatus={txStatus}
+        txHash={txHash}
+        onClose={onClose}
+      />
+    </>
   );
 };
 
