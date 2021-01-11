@@ -66,7 +66,7 @@ export type Ignitor = {
   hasRefunded: boolean;
 };
 
-export type ProjectKey = 'inactive' | 'active' | 'completed';
+export type ProjectKey = 'inactive' | 'active' | 'completed' | 'blacklisted';
 
 export type ProjectConfig = {
   projectName: string;

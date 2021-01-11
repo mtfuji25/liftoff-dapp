@@ -35,13 +35,15 @@ type Projects = {
   inactive: TokenSale[];
   active: TokenSale[];
   completed: TokenSale[];
+  blacklisted: TokenSale[];
 };
 
 export const useProjects = () => {
   const [projects, setProjects] = useState<Projects>({
     inactive: [],
     active: [],
-    completed: []
+    completed: [],
+    blacklisted: []
   });
 
   const { error, loading } = useQuery<GraphResponse>(query, {
@@ -49,7 +51,7 @@ export const useProjects = () => {
     fetchPolicy: 'network-only',
     onCompleted: (data: GraphResponse) => {
       if (data.tokenSales.length === 0) {
-        setProjects({ inactive: [], active: [], completed: [] });
+        setProjects({ inactive: [], active: [], completed: [], blacklisted: [] });
       } else {
         const newProjects = data.tokenSales.reduce(
           (sales, tokenSale) => {
@@ -62,7 +64,8 @@ export const useProjects = () => {
           {
             inactive: [] as TokenSale[],
             active: [] as TokenSale[],
-            completed: [] as TokenSale[]
+            completed: [] as TokenSale[],
+            blacklisted: [] as TokenSale[]
           }
         );
 
