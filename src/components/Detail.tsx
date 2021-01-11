@@ -168,6 +168,10 @@ const Detail = ({
     completed: {
       color: 'grey',
       title: 'COMPLETED'
+    },
+    blacklisted: {
+      color: 'grey',
+      title: 'BLACKLISTED'
     }
   };
 
