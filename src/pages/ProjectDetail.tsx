@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import { BigNumber } from 'ethers';
 import moment from 'moment';
@@ -19,6 +19,7 @@ import ClaimXETH from 'components/ClaimXETH';
 import { StyledBody, StyledContainer as UnstyledContainer } from 'theme';
 
 import {
+  useWalletModal,
   useProject,
   useInsurance,
   useProjectConfig,
@@ -45,6 +46,7 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
   const { insurance: tokenInsurance } = useInsurance(id);
   const { projectConf } = useProjectConfig(tokenSale?.ipfsHash);
   const { igniteInfo } = useIgniteInfo(tokenSale?.id || '', account);
+  const [, toggleModal] = useWalletModal();
 
   const currentTime = moment().unix();
 
@@ -77,9 +79,16 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
       tokenSale.isSparked && !!(igniteInfo && !igniteInfo.hasClaimed);
   }
 
+  useEffect(() => {
+    if (!networkId) {
+      toggleModal(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [networkId]);
+
   return (
     <>
-      {tokenSale && projectConf ? (
+      {networkId && tokenSale && projectConf ? (
         <StyledBody color="bg3">
           <StyledContainer sWidth="90vw">
             <Detail
@@ -124,8 +133,10 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
           <Disclaimer color="#232628" />
           <CopyRight mt="1.375rem" />
         </StyledBody>
-      ) : (
+      ) : networkId ? (
         <p>Loading...</p>
+      ) : (
+        <p>Please connect to your wallets</p>
       )}
       <Footer noBackground={true} color="bg3" />
     </>
