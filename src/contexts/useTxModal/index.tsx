@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useReducer
 } from 'react';
+import { TxStatus } from 'utils/enums';
 
 const ModalContext = createContext<any[]>([]);
 
@@ -12,7 +13,7 @@ const useModalContext = () => useContext(ModalContext);
 
 const initialState = () => ({
   txHash: '',
-  txStatus: 0
+  txStatus: TxStatus.TX_INITIAL
 });
 
 const UPDATE_TX_HASH = 'modal/UPDATE_TX_HASH';
@@ -20,7 +21,7 @@ const UPDATE_TX_STATUS = 'modal/UPDATE_TX_STATUS';
 
 const reducer = (
   state: any,
-  { type, payload }: { type: string; payload: { txHash: string, txStatus: number } }
+  { type, payload }: { type: string; payload: { txHash: string, txStatus: TxStatus } }
 ) => {
   const { txHash, txStatus } = payload;
   switch (type) {
@@ -71,14 +72,14 @@ export const useTxModal = () => {
 
   const toggleTxModal = async (provider: any, txHash: string) => {
     updateTxHash(txHash);
-    updateTxStatus(2);
+    updateTxStatus(TxStatus.TX_SENT);
     await provider.waitForTransaction(txHash);
-    updateTxStatus(3);
+    updateTxStatus(TxStatus.TX_SUCCESS);
   };
 
   const onClose = () => {
     updateTxHash('');
-    updateTxStatus(0);
+    updateTxStatus(TxStatus.TX_INITIAL);
   };
 
   return [state, updateTxStatus, toggleTxModal, onClose];

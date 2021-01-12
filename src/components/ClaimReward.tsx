@@ -7,7 +7,7 @@ import { useConnectedWeb3Context, useContracts, useTxModal } from '../contexts';
 
 import { TokenSale, Ignitor } from 'utils/types';
 import { formatBigNumber } from 'utils';
-import TxModal from './TxModal';
+import { TxStatus } from 'utils/enums';
 
 const CTA = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ interface IProps {
 }
 
 const ClaimReward: FC<IProps> = ({ igniteInfo, tokenSale }) => {
-  const [{ txStatus, txHash }, updateTxStatus, toggleTxModal, onClose] = useTxModal();
+  const [, updateTxStatus, toggleTxModal] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffEngine } = useContracts(context);
   const { account } = context;
@@ -47,7 +47,7 @@ const ClaimReward: FC<IProps> = ({ igniteInfo, tokenSale }) => {
       await toggleTxModal(liftoffEngine.provider, txHash);
     } catch (error) {
       console.log(error);
-      updateTxStatus(1);
+      updateTxStatus(TxStatus.TX_ERROR);
     }
   };
 
@@ -63,11 +63,6 @@ const ClaimReward: FC<IProps> = ({ igniteInfo, tokenSale }) => {
           </TYPE.Small>
         </CTA>
       </StyledRocketCard>
-      <TxModal
-        txStatus={txStatus}
-        txHash={txHash}
-        onClose={onClose}
-      />
     </>
   );
 };
