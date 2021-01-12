@@ -1,5 +1,4 @@
 import { Contract, Wallet, ethers, utils } from 'ethers';
-import { TransactionReceipt } from '@ethersproject/abstract-provider/lib/index';
 
 const liftoffEnginesAbi = [
   'event LaunchToken(uint256 tokenId, uint256 startTime, uint256 endTime, uint256 softCap, uint256 hardCap, uint256 totalSupply, string name, string symbol, address dev)',
@@ -48,36 +47,36 @@ class LiftoffEngineService {
   igniteEth = async (
     tokenSaleId: string,
     amount: string
-  ): Promise<TransactionReceipt> => {
+  ): Promise<string> => {
     const txObject = await this.contract.igniteEth(tokenSaleId, {
       value: utils.parseEther(amount)
     });
 
-    return this.provider.waitForTransaction(txObject.hash);
+    return txObject.hash;
   };
 
-  spark = async (tokenSaleId: string): Promise<TransactionReceipt> => {
+  spark = async (tokenSaleId: string): Promise<string> => {
     const txObject = await this.contract.spark(tokenSaleId);
 
-    return this.provider.waitForTransaction(txObject.hash);
+    return txObject.hash;
   };
 
   claimReward = async (
     tokenSaleId: string,
     address: string
-  ): Promise<TransactionReceipt> => {
+  ): Promise<string> => {
     const txObject = await this.contract.claimReward(tokenSaleId, address);
 
-    return this.provider.waitForTransaction(txObject.hash);
+    return txObject.hash;
   };
 
   claimRefund = async (
     tokenSaleId: string,
     address: string
-  ): Promise<TransactionReceipt> => {
+  ): Promise<string> => {
     const txObject = await this.contract.claimRefund(tokenSaleId, address);
 
-    return this.provider.waitForTransaction(txObject.hash);
+    return txObject.hash;
   };
 }
 

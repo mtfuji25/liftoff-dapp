@@ -2,7 +2,8 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 import { StyledRocketCard, TYPE } from '../theme';
-import { useConnectedWeb3Context, useContracts } from '../contexts';
+import { useConnectedWeb3Context, useContracts, useTxModal } from '../contexts';
+import { TxStatus } from 'utils/enums';
 
 const CTA = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ interface IProps {
 }
 
 const Spark: FC<IProps> = ({ tokenSaleId }) => {
+  const [, updateTxStatus, toggleTxModal] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffEngine } = useContracts(context);
 
@@ -31,22 +33,26 @@ const Spark: FC<IProps> = ({ tokenSaleId }) => {
       return;
     }
     try {
-      await liftoffEngine.spark(tokenSaleId);
+      const txHash = await liftoffEngine.spark(tokenSaleId);
+      await toggleTxModal(liftoffEngine.provider, txHash);
     } catch (error) {
       console.log(error);
+      updateTxStatus(TxStatus.TX_ERROR);
     }
   };
 
   return (
-    <StyledRocketCard>
-      <TYPE.LargeHeader mb="1rem">Spark Project</TYPE.LargeHeader>
-      <TYPE.Body lineHeight="1.5rem">
-        Spark to initiate the token on both PenguinSwap and LiftoffInsurance.
-      </TYPE.Body>
-      <CTA>
-        <StyledButton onClick={onClickSpark}>Spark</StyledButton>
-      </CTA>
-    </StyledRocketCard>
+    <>
+      <StyledRocketCard>
+        <TYPE.LargeHeader mb="1rem">Spark Project</TYPE.LargeHeader>
+        <TYPE.Body lineHeight="1.5rem">
+          Spark to initiate the token on both PenguinSwap and LiftoffInsurance.
+        </TYPE.Body>
+        <CTA>
+          <StyledButton onClick={onClickSpark}>Spark</StyledButton>
+        </CTA>
+      </StyledRocketCard>
+    </>
   );
 };
 

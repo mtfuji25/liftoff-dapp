@@ -3,10 +3,11 @@ import { BigNumber } from 'ethers';
 import styled from 'styled-components';
 import Button from './Button';
 import { StyledRocketCard, TYPE } from '../theme';
-import { useConnectedWeb3Context, useContracts } from '../contexts';
+import { useConnectedWeb3Context, useContracts, useTxModal } from '../contexts';
 
 import { TokenSale, Ignitor } from 'utils/types';
 import { formatBigNumber } from 'utils';
+import { TxStatus } from 'utils/enums';
 
 const CTA = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ interface IProps {
 }
 
 const ClaimReward: FC<IProps> = ({ igniteInfo, tokenSale }) => {
+  const [, updateTxStatus, toggleTxModal] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffEngine } = useContracts(context);
   const { account } = context;
@@ -41,23 +43,27 @@ const ClaimReward: FC<IProps> = ({ igniteInfo, tokenSale }) => {
       return;
     }
     try {
-      await liftoffEngine.claimReward(tokenSale.id, account);
+      const txHash = await liftoffEngine.claimReward(tokenSale.id, account);
+      await toggleTxModal(liftoffEngine.provider, txHash);
     } catch (error) {
       console.log(error);
+      updateTxStatus(TxStatus.TX_ERROR);
     }
   };
 
   return (
-    <StyledRocketCard>
-      <TYPE.LargeHeader>Claim Token Rewards</TYPE.LargeHeader>
-      <CTA>
-        <StyledButton onClick={onClaimReward}>Claim</StyledButton>
-        <TYPE.Small color="primary1">
-          Current available to claim: {formatBigNumber(reward, 18)}{' '}
-          {tokenSale.symbol}
-        </TYPE.Small>
-      </CTA>
-    </StyledRocketCard>
+    <>
+      <StyledRocketCard>
+        <TYPE.LargeHeader>Claim Token Rewards</TYPE.LargeHeader>
+        <CTA>
+          <StyledButton onClick={onClaimReward}>Claim</StyledButton>
+          <TYPE.Small color="primary1">
+            Current available to claim: {formatBigNumber(reward, 18)}{' '}
+            {tokenSale.symbol}
+          </TYPE.Small>
+        </CTA>
+      </StyledRocketCard>
+    </>
   );
 };
 
