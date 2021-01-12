@@ -28,7 +28,11 @@ import {
 } from '../contexts';
 import { getLiftoffSettings } from 'utils/networks';
 
-const ipfsInfura = require('ipfs-http-client')({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+const ipfsInfura = require('ipfs-http-client')({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https'
+});
 
 const StyledButton = styled(Button)`
   cursor: pointer !important;
@@ -141,10 +145,9 @@ const Launchpad: FC = () => {
 
         setLoading(true);
 
-        let configHash = "";
+        let configHash = '';
 
-        try{
-
+        try {
           // upload images
           const logo = await fleekStorage.upload({
             apiKey: process.env.REACT_APP_FLEEK_API_KEY || 'api-key',
@@ -155,7 +158,7 @@ const Launchpad: FC = () => {
 
           // upload json
           const configJson = JSON.stringify(
-            convertFormToConfig(data, logo.publicUrl)
+            convertFormToConfig(data, 'https://ipfs.io/ipfs/' + logo.hash)
           );
           const configBlob = new Blob([new TextEncoder().encode(configJson)], {
             type: 'application/json;charset=utf-8'
@@ -167,26 +170,27 @@ const Launchpad: FC = () => {
             data: configBlob
           });
           configHash = config.hash;
-
         } catch (error) {
           //Use ipfsInfura instead, since fleek is down.
           // upload images
-          console.log("Fleek down. Trying ipfsInfura...");
+          console.log('Fleek down. Trying ipfsInfura...');
           const logo = await ipfsInfura.add(data.logo[0]);
-          console.log("logo link:","https://ipfs.io/ipfs/"+logo.cid.string);
+          console.log('logo link:', 'https://ipfs.io/ipfs/' + logo.cid.string);
           // upload json
           const configJson = JSON.stringify(
-            convertFormToConfig(data, "https://ipfs.io/ipfs/"+logo.cid.string)
+            convertFormToConfig(data, 'https://ipfs.io/ipfs/' + logo.cid.string)
           );
           const configBlob = new Blob([new TextEncoder().encode(configJson)], {
             type: 'application/json;charset=utf-8'
           });
           const config = await ipfsInfura.add(configBlob);
-          console.log("config link:","https://ipfs.io/ipfs/"+config.cid.string);
+          console.log(
+            'config link:',
+            'https://ipfs.io/ipfs/' + config.cid.string
+          );
           configHash = config.cid.string;
-          
         }
-        if (liftoffRegistration && configHash !== "") {
+        if (liftoffRegistration && configHash !== '') {
           await liftoffRegistration.registerProject(
             configHash,
             startTime.toString(),
@@ -201,7 +205,6 @@ const Launchpad: FC = () => {
       }
     } catch (error) {
       console.log(error);
-      
 
       alert(error.message || error);
 
