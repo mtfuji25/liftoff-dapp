@@ -6,7 +6,7 @@ import InputWithAddon from './InputAddon';
 import { TYPE, StyledRocketCard, ExternalLink } from '../theme';
 import { useConnectedWeb3Context, useContracts, useTxModal } from '../contexts';
 import { Ignitor } from 'utils/types';
-import TxModal from './TxModal';
+import { TxStatus } from 'utils/enums';
 
 const Flex = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ interface IProps {
 }
 
 const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo }) => {
-  const [{ txStatus, txHash }, updateTxStatus, toggleTxModal, onClose] = useTxModal();
+  const [, updateTxStatus, toggleTxModal] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffEngine } = useContracts(context);
 
@@ -56,7 +56,7 @@ const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo }) => {
       await toggleTxModal(liftoffEngine.provider, txHash);
     } catch (error) {
       console.log(error);
-      updateTxStatus(1);
+      updateTxStatus(TxStatus.TX_ERROR);
     }
   };
 
@@ -86,11 +86,6 @@ const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo }) => {
           </TYPE.Small>
         </Flex>
       </StyledRocketCard>
-      <TxModal
-        txStatus={txStatus}
-        txHash={txHash}
-        onClose={onClose}
-      />
     </>
   );
 };

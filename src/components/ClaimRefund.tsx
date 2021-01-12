@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Button from './Button';
 import { StyledRocketCard, TYPE } from '../theme';
 import { useConnectedWeb3Context, useContracts, useTxModal } from '../contexts';
-import TxModal from './TxModal';
+import { TxStatus } from 'utils/enums';
 
 const CTA = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ interface IProps {
 }
 
 const ClaimRefund: FC<IProps> = ({ amount, tokenSaleId }) => {
-  const [{ txStatus, txHash }, updateTxStatus, toggleTxModal, onClose] = useTxModal();
+  const [, updateTxStatus, toggleTxModal] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffEngine } = useContracts(context);
   const { account } = context;
@@ -39,7 +39,7 @@ const ClaimRefund: FC<IProps> = ({ amount, tokenSaleId }) => {
       await toggleTxModal(liftoffEngine.provider, txHash);
     } catch (error) {
       console.log(error);
-      updateTxStatus(1);
+      updateTxStatus(TxStatus.TX_ERROR);
     }
   };
 
@@ -54,11 +54,6 @@ const ClaimRefund: FC<IProps> = ({ amount, tokenSaleId }) => {
           </TYPE.Small>
         </CTA>
       </StyledRocketCard>
-      <TxModal
-        txStatus={txStatus}
-        txHash={txHash}
-        onClose={onClose}
-      />
     </>
   );
 };

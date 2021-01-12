@@ -5,9 +5,10 @@ import { TYPE } from '../theme';
 import { ReactComponent as EtherscanLinkIcon } from '../assets/svgs/etherscan-link-icon.svg';
 import Button from './Button';
 import { useConnectedWeb3Context } from 'contexts';
+import { TxStatus } from 'utils/enums';
 
 interface IProps {
-  txStatus: number;
+  txStatus: TxStatus;
   txHash: string;
   onClose: () => void;
 }
@@ -69,11 +70,11 @@ const TxModal = (props: IProps) => {
 
   const getTitle = useCallback(() => {
     switch (txStatus) {
-      case 1:
+      case TxStatus.TX_ERROR:
         return 'Error';
-      case 2:
+      case TxStatus.TX_SENT:
         return 'Transaction Sent';
-      case 3:
+      case TxStatus.TX_SUCCESS:
         return 'Transaction Succeessful';    
       default:
         break;
@@ -82,11 +83,11 @@ const TxModal = (props: IProps) => {
 
   const getDescription = useCallback(() => {
     switch (txStatus) {
-      case 1:
+      case TxStatus.TX_ERROR:
         return 'Transaction Failed. Please try again.';
-      case 2:
+      case TxStatus.TX_SENT:
         return 'Your transaction was sent.';
-      case 3:
+      case TxStatus.TX_SUCCESS:
         return 'Your transaction successfully completed.';    
       default:
         break;
@@ -113,7 +114,7 @@ const TxModal = (props: IProps) => {
         onRequestClose={onClickCloseButton}
         isOpen={!!txStatus}
       >
-        <CloseButton onClick={props.onClose}>
+        <CloseButton onClick={onClose}>
           <CloseIcon />
         </CloseButton>
         <ContentWrapper>
@@ -137,7 +138,7 @@ const TxModal = (props: IProps) => {
           </div>
         </ContentWrapper>
         <StyledButtonContainer>
-          <StyledButton isFailed={txStatus === 1} onClick={() => onClose()}>{txStatus === 1 ? 'Dismiss' : 'OK'}</StyledButton>
+          <StyledButton isFailed={txStatus === TxStatus.TX_ERROR} onClick={onClose}>{txStatus === TxStatus.TX_ERROR ? 'Dismiss' : 'OK'}</StyledButton>
         </StyledButtonContainer>
       </ModalWrapper>
     </>
