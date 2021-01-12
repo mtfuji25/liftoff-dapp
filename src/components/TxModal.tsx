@@ -109,9 +109,9 @@ const TxModal = (props: IProps) => {
   return (
     <>
       <ModalWrapper
-        // disableBackdropClick={false}
+        disableBackdropClick={false}
         onRequestClose={onClickCloseButton}
-        isOpen={txStatus !== 0}
+        isOpen={!!txStatus}
       >
         <CloseButton onClick={props.onClose}>
           <CloseIcon />
