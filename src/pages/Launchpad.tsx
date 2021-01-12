@@ -186,7 +186,7 @@ const Launchpad: FC = () => {
           configHash = config.cid.string;
           
         }
-        if (liftoffRegistration && configHash != "") {
+        if (liftoffRegistration && configHash !== "") {
           await liftoffRegistration.registerProject(
             configHash,
             startTime.toString(),

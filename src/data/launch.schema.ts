@@ -1,4 +1,3 @@
-import { currentDate } from 'utils/date';
 import * as yup from 'yup';
 
 export const LaunchpadSchema = yup.object().shape({

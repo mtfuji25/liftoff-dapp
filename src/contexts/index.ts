@@ -5,6 +5,7 @@ export * from './ApolloWrapper';
 export * from './RouteWrapper';
 export * from './useProjects';
 export * from './useModal';
+export * from './useTxModal';
 export * from './useProjectConfig';
 export * from './useProject';
 export * from './useIgniteInfo';

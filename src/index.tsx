@@ -7,7 +7,8 @@ import {
   ConnectedWeb3,
   ApolloProviderWrapper,
   RouterWrapper,
-  ModalProvider
+  ModalProvider,
+  TxModalProvider
 } from './contexts';
 import App from './pages/App';
 import ThemeProvider, { ThemedGlobalStyle } from './theme';
@@ -27,9 +28,11 @@ ReactDOM.render(
         <ConnectedWeb3>
           <ApolloProviderWrapper>
             <ModalProvider>
-              <RouterWrapper>
-                <App />
-              </RouterWrapper>
+              <TxModalProvider>
+                <RouterWrapper>
+                  <App />
+                </RouterWrapper>
+              </TxModalProvider>
             </ModalProvider>
           </ApolloProviderWrapper>
         </ConnectedWeb3>

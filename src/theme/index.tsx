@@ -116,7 +116,7 @@ export const theme: DefaultTheme = {
       position: 'relative',
       right: 'auto',
       top: 'auto',
-      width: '355px'
+      width: '380px'
     },
     overlay: {
       alignItems: 'unset',
