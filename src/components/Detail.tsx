@@ -175,8 +175,11 @@ const Detail = ({
     }
   };
 
+  let setting: any;
   const status = projectStatus(tokenSale);
-  const setting = getLiftoffSettings(networkId);
+  if (networkId) {
+    setting = getLiftoffSettings(networkId);
+  }
 
   const currentTime = moment().unix();
 
