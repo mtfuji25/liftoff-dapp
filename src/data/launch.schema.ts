@@ -12,20 +12,6 @@ export const LaunchpadSchema = yup.object().shape({
       'Website URL is invalid'
     )
     .required('Website URL is required'),
-  dappLink: yup
-    .string()
-    .matches(
-      /((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-      'Dapp URL is invalid'
-    )
-    .required('Dapp URL is required'),
-  whitepaperLink: yup
-    .string()
-    .matches(
-      /((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-      'Whitepaper URL is invalid'
-    )
-    .required('Whitepaper URL is required'),
   discord: yup.string(),
   telegram: yup.string(),
   twitter: yup.string(),
