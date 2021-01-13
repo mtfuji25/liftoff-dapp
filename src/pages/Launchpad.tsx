@@ -24,9 +24,11 @@ import { StyledBody, StyledContainer, TYPE } from 'theme';
 import {
   useConnectedWeb3Context,
   useContracts,
+  useProjects,
   useWalletModal
 } from '../contexts';
 import { getLiftoffSettings } from 'utils/networks';
+import { useHistory } from 'react-router-dom';
 
 const ipfsInfura = require('ipfs-http-client')({
   host: 'ipfs.infura.io',
@@ -107,6 +109,10 @@ const Launchpad: FC = () => {
   const utcOffset = moment().utcOffset() / 60;
   const defaultTimezone = Timezones.find((zone) => zone.offset === utcOffset)
     ?.text;
+
+  const history = useHistory();
+  const { projects } = useProjects();
+  const projectsTotal = projects.active.length + projects.blacklisted.length + projects.completed.length + projects.inactive.length;
 
   const onSubmit = async (data: ILaunchPadInput) => {
     try {
@@ -200,6 +206,7 @@ const Launchpad: FC = () => {
             data.projectName,
             data.tokenTicker
           );
+          history.push(`/project/${projectsTotal}`);
           setLoading(false);
         }
       }
