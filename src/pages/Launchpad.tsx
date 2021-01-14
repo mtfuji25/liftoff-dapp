@@ -111,8 +111,7 @@ const Launchpad: FC = () => {
     ?.text;
 
   const history = useHistory();
-  const { projects } = useProjects();
-  const projectsTotal = projects.active.length + projects.blacklisted.length + projects.completed.length + projects.inactive.length;
+  const { refetch } = useProjects();
 
   const onSubmit = async (data: ILaunchPadInput) => {
     try {
@@ -206,7 +205,8 @@ const Launchpad: FC = () => {
             data.projectName,
             data.tokenTicker
           );
-          history.push(`/project/${projectsTotal}`);
+          await refetch();
+          history.push(`/projects`);
           setLoading(false);
         }
       }
