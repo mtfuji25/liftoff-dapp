@@ -46,7 +46,7 @@ export const useProjects = () => {
     blacklisted: []
   });
 
-  const { error, loading } = useQuery<GraphResponse>(query, {
+  const { error, loading, refetch } = useQuery<GraphResponse>(query, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'network-only',
     onCompleted: (data: GraphResponse) => {
@@ -74,5 +74,5 @@ export const useProjects = () => {
     }
   });
 
-  return { projects, error, loading };
+  return { projects, error, loading, refetch };
 };
