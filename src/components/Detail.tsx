@@ -174,9 +174,13 @@ const Detail = ({
       title: 'BLACKLISTED'
     }
   };
+  console.log(networkId);
 
+  let setting: any;
   const status = projectStatus(tokenSale);
-  const setting = getLiftoffSettings(networkId);
+  if (networkId) {
+    setting = getLiftoffSettings(networkId);
+  }
 
   const currentTime = moment().unix();
 
