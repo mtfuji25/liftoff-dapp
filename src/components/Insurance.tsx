@@ -171,7 +171,8 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
   };
 
   const onChangeRedeemAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRedeemAmount(event.target.value);
+    if (!isNaN(Number(event.target.value)))
+      setRedeemAmount(event.target.value);
   };
 
   const xEthEstimation =
