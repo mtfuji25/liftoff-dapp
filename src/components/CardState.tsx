@@ -125,7 +125,7 @@ const CardState: React.FC<ICardStateProps> = ({ type, project }) => {
   }
 
   const onClickCard = () => {
-    history.push(`/project/${project.id}`);
+    history.push(`/project/${project.symbol}-${project.id}`);
   };
 
   return (
