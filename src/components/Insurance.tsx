@@ -9,6 +9,7 @@ import InputWithAddon from 'components/InputAddon';
 
 import { TokenInsurance } from 'utils/types';
 import { useConnectedWeb3Context, useContracts, useToken } from 'contexts';
+import { formatBigNumber } from 'utils';
 
 const CTA = styled.div`
   display: flex;
@@ -38,7 +39,8 @@ const Redeem = styled.div({
 const FlexWrap = styled.div(
   {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: '15px'
   },
   ({ theme }) =>
     theme.mediaWidth.upToSmall({
@@ -50,13 +52,22 @@ const FlexWrap = styled.div(
 
 const StyledButton = styled(Button)``;
 
-const RedeemButton = styled(StyledButton)(
+const InsuranceContainer = styled.div(
+  ({ theme }) =>
+    theme.mediaWidth.upToSmall({
+      display: 'flex',
+      justifyContent: 'space-around',
+      width: '-webkit-fill-available'
+    })
+);
+
+const InsuranceButton = styled(StyledButton)(
   {
     margin: '0 1rem'
   },
   ({ theme }) =>
     theme.mediaWidth.upToSmall({
-      margin: '5px 0'
+      margin: '10px 0 0 0'
     })
 );
 
@@ -127,6 +138,19 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
 
     try {
       await xToken.approveUnlimited(liftoffInsurance.address);
+    } catch (error) {
+      alert(error.message || error);
+      console.log(error);
+    }
+  };
+
+  const onClickMax = async () => {
+    if (!xToken || !account) {
+      return;
+    }
+    try {
+      const balance = await xToken.getBalanceOf(account);
+      setRedeemAmount(formatBigNumber(balance, 18));
     } catch (error) {
       alert(error.message || error);
       console.log(error);
@@ -212,13 +236,15 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
               value={redeemAmount}
               onChange={(event) => onChangeRedeemAmount(event)}
             />
-            <RedeemButton onClick={onClickRedeem}>Redeem</RedeemButton>
-
-            <TYPE.Body color="blue1">
+            <InsuranceContainer>
+              <InsuranceButton onClick={onClickMax}>MAX</InsuranceButton>
+              <InsuranceButton onClick={onClickRedeem}>Redeem</InsuranceButton>
+            </InsuranceContainer>
+          </FlexWrap>
+          <TYPE.Body color="blue1">
               You will get {utils.formatEther(xEthEstimation)} xETH (Current
               xETH Balance: {utils.formatEther(xEthBalance)})
             </TYPE.Body>
-          </FlexWrap>
         </Redeem>
       )}
 
