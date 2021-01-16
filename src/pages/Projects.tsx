@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { STab, STabList, STabPanel, STabs } from '../components/Tab';
-import { Warning } from '../components/Warning';
 import CardState from '../components/CardState';
 import Footer from '../components/Footer';
 import Disclaimer from '../components/Disclaimer';
+import InfoStatement from 'components/InfoStatement';
 import CopyRight from '../components/Copyright';
 import Spinner from '../components/Spinner';
 
@@ -20,7 +20,7 @@ import { Flex } from 'rebass';
 
 const Container = styled.div(
   {
-    paddingTop: 63,
+    paddingTop: 40,
     width: '100%'
   },
   ({ theme }) =>
@@ -73,10 +73,7 @@ const Projects = () => {
     <>
       <StyledBody color="bg3">
         <StyledContainer sWidth="85vw">
-          <Warning
-            text="LIFTOFF is an autonomous launchpad that anyone can use. Similar to Uniswap, anyone can create a token with any name, including fake versions of existing tokens. Please do your own research before joining a project."
-            ctaText="I understand"
-          />
+          <InfoStatement noBackground={false} color="bg3" />
           <Container>
             <STabs
               selectedTabClassName="is-selected"

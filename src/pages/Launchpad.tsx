@@ -14,6 +14,7 @@ import CopyRight from 'components/Copyright';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import Disclaimer from 'components/Disclaimer';
+import InfoStatement from 'components/InfoStatement';
 import Footer from 'components/Footer';
 import Input from 'components/Input';
 import Select from 'components/Select';
@@ -223,6 +224,7 @@ const Launchpad: FC = () => {
     <>
       <StyledBody color="bg2">
         <StyledContainer sWidth="800px">
+          <InfoStatement noBackground={false} color="bg2" />
           <TYPE.LargeHeader color="white" textAlign="center">
             🕹Launchpad for Developers
           </TYPE.LargeHeader>
