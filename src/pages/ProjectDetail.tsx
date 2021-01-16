@@ -141,7 +141,9 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
             )}
           </StyledContainer>
 
-          <Disclaimer color="#232628" />
+          {!isVerified(tokenSale) && (
+            <Disclaimer color="#232628" />
+          )}
           <CopyRight mt="1.375rem" />
         </StyledBody>
       ) : networkId ? (
