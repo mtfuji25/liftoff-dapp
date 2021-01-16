@@ -5,14 +5,15 @@ import { Colors } from '../theme/styled';
 
 interface Props {
   color: any;
-  noBackground: any;
+  backgroundColor: any;
 }
 
 const StyledDescription = styled.h1<{
   color: keyof Colors;
+  backgroundColor: keyof Colors;
 }>`
-  background-color: ${({ color, theme }) => (theme as any)[color]};
-  color: ${({ theme }) => theme.bg1};
+  background-color: ${({ backgroundColor, theme }) => (theme as any)[backgroundColor]};
+  color: ${({ color, theme }) => (theme as any)[color]};
   text-align: center;
   margin-bottom: 30px;
   font-size:16px;

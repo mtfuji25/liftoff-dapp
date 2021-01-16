@@ -224,7 +224,7 @@ const Launchpad: FC = () => {
     <>
       <StyledBody color="bg2">
         <StyledContainer sWidth="800px">
-          <InfoStatement noBackground={false} color="bg2" />
+          <InfoStatement backgroundColor="bg2" color="bg3" />
           <TYPE.LargeHeader color="white" textAlign="center">
             🕹Launchpad for Developers
           </TYPE.LargeHeader>
