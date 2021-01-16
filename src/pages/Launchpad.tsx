@@ -241,9 +241,21 @@ const Launchpad: FC = () => {
                   paddingX="1.375rem"
                   paddingY="1.875rem"
                 >
-                  <TYPE.Header color="black" mb="1.25rem">
-                    Project Name
-                  </TYPE.Header>
+                  <Flex justifyContent="space-between">
+                    <Flex>
+                      <TYPE.Header color="black" mb="1.25rem">
+                        Project Name
+                      </TYPE.Header>
+                      <TYPE.Body color="red">* </TYPE.Body>
+                    </Flex>
+
+                    <Flex>
+                      <TYPE.Body color="red">* </TYPE.Body>
+                      <TYPE.Body color="black">
+                        These fields are required
+                      </TYPE.Body>
+                    </Flex>
+                  </Flex>
                   <Controller
                     control={control}
                     name="projectName"
@@ -271,9 +283,12 @@ const Launchpad: FC = () => {
                   paddingX="1.375rem"
                   paddingY="1.875rem"
                 >
-                  <TYPE.Header color="black" mb="1.25rem">
-                    Token ticker
-                  </TYPE.Header>
+                  <Flex>
+                    <TYPE.Header color="black" mb="1.25rem">
+                      Token Ticker
+                    </TYPE.Header>
+                    <TYPE.Body color="red">* </TYPE.Body>
+                  </Flex>
                   <Controller
                     control={control}
                     name="tokenTicker"
@@ -301,9 +316,12 @@ const Launchpad: FC = () => {
                   paddingX="1.375rem"
                   paddingY="1.875rem"
                 >
-                  <TYPE.Header color="black" mb="1.25rem">
-                    Project Description
-                  </TYPE.Header>
+                  <Flex>
+                    <TYPE.Header color="black" mb="1.25rem">
+                      Project Description
+                    </TYPE.Header>
+                    <TYPE.Body color="red">* </TYPE.Body>
+                  </Flex>
                   <Controller
                     control={control}
                     name="projectDescription"
@@ -332,10 +350,11 @@ const Launchpad: FC = () => {
                   paddingX="1.375rem"
                   paddingY="1.875rem"
                 >
-                  <Flex alignItems="center" mb="1.25rem">
-                    <TYPE.Header color="black" mr=".875rem">
-                      Logo
-                    </TYPE.Header>
+                  <Flex mb="1.25rem">
+                    <TYPE.Header color="black">Logo</TYPE.Header>
+                    <TYPE.Body color="red" mr=".4rem">
+                      *{' '}
+                    </TYPE.Body>
                     <TYPE.Body color="black">
                       (Image format: png, jpg, svg)
                     </TYPE.Body>
@@ -356,9 +375,12 @@ const Launchpad: FC = () => {
                   paddingX="1.375rem"
                   paddingY="1.875rem"
                 >
-                  <TYPE.Header color="black" mb="1.25rem">
-                    Website Link
-                  </TYPE.Header>
+                  <Flex>
+                    <TYPE.Header color="black" mb="1.25rem">
+                      Website Link
+                    </TYPE.Header>
+                    <TYPE.Body color="red">* </TYPE.Body>
+                  </Flex>
                   <Controller
                     control={control}
                     name="websiteLink"
@@ -388,9 +410,11 @@ const Launchpad: FC = () => {
                   paddingX="1.375rem"
                   paddingY="1.875rem"
                 >
-                  <TYPE.Header color="black" mb="1.25rem">
-                    dApp Link
-                  </TYPE.Header>
+                  <Flex>
+                    <TYPE.Header color="black" mb="1.25rem">
+                      dapp Link
+                    </TYPE.Header>
+                  </Flex>
                   <Controller
                     control={control}
                     name="dappLink"
@@ -453,8 +477,121 @@ const Launchpad: FC = () => {
                   paddingY="1.875rem"
                 >
                   <TYPE.Header color="black" mb="1.25rem">
-                    LIFTOFF Launch Date & Time
+                    Social Medial Links
                   </TYPE.Header>
+                  <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                    Discord
+                  </TYPE.Body>
+                  <Controller
+                    control={control}
+                    name="discord"
+                    render={({ onChange, onBlur, value, name }) => (
+                      <Input
+                        placeholder="discord.gg"
+                        type="text"
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        ref={register({
+                          required: 'Discord is required'
+                        })}
+                      />
+                    )}
+                  />
+                  {errors.discord && (
+                    <TYPE.Small color="red1">
+                      {errors.discord.message}
+                    </TYPE.Small>
+                  )}
+                  <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                    Telegram
+                  </TYPE.Body>
+                  <Controller
+                    control={control}
+                    name="telegram"
+                    render={({ onChange, onBlur, value, name }) => (
+                      <Input
+                        placeholder="t.me"
+                        type="text"
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        ref={register({
+                          required: 'Telegram is required'
+                        })}
+                      />
+                    )}
+                  />
+                  {errors.telegram && (
+                    <TYPE.Small color="red1">
+                      {errors.telegram.message}
+                    </TYPE.Small>
+                  )}
+                  <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                    Twitter
+                  </TYPE.Body>
+                  <Controller
+                    control={control}
+                    name="twitter"
+                    render={({ onChange, onBlur, value, name }) => (
+                      <Input
+                        placeholder="twitter.com/"
+                        type="text"
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        ref={register({
+                          required: 'Twitter is required'
+                        })}
+                      />
+                    )}
+                  />
+                  {errors.twitter && (
+                    <TYPE.Small color="red1">
+                      {errors.twitter.message}
+                    </TYPE.Small>
+                  )}
+                  <TYPE.Body color="black" mt="1rem" mb="0.5rem">
+                    Facebook
+                  </TYPE.Body>
+                  <Controller
+                    control={control}
+                    name="facebook"
+                    render={({ onChange, onBlur, value, name }) => (
+                      <Input
+                        placeholder="facebook.com/"
+                        type="text"
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        ref={register({
+                          required: 'Facebook is required'
+                        })}
+                      />
+                    )}
+                  />
+                  {errors.twitter && (
+                    <TYPE.Small color="red1">
+                      {errors.twitter.message}
+                    </TYPE.Small>
+                  )}
+                </Card>
+
+                <Card
+                  marginBottom="1rem"
+                  paddingX="1.375rem"
+                  paddingY="1.875rem"
+                >
+                  <Flex>
+                    <TYPE.Header color="black" mb="1.25rem">
+                      LIFTOFF Launch Date & Time
+                    </TYPE.Header>
+                    <TYPE.Body color="red">* </TYPE.Body>
+                  </Flex>
                   <DateFlex>
                     <Box>
                       <TYPE.Body color="black" mt="0.5rem" mb="0.5rem">
@@ -541,9 +678,12 @@ const Launchpad: FC = () => {
                   paddingX="1.375rem"
                   paddingY="1.875rem"
                 >
-                  <TYPE.Header color="black" mb="1.25rem">
-                    Soft & Hard Cap / TotalSupply
-                  </TYPE.Header>
+                  <Flex>
+                    <TYPE.Header color="black" mb="1.25rem">
+                      Soft & Hard Cap / TotalSupply
+                    </TYPE.Header>
+                    <TYPE.Body color="red">* </TYPE.Body>
+                  </Flex>
                   <TYPE.Body color="black" mt="1rem" mb="0.5rem">
                     Soft Cap
                   </TYPE.Body>
