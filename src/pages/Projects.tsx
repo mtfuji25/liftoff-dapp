@@ -73,7 +73,7 @@ const Projects = () => {
     <>
       <StyledBody color="bg3">
         <StyledContainer sWidth="85vw">
-          <InfoStatement noBackground={false} color="bg3" />
+            <InfoStatement backgroundColor="bg3" color="bg2" />
           <Container>
             <STabs
               selectedTabClassName="is-selected"
