@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import { BigNumber } from 'ethers';
 import moment from 'moment';
 
+import { isVerified } from 'utils';
+
 import CopyRight from 'components/Copyright';
 import Disclaimer from 'components/Disclaimer';
+import { Warning } from '../components/Warning';
+import InfoStatement from 'components/InfoStatement';
 import Footer from 'components/Footer';
 import TokenStats from 'components/TokenStats';
 import TokenDetails from 'components/TokenDetails';
@@ -91,6 +95,13 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
       {networkId && tokenSale && projectConf ? (
         <StyledBody color="bg3">
           <StyledContainer sWidth="90vw">
+            <InfoStatement noBackground={false} color="bg3" />
+            {!isVerified(tokenSale) && (
+              <Warning
+                text="LIFTOFF is an autonomous launchpad that anyone can use. Similar to Uniswap, anyone can create a token with any name, including fake versions of existing tokens. Please do your own research before joining a project."
+                ctaText="I understand"
+              />
+            )}
             <Detail
               networkId={networkId}
               tokenInsurance={tokenInsurance}

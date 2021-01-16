@@ -3,6 +3,7 @@ import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import moment from 'moment';
 import blacklist from './blacklist.json';
+import verified from './verified.json';
 
 export const shortenAddress = (address: string) => {
   return `${address.substring(0, 6)}...${address.substring(
@@ -95,3 +96,7 @@ export const projectStatus = (tokenSale: TokenSale): ProjectKey => {
 
   return status;
 };
+
+export const isVerified = (tokenSale: TokenSale): boolean => {
+  return verified.ids.includes(tokenSale.tokenId);
+}

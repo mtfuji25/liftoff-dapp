@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Launchpad from './Launchpad';
 import ProjectDetail from './ProjectDetail';
 import Projects from './Projects';
+import Faq from './Faq';
 import Header from '../components/Header';
 import ConnectWalletModal from 'components/ConnectWalletModal';
 import { useTxModal, useWalletModal } from 'contexts';
@@ -18,6 +19,7 @@ function App() {
       <Switch>
         <Route path={'/'} component={Launchpad} exact />
         <Route path={'/projects'} component={Projects} exact />
+        <Route path={'/faq'} component={Faq} exact />
         <Route
           path={'/project/:symbol-:id'}
           render={(props) => (
