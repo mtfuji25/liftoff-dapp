@@ -172,7 +172,7 @@ const Header = (_props: Props) => {
             <StyledLink to="/projects">Projects</StyledLink>
           </StyledNavListItem>
           <StyledNavListItem onClick={() => setIsOpen(false)}>
-            <StyledLink to="/faq">Faq</StyledLink>
+            <StyledLink to="/faq">FAQ</StyledLink>
           </StyledNavListItem>
           {isConnected ? (
             <StyledAccountInfo>
