@@ -40,7 +40,7 @@ const StyledLink = styled.div`
 
 const StyledButtonContainer = styled.p`
   text-align: center;
-  margin-top: 0.3rem;
+  margin-top: 1rem;
 `;
 
 const StyledButton = styled(Button)<{ isFailed: boolean }>`
@@ -75,7 +75,7 @@ const TxModal = (props: IProps) => {
       case TxStatus.TX_SENT:
         return 'Transaction Sent';
       case TxStatus.TX_SUCCESS:
-        return 'Transaction Succeessful';    
+        return 'Transaction Succeessful';
       default:
         break;
     }
@@ -88,7 +88,7 @@ const TxModal = (props: IProps) => {
       case TxStatus.TX_SENT:
         return 'Your transaction was sent.';
       case TxStatus.TX_SUCCESS:
-        return 'Your transaction successfully completed.';    
+        return 'Your transaction successfully completed.';
       default:
         break;
     }
@@ -102,9 +102,9 @@ const TxModal = (props: IProps) => {
   }, [onClose, resetEverything]);
 
   const onViewEtherscan = useCallback(() => {
-    window.open(`https://${
-        networkId === 3 ? 'ropsten.' : ''
-      }etherscan.io/tx/${txHash}`);
+    window.open(
+      `https://${networkId === 3 ? 'ropsten.' : ''}etherscan.io/tx/${txHash}`
+    );
   }, [networkId, txHash]);
 
   return (
@@ -122,23 +122,27 @@ const TxModal = (props: IProps) => {
             {getTitle()}
           </TYPE.LargeHeader>
           <div>
-            <p>
-              <TYPE.Header ml={2} fontWeight="normal" color="#232628">
-                  {getDescription()}
-              </TYPE.Header>
-            </p>
-            <p>
-            <StyledLink onClick={onViewEtherscan}>
-              <EtherscanLinkIcon />
-              <TYPE.Header ml={2} fontWeight="normal" color="#B4B4B4">
+            <TYPE.Header mb={2} fontWeight="normal" color="#232628">
+              {getDescription()}
+            </TYPE.Header>
+
+            {!!txHash && (
+              <StyledLink onClick={onViewEtherscan}>
+                <EtherscanLinkIcon />
+                <TYPE.Header ml={2} fontWeight="normal" color="#B4B4B4">
                   View on Etherscan
-              </TYPE.Header>
-            </StyledLink>
-            </p>
+                </TYPE.Header>
+              </StyledLink>
+            )}
           </div>
         </ContentWrapper>
         <StyledButtonContainer>
-          <StyledButton isFailed={txStatus === TxStatus.TX_ERROR} onClick={onClose}>{txStatus === TxStatus.TX_ERROR ? 'Dismiss' : 'OK'}</StyledButton>
+          <StyledButton
+            isFailed={txStatus === TxStatus.TX_ERROR}
+            onClick={onClose}
+          >
+            {txStatus === TxStatus.TX_ERROR ? 'Dismiss' : 'OK'}
+          </StyledButton>
         </StyledButtonContainer>
       </ModalWrapper>
     </>

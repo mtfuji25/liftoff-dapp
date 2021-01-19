@@ -65,10 +65,12 @@ const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo }) => {
       <StyledRocketCard>
         <TYPE.LargeHeader mb="1rem">Ignite</TYPE.LargeHeader>
         <TYPE.Body lineHeight="1.5rem">
-          Ignite to add ETH to the sale, so you can claim tokens at the end. Full
-          refund if softcap isn’t hit. <br />
+          Ignite to add ETH to the sale, so you can claim tokens at the end.
+          Full refund if softcap isn’t hit. <br />
           It automatically converts ETH to xETH.{' '}
-          <ExternalLink href="#">Learn about xETH</ExternalLink>
+          <ExternalLink href="https://xlock.eth.link/">
+            Learn about xETH
+          </ExternalLink>
         </TYPE.Body>
         <TYPE.Header mt="1.375rem">Amount of ETH to ignite</TYPE.Header>
         <Flex>
