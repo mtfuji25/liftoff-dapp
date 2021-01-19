@@ -73,11 +73,12 @@ const Projects = () => {
     <>
       <StyledBody color="bg3">
         <StyledContainer sWidth="85vw">
-            <InfoStatement backgroundColor="bg3" color="bg2" />
+          <InfoStatement backgroundColor="bg3" color="bg2" />
           <Container>
             <STabs
               selectedTabClassName="is-selected"
               selectedTabPanelClassName="is-selected"
+              defaultIndex={1}
             >
               <STabList>
                 {tabs.map((tab) => (
