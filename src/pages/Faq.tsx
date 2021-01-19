@@ -64,8 +64,8 @@ insures deposits.
             Why is Liftoff important?
           </StyledQuestion>
           <StyledAnswer>
-            Multiple types of technologies emerged in 2020 to protect token sale investors from scams. The first
-platforms provided locked liquidity. However, investors in tokens with locked liquidity were still
+            Multiple types of technologies emerged in 2020 to protect token sale buyers from scams. The first
+platforms provided locked liquidity. However, buyers of tokens with locked liquidity were still
 vulnerable to minting attacks. Lid’s first presale platform, Lid Simplified, stopped minting and many
 other early attacks on token sales. However, Lid Simplified is vulnerable to soft exit scams, where
 developers abandon their project instead of growing it. In response, Lid developed Liftoff in the first
@@ -87,7 +87,7 @@ weeks.
             What is xETH?
           </StyledQuestion>
           <StyledAnswer>
-            Liftoff is able to distribute 112% of the deposited eth, instead of 100%, all without ever risking
+            Liftoff is able to distribute 10% of the deposited eth, instead of 100%, all without ever risking
 any deposits. This seemingly impossible feat is accomplished through xETH, a type of
 wrapped ether. xETH is derived from the ERC-31337 technology developed by
 Rootkit.finance and allows the issuance of xETH backed by locked liquidity. More details are
@@ -117,6 +117,13 @@ for assistance.
           </StyledAnswer>
 
           <StyledQuestion>
+            How long do Liftoff sales last?
+          </StyledQuestion>
+          <StyledAnswer>
+            All sales last 5 days. Sales must be launched at least 2 days before their start time.
+          </StyledAnswer>
+
+          <StyledQuestion>
             How often is Eth distributed to project devs?
           </StyledQuestion>
           <StyledAnswer>
@@ -133,15 +140,15 @@ project developers are heavily incentivized to prevent the price from crashing f
           </StyledQuestion>
           <StyledAnswer>
             Eth allocations, as % of raise:<br/>
-            68.5% liquidity<br/>
-            35% dev fund (for the project raising funds)<br/>
-            6.5% insurance<br/>
-            2.0% lid fee<br/>
+            59.91% liquidity<br/>
+            45.00% dev fund (for the project raising funds)<br/>
+            3.09% lid fee<br/>
+            2.00% insurance fee<br/>
             ———————<br/>
-            TOTAL: 112% raised<br/><br/>
+            TOTAL: 110% raised<br/><br/>
             Token allocations, as % of total supply:<br/>
-            40.59% liquidity<br/>
-            59.41% depositors<br/>
+            37.44% liquidity<br/>
+            62.56% depositors<br/>
             ———————<br/>
             TOTAL: 100% of supply
           </StyledAnswer>
