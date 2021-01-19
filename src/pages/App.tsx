@@ -12,7 +12,7 @@ import TxModal from 'components/TxModal';
 
 function App() {
   const [{ isOpen }, toggleModal] = useWalletModal();
-  const [{ txStatus, txHash }, onClose] = useTxModal();
+  const [{ txStatus, txHash }, , , onClose] = useTxModal();
   return (
     <>
       <Header />
@@ -28,11 +28,7 @@ function App() {
         />
       </Switch>
       <ConnectWalletModal onClose={() => toggleModal(false)} visible={isOpen} />
-      <TxModal
-        txStatus={txStatus}
-        txHash={txHash}
-        onClose={onClose}
-      />
+      <TxModal txStatus={txStatus} txHash={txHash} onClose={onClose} />
     </>
   );
 }
