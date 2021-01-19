@@ -2,10 +2,14 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useMemo,
   useReducer
 } from 'react';
 import { TxStatus } from 'utils/enums';
+
+export interface ITxModalState {
+  txHash: string;
+  txStatus: TxStatus;
+}
 
 const ModalContext = createContext<any[]>([]);
 
@@ -20,29 +24,28 @@ const UPDATE_TX_HASH = 'modal/UPDATE_TX_HASH';
 const UPDATE_TX_STATUS = 'modal/UPDATE_TX_STATUS';
 
 const reducer = (
-  state: any,
-  { type, payload }: { type: string; payload: { txHash: string, txStatus: TxStatus } }
-) => {
-  const { txHash, txStatus } = payload;
+  state: ITxModalState,
+  { type, payload }: { type: string; payload: string | TxStatus }
+): ITxModalState => {
   switch (type) {
     case UPDATE_TX_HASH:
       return {
         ...state,
-        txHash
+        txHash: payload as string
       };
     case UPDATE_TX_STATUS:
       return {
         ...state,
-        txStatus
-        };
+        txStatus: payload as TxStatus
+      };
     default: {
-      throw new Error(`Unknown action type ${type}`);
+      return state;
     }
   }
 };
 
 export function TxModalProvider({ children }: any) {
-  const [state, dispatch] = useReducer(reducer, undefined, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState(), initialState);
 
   const updateTxHash = useCallback((payload: any) => {
     dispatch({
@@ -59,9 +62,7 @@ export function TxModalProvider({ children }: any) {
   }, []);
 
   return (
-    <ModalContext.Provider
-      value={useMemo(() => [state, { updateTxHash, updateTxStatus }], [state, updateTxHash, updateTxStatus])}
-    >
+    <ModalContext.Provider value={[state, { updateTxHash, updateTxStatus }]}>
       {children}
     </ModalContext.Provider>
   );
@@ -84,4 +85,3 @@ export const useTxModal = () => {
 
   return [state, updateTxStatus, toggleTxModal, onClose];
 };
-  

@@ -91,7 +91,7 @@ const TokenStats: FC<IProps> = ({ deployed, networkId }) => {
               <ExternalLink
                 href={`https://${
                   networkId === 3 ? 'ropsten.' : ''
-                }etherscan.com/address/${deployed}`}
+                }etherscan.io/address/${deployed}`}
               >
                 {deployed}
               </ExternalLink>
