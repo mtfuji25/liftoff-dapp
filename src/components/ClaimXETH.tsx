@@ -6,9 +6,10 @@ import { BigNumber, utils } from 'ethers';
 import { StyledRocketCard, TYPE } from '../theme';
 import Button from './Button';
 
-import { useConnectedWeb3Context, useContracts } from 'contexts';
+import { useConnectedWeb3Context, useContracts, useTxModal } from 'contexts';
 import { TokenInsurance } from 'utils/types';
 import { getLiftoffSettings } from 'utils/networks';
+import { TxStatus } from 'utils/enums';
 
 const Card = styled(StyledRocketCard)({
   backgroundColor: '#7289DA',
@@ -42,6 +43,7 @@ const ClaimXETH: React.FC<IProps> = ({
   tokenSaleId,
   tokenInsurance
 }) => {
+  const [, updateTxStatus, toggleTxModal] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffInsurance } = useContracts(context);
   const setting = getLiftoffSettings(networkId);
@@ -87,10 +89,11 @@ const ClaimXETH: React.FC<IProps> = ({
     }
 
     try {
-      await liftoffInsurance.claim(tokenSaleId);
+      const txHash = await liftoffInsurance.claim(tokenSaleId);
+      await toggleTxModal(liftoffInsurance.provider, txHash);
     } catch (error) {
-      alert(error.message || error);
       console.log(error);
+      updateTxStatus(TxStatus.TX_ERROR);
     }
   };
 
