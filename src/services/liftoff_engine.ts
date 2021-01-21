@@ -9,6 +9,7 @@ const liftoffEnginesAbi = [
   'function setLiftoffSettings(ILiftoffSettings liftoffSettings) public',
   'function launchToken(uint256 startTime, uint256 endTime, uint256 softCap, uint256 hardCap,uint256 totalSupply, string calldata name, string calldata symbol, address projectDev) external returns (uint256 tokenId)',
   'function igniteEth(uint256 _tokenSaleId) external payable',
+  'function undoIgnite(uint256 _tokenSaleId) external payable',
   'function claimReward(uint256 _tokenSaleId, address _for) external',
   'function spark(uint256 _tokenSaleId) external',
   'function claimRefund(uint256 _tokenSaleId, address _for) external',
@@ -44,13 +45,16 @@ class LiftoffEngineService {
     return this.contract.address;
   }
 
-  igniteEth = async (
-    tokenSaleId: string,
-    amount: string
-  ): Promise<string> => {
+  igniteEth = async (tokenSaleId: string, amount: string): Promise<string> => {
     const txObject = await this.contract.igniteEth(tokenSaleId, {
       value: utils.parseEther(amount)
     });
+
+    return txObject.hash;
+  };
+
+  undoIgnite = async (tokenSaleId: string): Promise<string> => {
+    const txObject = await this.contract.undoIgnite(tokenSaleId, {});
 
     return txObject.hash;
   };
