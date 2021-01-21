@@ -17,14 +17,13 @@ const Flex = styled.div`
   `}
   button {
     ${({ theme }) => theme.mediaWidth.upToSmall`
-      margin: 1rem 0;
+      margin: 1rem 0 0 0;
     `}
   }
 `;
 
 const StyledButton = styled(Button)`
   margin-left: 1.25rem;
-  margin-right: 1.825rem;
 `;
 
 const StyledInput = styled(InputWithAddon)({}, ({ theme }) =>
@@ -60,6 +59,20 @@ const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo }) => {
     }
   };
 
+  const onClickUndoIgnite = async () => {
+    if (!liftoffEngine) {
+      return;
+    }
+
+    try {
+      const txHash = await liftoffEngine.undoIgnite(tokenSaleId);
+      await toggleTxModal(liftoffEngine.provider, txHash);
+    } catch (error) {
+      console.log(error);
+      updateTxStatus(TxStatus.TX_ERROR);
+    }
+  };
+
   return (
     <>
       <StyledRocketCard>
@@ -82,7 +95,12 @@ const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo }) => {
             onChange={(event) => onChangeAmount(event)}
           />
           <StyledButton onClick={onClickIgnite}>Ignite</StyledButton>
-          <TYPE.Small color="primary1">
+          <StyledButton onClick={onClickUndoIgnite}>UndoIgnite</StyledButton>
+          <TYPE.Small
+            color="primary1"
+            ml={[0, 0, '1.875rem']}
+            mt={['1rem', '1rem', 0]}
+          >
             Your ETH ignited:{' '}
             {igniteInfo ? utils.formatEther(igniteInfo.ignited) : 0} ETH
           </TYPE.Small>
