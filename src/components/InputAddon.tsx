@@ -25,7 +25,7 @@ const StyledInput = styled(Input)({
 const StyledText = styled.div(
   {
     position: 'absolute',
-    right: 10
+    right: 15
   },
   ({ theme }) => ({
     color: theme.grey
