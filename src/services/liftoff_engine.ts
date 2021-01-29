@@ -8,6 +8,7 @@ const liftoffEnginesAbi = [
   'event ClaimRefund(uint256 tokenId, address igniter)',
   'function setLiftoffSettings(ILiftoffSettings liftoffSettings) public',
   'function launchToken(uint256 startTime, uint256 endTime, uint256 softCap, uint256 hardCap,uint256 totalSupply, string calldata name, string calldata symbol, address projectDev) external returns (uint256 tokenId)',
+  'function ignite(uint256 _tokenSaleId, address _for, uint256 _amountXEth) external',
   'function igniteEth(uint256 _tokenSaleId) external payable',
   'function undoIgnite(uint256 _tokenSaleId) external payable',
   'function claimReward(uint256 _tokenSaleId, address _for) external',
@@ -44,6 +45,12 @@ class LiftoffEngineService {
   get address(): string {
     return this.contract.address;
   }
+
+  ignite = async (tokenSaleId: string, address: string, amount: string): Promise<string> => {
+    const txObject = await this.contract.ignite(tokenSaleId, address, amount);
+
+    return txObject.hash;
+  };
 
   igniteEth = async (tokenSaleId: string, amount: string): Promise<string> => {
     const txObject = await this.contract.igniteEth(tokenSaleId, {
