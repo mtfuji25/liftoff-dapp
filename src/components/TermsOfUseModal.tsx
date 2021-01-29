@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react';
-import styled from 'styled-components';
-import { ModalWrapper } from '../components/Modal';
+import styled, { withTheme } from 'styled-components';
+import { ModalWrapper } from './Modal';
 import { TYPE } from '../theme';
 import Button from './Button';
 
 interface IProps {
   isOpen: boolean;
   tokenTicker: string;
+  theme?: any;
   onClose: () => void;
   onAccept: () => void;
 }
@@ -29,14 +30,16 @@ const CloseButton = styled.div(
   })
 );
 
-const StyledButtonContainer = styled.p`
-  text-align: center;
-  margin-top: 1rem;
+const StyledButtonContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 `;
 
-const StyledButton = styled(Button)`
-  padding: 0.7rem 4rem;
-  background: #2A7CEA;
+const StyledButton = styled(Button)<{ isAccept: boolean }>`
+  width: 150px;
+  margin-right: ${({ isAccept }) => (isAccept ? '30px' : '0')};
+  background: ${({ isAccept }) => (isAccept ? '#2A7CEA' : '#565656')};
 `;
 
 const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -55,8 +58,9 @@ const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const LegalModal = (props: IProps) => {
-  const { isOpen, tokenTicker, onAccept, onClose } = props;
+const TermsOfUseModal = (props: IProps) => {
+  const { isOpen, tokenTicker, theme, onAccept, onClose } = props;
+  const { modalStyle } = theme;
 
   const resetEverything = useCallback(() => {}, []);
 
@@ -71,13 +75,14 @@ const LegalModal = (props: IProps) => {
         disableBackdropClick={false}
         onRequestClose={onClickCloseButton}
         isOpen={isOpen}
+        style={{content: {...modalStyle.content, width: 620, textAlign: "center"}, overlay: modalStyle.overlay}}
       >
         <CloseButton onClick={onClose}>
           <CloseIcon />
         </CloseButton>
         <ContentWrapper>
           <TYPE.LargeHeader fontWeight="normal" color="#232628" mb="1rem">
-            {""}
+            Terms of Use
           </TYPE.LargeHeader>
           <div>
             <TYPE.Header mb={2} fontWeight="normal" color="#232628">
@@ -87,9 +92,16 @@ const LegalModal = (props: IProps) => {
         </ContentWrapper>
         <StyledButtonContainer>
           <StyledButton
+            isAccept={true}
             onClick={onAccept}
           >
             Accept
+          </StyledButton>
+          <StyledButton
+            isAccept={false}
+            onClick={onClose}
+          >
+            Decline
           </StyledButton>
         </StyledButtonContainer>
       </ModalWrapper>
@@ -97,4 +109,4 @@ const LegalModal = (props: IProps) => {
   );
 };
 
-export default LegalModal;
+export default withTheme(TermsOfUseModal);
