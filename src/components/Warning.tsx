@@ -22,7 +22,7 @@ const WarningCTA = styled(Button)(
     alignSelf: 'flex-end'
   },
   ({ theme }) => ({
-    backgroundColor: theme.red1
+    background: theme.red1
   }),
   ({ theme }) =>
     theme.mediaWidth.upToSmall({

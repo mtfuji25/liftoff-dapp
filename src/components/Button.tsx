@@ -1,11 +1,7 @@
 import styled from 'styled-components';
+import { theme } from 'theme';
 
-const Button = styled.button.attrs<
-  { warning: boolean },
-  { backgroundColor: string }
->(({ warning, theme }) => ({
-  backgroundColor: warning ? theme.red1 : theme.primary1
-}))`
+const Button = styled.button`
   font-family: 'Open Sans', sans-serif;
   padding: 0.7rem 2rem 0.7rem 2rem;
   border-radius: 5px;
@@ -14,7 +10,7 @@ const Button = styled.button.attrs<
   font-size: 1rem;
   border: none;
   outline: none;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background: linear-gradient(90deg, rgba(249,55,206,1) 0%, rgba(144,44,233,1) 100%);
   color: ${({ theme }) => theme.white};
 `;
 
