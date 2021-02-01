@@ -73,7 +73,7 @@ const Projects = () => {
     <>
       <StyledBody color="bg3">
         <StyledContainer sWidth="85vw">
-          <InfoStatement backgroundColor="bg3" color="bg2" />
+          <InfoStatement color="bg2" />
           <Container>
             <STabs
               selectedTabClassName="is-selected"
@@ -118,13 +118,13 @@ const Projects = () => {
             </STabs>
           </Container>
 
-          <Disclaimer color="#000000" />
-          <CopyRight mt="1.375rem" color="#000000" />
+          <Disclaimer color="#232628" />
+          <CopyRight mt="1.375rem" color="#232628" />
 
           <Spinner loading={loading} />
         </StyledContainer>
       </StyledBody>
-      <Footer noBackground={false} color="bg3" />
+      <Footer noBackground={false} isSimple={true} />
     </>
   );
 };

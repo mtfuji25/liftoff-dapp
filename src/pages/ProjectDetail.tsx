@@ -95,7 +95,7 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
       {networkId && tokenSale && projectConf ? (
         <StyledBody color="bg3">
           <StyledContainer sWidth="90vw">
-            <InfoStatement backgroundColor="bg3" color="bg2" />
+            <InfoStatement color="bg2" />
             {!isVerified(tokenSale) && (
               <Warning
                 text="LIFTOFF is an autonomous launchpad that anyone can use. Similar to Uniswap, anyone can create a token with any name, including fake versions of existing tokens. Please do your own research before joining a project."
@@ -144,14 +144,14 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
           {!isVerified(tokenSale) && (
             <Disclaimer color="#232628" />
           )}
-          <CopyRight mt="1.375rem" />
+          <CopyRight mt="1.375rem" color="#232628" />
         </StyledBody>
       ) : networkId ? (
         <p>Loading...</p>
       ) : (
         <p>Please connect to your wallets</p>
       )}
-      <Footer noBackground={true} color="bg3" />
+      <Footer noBackground={false} isSimple={true} />
     </>
   );
 };

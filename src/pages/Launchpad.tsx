@@ -224,14 +224,14 @@ const Launchpad: FC = () => {
     <>
       <StyledBody color="bg2">
         <StyledContainer sWidth="800px">
-          <InfoStatement backgroundColor="bg2" color="bg3" />
-          <TYPE.LargeHeader color="white" textAlign="center">
-            🕹Launchpad for Developers
+          <InfoStatement color="bg2" />
+          <TYPE.LargeHeader color="bg1" textAlign="center">
+            Launchpad for Developers
           </TYPE.LargeHeader>
-          <TYPE.Header marginY="1.875rem" color="white">
+          <TYPE.Header marginY="1.875rem" color="bg1">
             How it works?
           </TYPE.Header>
-          <TYPE.Body color="white" textAlign="center" lineHeight="1.5rem">
+          <TYPE.Body color="bg1" textAlign="center" lineHeight="1.5rem">
             1. Register your project with this form.
             <br />
             2. Include a link to your working dapp that will use the created
@@ -773,13 +773,13 @@ const Launchpad: FC = () => {
                 <StyledButton type="submit">Launch</StyledButton>
               </fieldset>
             </form>
-            <Disclaimer color="#b4b4b4" />
-            <CopyRight mt="1.375rem" />
+            <Disclaimer color="#232628" />
+            <CopyRight mt="1.375rem" color="#232628" />
           </Box>
           <Spinner loading={loading} />
         </StyledContainer>
       </StyledBody>
-      <Footer noBackground={false} color="bg2" />
+      <Footer noBackground={false} isSimple={false} />
     </>
   );
 };
