@@ -33,7 +33,7 @@ const StyledTokenSelector = styled.div`
   margin-top: 20px;
 `
 const StyledTokenButton = styled(Button)<{ isSelected: boolean }>`
-  background: ${({ isSelected }) => (isSelected ? '#2A7CEA' : '#FFFFFF')};
+  background: ${({ isSelected }) => (isSelected ? 'linear-gradient(90deg, rgba(249,55,206,1) 0%, rgba(144,44,233,1) 100%)' : '#FFFFFF')};
   color: ${({ isSelected }) => (isSelected ? '#FFFFFF' : '#B4B4B4')};
   border: 1px solid #DADADA;
   border-radius: 5px;
