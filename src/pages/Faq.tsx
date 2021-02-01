@@ -175,11 +175,11 @@ sentence description of your service. Liftoff primarily accepts influencer netwo
 marketing agencies.
           </StyledAnswer>
 
-          <Disclaimer color="#000000" />
-          <CopyRight mt="1.375rem" color="#000000" />
+          <Disclaimer color="#232628" />
+          <CopyRight mt="1.375rem" color="#232628" />
         </StyledContainer>
       </StyledBody>
-      <Footer noBackground={false} color="bg3" />
+      <Footer noBackground={false} isSimple={true} />
     </>
   )
 }

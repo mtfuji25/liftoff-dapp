@@ -148,7 +148,7 @@ const TextWrapper = styled(Text)<{ color: keyof Colors }>`
 
 export const StyledBody = styled.div<{ color: keyof Colors }>`
   padding: 2rem;
-  background-color: ${({ color, theme }) => (theme as any)[color]};
+  background-color: transparent;
   ${({ theme }) => theme.mediaWidth.upToSmall`
   padding: 1rem 1.25rem;`};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
