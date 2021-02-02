@@ -7,7 +7,6 @@ import CopyRight from '../components/Copyright';
 import {
   StyledContainer as UnstyledContainer,
   StyledBody,
-  TYPE
 } from '../theme';
 
 const StyledContainer = styled(UnstyledContainer)({}, ({ theme }) =>

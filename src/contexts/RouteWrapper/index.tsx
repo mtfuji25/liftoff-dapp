@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 export const RouterWrapper: React.FC = ({ children }) => {
   // return process.env.REACT_APP_ON_IPFS === 'true' ? (

@@ -13,7 +13,8 @@ const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
   upToSmall: 720,
   upToMedium: 960,
-  upToLarge: 1280
+  upToLarge: 1280,
+  upToExtraLarge: 1400
 };
 
 const mediaWidthTemplates: {
