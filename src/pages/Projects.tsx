@@ -45,8 +45,12 @@ const LayoutGrid = styled.div(
     }),
   ({ theme }) =>
     theme.mediaWidth.upToMedium({
-      gridTemplateColumns: 'repeat(2, 1fr)'
-    })
+      gridTemplateColumns: '1fr !important'
+    }),
+  ({ theme }) =>
+  theme.mediaWidth.upToExtraLarge({
+    gridTemplateColumns: 'repeat(2, 1fr)'
+  })
 );
 
 const StyledContainer = styled(UnstyledContainer)({}, ({ theme }) =>

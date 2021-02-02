@@ -4,7 +4,6 @@ import { Image } from 'rebass';
 
 import FooterImage from '../assets/footer.png';
 import FooterSimpleImage from '../assets/footer-simple.png';
-import { Colors } from '../theme/styled';
 
 interface Props {
   noBackground: any;
