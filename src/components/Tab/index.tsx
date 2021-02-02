@@ -44,6 +44,7 @@ export const STabPanel = styled(TabPanel)`
   margin-top: -5px;
 
   &.is-selected {
-    display: block;
+    display: flex;
+    justify-content: center;
   }
 `;
