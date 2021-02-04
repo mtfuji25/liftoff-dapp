@@ -66,8 +66,7 @@ const DefaultLogo = () => (
 );
 
 const Logo = styled.img`
-  width: 104px;
-  height: 104px;
+  max-width: 50%;
   object-fit: cover;
 `;
 
