@@ -47,7 +47,7 @@ class LiftoffEngineService {
   }
 
   ignite = async (tokenSaleId: string, address: string, amount: string): Promise<string> => {
-    const txObject = await this.contract.ignite(tokenSaleId, address, amount);
+    const txObject = await this.contract.ignite(tokenSaleId, address, utils.parseEther(amount));
 
     return txObject.hash;
   };
