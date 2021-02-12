@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { utils } from 'ethers';
 import Button from './Button';
 import InputWithAddon from './InputAddon';
 import { TYPE, StyledRocketCard, ExternalLink } from '../theme';
-import { useConnectedWeb3Context, useContracts, useTxModal } from '../contexts';
+import { useConnectedWeb3Context, useContracts, useToken, useTxModal } from '../contexts';
 import { Ignitor } from 'utils/types';
 import { TxStatus } from 'utils/enums';
 import TermsOfUseModal from './TermsOfUseModal';
+import { getContractAddress } from 'utils/networks';
 
 const Flex = styled.div`
   margin-top: 20px;
@@ -57,17 +58,39 @@ interface IProps {
   tokenSaleId: string;
   igniteInfo: Maybe<Ignitor>;
   tokenTicker: string;
+  networkId: number | undefined;
 }
 
-const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo, tokenTicker }) => {
+const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo, tokenTicker, networkId }) => {
   const [, updateTxStatus, toggleTxModal] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffEngine } = useContracts(context);
   const { account } = context
+  const xEthAddress = getContractAddress(networkId || 1, 'xEth');
+  const { token: xToken } = useToken(context, xEthAddress);
 
   const [amount, setAmount] = useState('0');
   const [isETH, setETH] = useState(true);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isApprovedTokens, setApprovedTokens] = useState(false);
+
+  useEffect(() => {
+    if (!xToken || !account || !liftoffEngine) {
+      return;
+    }
+
+    const checkApprovedTokens = async () => {
+      const balance = await xToken.getBalanceOf(account);
+      const isEnoughAllowance = await xToken.hasEnoughAllowance(
+        account,
+        liftoffEngine.address,
+        balance
+      );
+      setApprovedTokens(isEnoughAllowance);
+    };
+
+    checkApprovedTokens();
+  }, [xToken, account, liftoffEngine]);
 
   const onChangeAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(event.target.value);
@@ -122,6 +145,19 @@ const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo, tokenTicker }) => {
     }
   }
 
+  const onClickApprove = async () => {
+    if (!xToken || !liftoffEngine || isApprovedTokens) {
+      return;
+    }
+
+    try {
+      await xToken.approveUnlimited(liftoffEngine.address);
+    } catch (error) {
+      alert(error.message || error);
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <StyledRocketCard>
@@ -151,7 +187,12 @@ const Ignite: React.FC<IProps> = ({ tokenSaleId, igniteInfo, tokenTicker }) => {
             paddingLeft={15}
             minWidth={250}
           />
-          <StyledButton onClick={onClickIgnite}>Ignite</StyledButton>
+          {!isETH && !isApprovedTokens && (
+            <StyledButton onClick={onClickApprove}>Approve</StyledButton>
+          )}
+          {(isETH || isApprovedTokens) && (
+            <StyledButton onClick={onClickIgnite}>Ignite</StyledButton>
+          )}
         </Flex>
         <Flex>
           <StyledIgnitedBalance>
