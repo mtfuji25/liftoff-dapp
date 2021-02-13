@@ -110,7 +110,7 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
             />
             <TokenDetails tokenSale={tokenSale} />
             {isIgniting && (
-              <Ignite tokenSaleId={tokenSale.id} igniteInfo={igniteInfo} tokenTicker={projectConf.tokenTicker} />
+              <Ignite tokenSaleId={tokenSale.id} igniteInfo={igniteInfo} tokenTicker={projectConf.tokenTicker} networkId={networkId} />
             )}
             {isSparkReady && <Spark tokenSaleId={tokenSale.id} />}
             {isClaimable && (
