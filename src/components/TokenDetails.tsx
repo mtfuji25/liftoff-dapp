@@ -38,12 +38,16 @@ const TokenDetails = ({ tokenSale }: Props) => {
     .mul(BigNumber.from('100'))
     .div(BigNumber.from(tokenSale.hardCap))
     .toNumber();
+  const softPercent = BigNumber.from(tokenSale.softCap)
+    .mul(BigNumber.from('100'))
+    .div(BigNumber.from(tokenSale.hardCap))
+    .toNumber();
 
   return (
     <StyledRocketCard>
       <TYPE.LargeHeader>Token Details</TYPE.LargeHeader>
       <ProgressStatus>
-        <ProgressBar completed={percent} />
+        <ProgressBar completed={percent} softPercent={softPercent} />
       </ProgressStatus>
       <CardGrid>
         <StyledCard>
