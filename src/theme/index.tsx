@@ -40,6 +40,7 @@ export const colors: Colors = {
   text3: '#B4B4B4',
   text4: '#565A69',
   text5: '#2C2F36',
+  text6: '#565656',
 
   bg1: '#131717',
   bg2: '#484E5A',
@@ -47,6 +48,7 @@ export const colors: Colors = {
   bg4: '#F9FAFB',
   bg5: '#B4B4B4',
   bg6: '#D8D8D8',
+  bg7: '#EBEBEB',
 
   primary1: '#2A7CEA',
   primary2: '#FF8CC3',
