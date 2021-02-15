@@ -92,7 +92,7 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
 
   return (
     <>
-      {networkId && tokenSale && projectConf ? (
+      {tokenSale && projectConf ? (
         <StyledBody color="bg3">
           <StyledContainer sWidth="90vw">
             <InfoStatement color="bg2" />
@@ -110,7 +110,12 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
             />
             <TokenDetails tokenSale={tokenSale} />
             {isIgniting && (
-              <Ignite tokenSaleId={tokenSale.id} igniteInfo={igniteInfo} tokenTicker={projectConf.tokenTicker} networkId={networkId} />
+              <Ignite
+                tokenSaleId={tokenSale.id}
+                igniteInfo={igniteInfo}
+                tokenTicker={projectConf.tokenTicker}
+                networkId={networkId}
+              />
             )}
             {isSparkReady && <Spark tokenSaleId={tokenSale.id} />}
             {isClaimable && (
@@ -141,15 +146,11 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
             )}
           </StyledContainer>
 
-          {!isVerified(tokenSale) && (
-            <Disclaimer color="#232628" />
-          )}
+          {!isVerified(tokenSale) && <Disclaimer color="#232628" />}
           <CopyRight mt="1.375rem" color="#232628" />
         </StyledBody>
-      ) : networkId ? (
-        <p>Loading...</p>
       ) : (
-        <p>Please connect to your wallets</p>
+        <p>Loading...</p>
       )}
       <Footer noBackground={false} isSimple={true} />
     </>
