@@ -46,7 +46,7 @@ const ClaimXETH: React.FC<IProps> = ({
   const [, updateTxStatus, toggleTxModal] = useTxModal();
   const context = useConnectedWeb3Context();
   const { liftoffInsurance } = useContracts(context);
-  const setting = getLiftoffSettings(networkId);
+  const setting = getLiftoffSettings(networkId || 1);
 
   const currentTime = moment().unix();
   const cycles =
