@@ -49,26 +49,65 @@ const Faq = () => {
         <StyledContainer sWidth="85vw">
 
           <StyledQuestion>
+            Links
+          </StyledQuestion>
+          <StyledAnswer>
+            dApp: <a href="https://liftoff.eth.link/">liftoff.eth.link/</a> <br/>
+            Whitepaper: <a href="https://whitepaper.liftoff.eth.link/">whitepaper.liftoff.eth.link</a> <br/>
+            Telegram: <a href="https://t.me/LiftoffETH">t.me/LiftoffETH</a><br/>
+            Announcements: <a href="https://t.me/LiftOffNews">t.me/LiftOffNews</a><br/>
+            Twitter: <a href="https://twitter.com/LiftoffEth">twitter.com/LiftoffEth</a><br/>
+            Medium: <a href="https://liftoffeth.medium.com/">liftoffeth.medium.com</a><br/>
+            Discord: <a href="https://discord.gg/APz5npdWgv">discord.gg/APz5npdWgv</a><br/>
+            Opensea: <a href="https://opensea.io/collection/lfty">opensea.io/collection/lfty</a><br/>
+          </StyledAnswer>
+
+          <StyledQuestion>
             What is Liftoff?
           </StyledQuestion>
           <StyledAnswer>
-            Liftoff is a fully self-service ERC20 launchpad dapp with integrated insurance. It allows any project
+            LIFTOFF is a fully decentralized & self service ERC20 Launchpad that creates both the new Token & the Sale in one transaction. It allows any project
 developer to create a new token, token sale, insurance scheme, and marketing partnerships with just
-one click of a button. For project developers, it is the fastest and simplest way to create a new token
-and reach a wide audience. For sale buyers, it is the safest presale platform and the only one that
-insures deposits.
+one click of a button. It does so through Three Innovations that improve over the previous Launchpads run by Lid Protocol.<br/>
+☞ Crash Insurance<br/>
+☞ Gradual Payments<br/>
+☞ Free Liquidity
           </StyledAnswer>
-          
+
           <StyledQuestion>
-            Why is Liftoff important?
+            What is LIFT?
           </StyledQuestion>
           <StyledAnswer>
-            Multiple types of technologies emerged in 2020 to protect token sale buyers from scams. The first
-platforms provided locked liquidity. However, buyers of tokens with locked liquidity were still
-vulnerable to minting attacks. Lid’s first presale platform, Lid Simplified, stopped minting and many
-other early attacks on token sales. However, Lid Simplified is vulnerable to soft exit scams, where
-developers abandon their project instead of growing it. In response, Lid developed Liftoff in the first
-few weeks of 2021 to stop soft exit scams.
+            LIFT is the Platform Token for LIFTOFF and is designed to congeal a community around LIFTOFF to both earn benefits & review LIFTOFF sales.<br/>
+            LIFT has 3 primary benefits to Members. Currently we have Tier 1 which has the following Benefits and will receive all future Benefits.
+☞ 3% airdrop distributed proportionately to Members based on LIFT holdings from all LIFT sales.<br/>
+☞ Access to private channels with Research, Discussion, & AMAs for projects both on LIFTOFF and not.<br/>
+☞ Voting rights to verify LIFTOFF sales of unusually high Quality as a signal to the crypto community.<br/>
+Tier 1 has the following requirements all of which must be maintained:<br/>
+☞ Wallet balance of 1 LIFT,<br/>
+☞ Good Standing in the community, and<br/>
+☞ A whitelisted Discord account with Ethereum address.<br/>
+          </StyledAnswer>
+
+          <StyledQuestion>
+            How does a project launch on Liftoff?
+          </StyledQuestion>
+          <StyledAnswer>
+            The project first fills out the required informational disclosures at liftoff.eth.link such as Whitepaper, Social Media, dApp Link, & Website.
+            These are uploaded automatically by LIFTOFF to IPFS silently. Second, they select their softcap, hardcap, and Token quantity.
+            Finally they click the "Launch" button and sign the Ethereum transaction.<br/>
+            Alternatively, if the Project wishes to meet the LIFT community and receive a vote for verification, they must reach out to the LIFT team first.
+          </StyledAnswer>
+
+          <StyledQuestion>
+            What restrictions are there to launch on Liftoff?
+          </StyledQuestion>
+          <StyledAnswer>
+            LIFTOFF is fully self service, so there are no limitations. The only cost is the Gas for the Launch transaction.
+            However, LIFT Club Members may vote to verify Sales that are of exceptional quality as a signal to the wider world.
+            LIFTOFF is also radically decentralized. The dApp is hosted on IPFS, the domain on ENS, and the smart contracts on Ethereum.
+            Accordingly the platform is uncensorable. However, before calling Ignite, users must sign an Attestation that they are not
+            in the USA or any other unfriendly jurisdiction.
           </StyledAnswer>
 
           <StyledQuestion>
@@ -76,10 +115,12 @@ few weeks of 2021 to stop soft exit scams.
           </StyledQuestion>
           <StyledAnswer>
             Crash Insurance protects presale buyers by refunding their deposited Eth if the price of the token falls
-below the initial sale rate. Crash Insurance provides 100% coverage for the first week. For the next 10
-weeks, it provides insurance at a gradually reduced amount but at the same, original sale rate. Crash
+below the initial sale rate. Crash Insurance covers 100% of Tokens for the first week. For the next 10
+weeks, it provides insurance for a gradually reducing percentage of the supply but at the same, original sale rate. Crash
 Insurance thus guarantees a hard price floor during the first week, and a soft price floor for the next 10
-weeks.
+weeks. All Tokens are covered no matter the source. There is a 2% fee for claiming insurance<br/>
+LIFTOFF is fully self insured. First, during the first week if excessive redemptions are made the Sale is able to unwind itself.
+Second, Developers & Promoters are not paid in Tokens, only ETH (Gradual Payments). This ETH is distributed over 10% over 10 weeks but Insurance Redemptions are removed from this pay.
           </StyledAnswer>
 
           <StyledQuestion>
@@ -105,14 +146,13 @@ globally with a history servicing great projects like Coinbase and Bancor.
           </StyledAnswer>
 
           <StyledQuestion>
-            How do I get ETH?
+            What types of Rugs or Scams does LIFTOFF protect against?
           </StyledQuestion>
           <StyledAnswer>
-            Unfortunately, financial regulation makes acquiring cryptocurrencies like ETH quite difficult.
-You will need to consult the regulations in your particular country, and find an exchange where
-you can deposit your native currency and receive ETH. Afterwards, you can transfer your ETH
-to your metamask wallet to use Liftoff. Ask in the Lid Protocol’s telegram or Discord channels
-for assistance.
+            Hard Rugs/Slow Rugs, where the Liquidity is removed. These are impossible as LIFTOFF creates permanently locked liquidity after launch.<br/>
+            Strong Soft Rugs, where the Developer deletes their Social Media Channels. These are fully protected against in the first week by Crash Insurance and by a reduced amount for the following 9 weeks. Additionally, since Developers are paid at 10%/week, they are heavily incentivized to maintain the project. That said, if a Developer appears dishonest after Launch the first week is the best time to Sell or Redeem for insurance.<br/>
+            Weak Soft Rugs, where the Developers are lazy. These are somewhat protected against by Crash Insurance but Laziness is not something which can be detected by technology. The primary protection against Indolence is community vetting with LIFT Member Verification.<br/>
+            Fake Rugs, where the Developers create a fake token. The only protection against these is the required informational disclosures & Crash Insurance. It is best to be cautious to avoid the 2% insurance fee.
           </StyledAnswer>
 
           <StyledQuestion>
