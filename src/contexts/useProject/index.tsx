@@ -33,7 +33,7 @@ type GraphResponse = {
 export const useProject = (tokenSaleId: string) => {
   const [project, setProject] = useState<Maybe<TokenSale>>(null);
 
-  const { data, error, loading } = useQuery<GraphResponse>(query, {
+  const { data, error, loading, refetch } = useQuery<GraphResponse>(query, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'network-only',
     variables: {
@@ -48,5 +48,5 @@ export const useProject = (tokenSaleId: string) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  return { project, error, loading };
+  return { project, error, loading, refetch };
 };

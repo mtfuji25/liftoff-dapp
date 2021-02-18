@@ -64,7 +64,6 @@ const ClaimXETH: React.FC<IProps> = ({
     tokenInsurance.redeemedXEth &&
     tokenInsurance.claimedXEth
   ) {
-    console.log(tokenInsurance);
     const totalFinalClaim = BigNumber.from(tokenInsurance.totalIgnited)
       .sub(BigNumber.from(tokenInsurance.claimedXEth))
       .sub(BigNumber.from(tokenInsurance.redeemedXEth));
@@ -79,8 +78,6 @@ const ClaimXETH: React.FC<IProps> = ({
       .mul(BigNumber.from(setting.projectDevBP))
       .div(BigNumber.from('10000'))
       .toString();
-
-    console.log(claimable);
   }
 
   const onClaimXEth = async () => {
