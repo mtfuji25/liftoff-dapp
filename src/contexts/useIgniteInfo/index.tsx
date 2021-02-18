@@ -24,7 +24,7 @@ export const useIgniteInfo = (tokenSaleId: string, address: Maybe<string>) => {
 
   const id = `ignite_${tokenSaleId}_${address ? address.toLowerCase() : ''}`;
 
-  const { data, error, loading } = useQuery<GraphResponse>(query, {
+  const { data, error, loading, refetch } = useQuery<GraphResponse>(query, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'network-only',
     variables: {
@@ -45,5 +45,5 @@ export const useIgniteInfo = (tokenSaleId: string, address: Maybe<string>) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  return { igniteInfo, error, loading };
+  return { igniteInfo, error, loading, refetch };
 };

@@ -48,9 +48,9 @@ const LayoutGrid = styled.div(
       gridTemplateColumns: '1fr !important'
     }),
   ({ theme }) =>
-  theme.mediaWidth.upToExtraLarge({
-    gridTemplateColumns: 'repeat(2, 1fr)'
-  })
+    theme.mediaWidth.upToExtraLarge({
+      gridTemplateColumns: 'repeat(2, 1fr)'
+    })
 );
 
 const StyledContainer = styled(UnstyledContainer)({}, ({ theme }) =>
@@ -70,8 +70,6 @@ const Projects = () => {
     { title: 'ACTIVE', key: 'active' },
     { title: 'COMPLETED', key: 'completed' }
   ];
-
-  console.log(projects, loading, error);
 
   return (
     <>

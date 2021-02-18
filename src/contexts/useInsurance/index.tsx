@@ -34,7 +34,7 @@ type GraphResponse = {
 export const useInsurance = (tokenSaleId: string) => {
   const [insurance, setInsurance] = useState<Maybe<TokenInsurance>>(null);
 
-  const { data, error, loading } = useQuery<GraphResponse>(query, {
+  const { data, error, loading, refetch } = useQuery<GraphResponse>(query, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'network-only',
     variables: {
@@ -51,5 +51,5 @@ export const useInsurance = (tokenSaleId: string) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  return { insurance, error, loading };
+  return { insurance, error, loading, refetch };
 };

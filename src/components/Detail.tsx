@@ -174,7 +174,6 @@ const Detail = ({
       title: 'BLACKLISTED'
     }
   };
-  console.log(networkId);
 
   let setting: any;
   const status = projectStatus(tokenSale);

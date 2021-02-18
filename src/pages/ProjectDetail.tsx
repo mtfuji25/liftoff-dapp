@@ -46,10 +46,15 @@ interface IProjectDetails {
 
 const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
   const { account, networkId } = useConnectedWeb3Context();
-  const { project: tokenSale } = useProject(id);
-  const { insurance: tokenInsurance } = useInsurance(id);
+  const { project: tokenSale, refetch: refetchProject } = useProject(id);
+  const { insurance: tokenInsurance, refetch: refetchInsurance } = useInsurance(
+    id
+  );
   const { projectConf } = useProjectConfig(tokenSale?.ipfsHash);
-  const { igniteInfo } = useIgniteInfo(tokenSale?.id || '', account);
+  const { igniteInfo, refetch: refetchIgniteInfo } = useIgniteInfo(
+    tokenSale?.id || '',
+    account
+  );
   const [, toggleModal] = useWalletModal();
 
   const currentTime = moment().unix();
@@ -89,6 +94,23 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [networkId]);
+
+  useEffect(() => {
+    // NOTE: improve this
+    const interval = setInterval(() => {
+      console.log('refetching...');
+      if (tokenSale && tokenSale.startTime < currentTime) {
+        refetchProject();
+        refetchIgniteInfo();
+        refetchInsurance();
+      }
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
