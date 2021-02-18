@@ -8,8 +8,14 @@ import { TYPE, StyledRocketCard } from 'theme';
 import InputWithAddon from 'components/InputAddon';
 
 import { TokenInsurance } from 'utils/types';
-import { useConnectedWeb3Context, useContracts, useToken } from 'contexts';
+import {
+  useConnectedWeb3Context,
+  useContracts,
+  useToken,
+  useTxModal
+} from 'contexts';
 import { formatBigNumber } from 'utils';
+import { TxStatus } from 'utils/enums';
 
 const CTA = styled.div`
   display: flex;
@@ -52,13 +58,12 @@ const FlexWrap = styled.div(
 
 const StyledButton = styled(Button)``;
 
-const InsuranceContainer = styled.div(
-  ({ theme }) =>
-    theme.mediaWidth.upToSmall({
-      display: 'flex',
-      justifyContent: 'space-around',
-      width: '-webkit-fill-available'
-    })
+const InsuranceContainer = styled.div(({ theme }) =>
+  theme.mediaWidth.upToSmall({
+    display: 'flex',
+    justifyContent: 'space-around',
+    width: '-webkit-fill-available'
+  })
 );
 
 const InsuranceButton = styled(StyledButton)(
@@ -80,6 +85,8 @@ interface IProps {
 const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
   const isInsuranceStarted = !!(tokenInsurance && tokenInsurance.isInitialized);
   const context = useConnectedWeb3Context();
+  const [, updateTxStatus, toggleTxModal] = useTxModal();
+
   const { liftoffInsurance, xEth } = useContracts(context);
   const { token: xToken } = useToken(context, tokenInsurance?.deployed || '');
 
@@ -124,7 +131,8 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
       return;
     }
     try {
-      await liftoffInsurance.createInsurance(tokenSaleId);
+      const txHash = await liftoffInsurance.createInsurance(tokenSaleId);
+      await toggleTxModal(liftoffInsurance.provider, txHash);
     } catch (error) {
       alert(error.message || error);
       console.log(error);
@@ -163,16 +171,18 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
     }
 
     try {
-      await liftoffInsurance.redeem(tokenSaleId, redeemAmount);
+      const txHash = await liftoffInsurance.redeem(tokenSaleId, redeemAmount);
+      await toggleTxModal(liftoffInsurance.provider, txHash);
     } catch (error) {
-      alert(error.message || error);
       console.log(error);
+      updateTxStatus(TxStatus.TX_ERROR);
     }
   };
 
   const onChangeRedeemAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isNaN(Number(event.target.value)))
+    if (!isNaN(Number(event.target.value))) {
       setRedeemAmount(event.target.value);
+    }
   };
 
   const xEthEstimation =
@@ -243,9 +253,9 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
             </InsuranceContainer>
           </FlexWrap>
           <TYPE.Body color="blue1">
-              You will get {utils.formatEther(xEthEstimation)} xETH (Current
-              xETH Balance: {utils.formatEther(xEthBalance)})
-            </TYPE.Body>
+            You will get {utils.formatEther(xEthEstimation)} xETH (Current xETH
+            Balance: {utils.formatEther(xEthBalance)})
+          </TYPE.Body>
         </Redeem>
       )}
 
