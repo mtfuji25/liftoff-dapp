@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 import { utils, BigNumber } from 'ethers';
+import { formatUnits } from 'ethers/lib/utils';
 
 import Button from 'components/Button';
 import { TYPE, StyledRocketCard } from 'theme';
@@ -158,7 +159,7 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
     }
     try {
       const balance = await xToken.getBalanceOf(account);
-      setRedeemAmount(formatBigNumber(balance, 18));
+      setRedeemAmount(formatUnits(balance, 18));
     } catch (error) {
       alert(error.message || error);
       console.log(error);
