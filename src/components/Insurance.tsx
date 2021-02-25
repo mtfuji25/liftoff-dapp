@@ -15,7 +15,6 @@ import {
   useToken,
   useTxModal
 } from 'contexts';
-import { formatBigNumber } from 'utils';
 import { TxStatus } from 'utils/enums';
 
 const CTA = styled.div`
@@ -198,9 +197,11 @@ const Insurance: FC<IProps> = ({ tokenSaleId, tokenInsurance, symbol }) => {
     tokenInsurance &&
     tokenInsurance.totalIgnited &&
     tokenInsurance.claimedXEth &&
+    tokenInsurance.redeemedXEth &&
     !BigNumber.from(tokenInsurance.totalIgnited).isZero()
       ? BigNumber.from(tokenInsurance.totalIgnited)
           .sub(BigNumber.from(tokenInsurance.claimedXEth))
+          .sub(BigNumber.from(tokenInsurance.redeemedXEth))
           .mul(BigNumber.from('1000'))
           .div(BigNumber.from(tokenInsurance.totalIgnited))
           .toNumber() / 10
