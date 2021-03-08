@@ -159,13 +159,15 @@ const ProjectDetail: FC<IProjectDetails> = ({ id }) => {
                 tokenSaleId={tokenSale.id}
               />
             )}
-            {tokenSale.isSparked && (
-              <ClaimXETH
-                networkId={networkId}
-                tokenSaleId={tokenSale.id}
-                tokenInsurance={tokenInsurance}
-              />
-            )}
+            {account &&
+              tokenSale.isSparked &&
+              tokenSale.dev.toLowerCase() === account.toLowerCase() && (
+                <ClaimXETH
+                  networkId={networkId}
+                  tokenSaleId={tokenSale.id}
+                  tokenInsurance={tokenInsurance}
+                />
+              )}
           </StyledContainer>
 
           {!isVerified(tokenSale) && <Disclaimer color="#232628" />}
